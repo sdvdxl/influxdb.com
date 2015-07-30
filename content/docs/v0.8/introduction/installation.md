@@ -23,8 +23,13 @@ Replace the `riak` user with `influxdb` and you should be good to go.
 
 ## OS X
 
-Installation of version 0.8.x on OS X is no longer supported through [Homebrew](http://brew.sh/). You will need to build from source. If that's unclear please contact us at [support@influxdb.com](mailto:support@influxdb.com).
+Installation of version 0.8.x on OS X 10.8 and higher is available through [Homebrew](http://brew.sh/) [Tap](https://github.com/Homebrew/homebrew/blob/master/share/doc/homebrew/brew-tap.md). 
 
+Installing the package on OS X:
+
+```bash
+brew install homebrew/versions/influxdb08
+```
 
 ## Ubuntu & Debian
 Debian users can install by downloading the package and installing it like this:
