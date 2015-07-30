@@ -261,12 +261,6 @@ Find out what measurements we're taking for redis:
 SHOW MEASUREMENTS WHERE service = 'redis'
 ```
 
-Show measurements against a regex:
-
-```sql
-SHOW MEASUREMENTS where app =~ '.*paulapp.*'
-```
-
 Show series (unique tag sets) on the cpu measurement:
 
 ```sql
