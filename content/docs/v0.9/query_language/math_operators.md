@@ -4,13 +4,13 @@ aliases:
   - /docs/v0.9/query_language/math_operators.html
 ---
 
-**Note:** Currently all mathematical operators work soley on `floats`. Any operation performed on an `int` will return a `null` value.
+**Note:** Currently all mathematical operators work soley on `floats`. Any operation performed on an `int` will return a `null` value. See issue [3000](https://github.com/influxdb/influxdb/issues/3000).
 
 Mathematical operators follow the standard order of operations. That is, *parentheses* take precedence to *division* and *multiplication*, which takes precedence to *addition* and *substraction*. For example `5 / 2 + 3 * 2 =  (5 / 2) + (3 * 2)` and `5 + 2 * 3 - 2 = 5 + (2 * 3) - 2`.
 
 ## Supported Operators
 
-**Note:** Any expression that involves adding, subtracting, or dividing by 0 yields a `null` value.
+**Note:** Any expression that involves adding, subtracting, or dividing by 0 yields a `null` value. This is not intentional and is the result of a bug. See issue [3000](https://github.com/influxdb/influxdb/issues/3000).
 
 ### Addition
 
@@ -107,14 +107,14 @@ will yield a parse error.
 
 ### Inequalities
 
-Using any of `=`,`!=`,`<`,`>`,`<=`,`>=` will yield empty results for all types.
+Using any of `=`,`!=`,`<`,`>`,`<=`,`>=` will yield empty results for all types. See issue [3525](https://github.com/influxdb/influxdb/issues/3525).
 
 ### Miscellaneous
 
-Using any of `%`, `^` will yield a parse error.
+Using any of `%`, `^` will yield a parse error. If you would like to see support for these operators open an [issue](https://github.com/influxdb/influxdb/issues/new).
 
 ## Logical Operators are Unsupported
 
 Using any of `&`,`|`,`!|`,`NAND`,`XOR`,`NOR` will yield parse error.
 
-Additionally using `AND`, `OR` in the `SELECT` clause of a query will not behave as mathematical operators and simply yield empty results.
+Additionally using `AND`, `OR` in the `SELECT` clause of a query will not behave as mathematical operators and simply yield empty results, as they are tokens in InfluxQL.
