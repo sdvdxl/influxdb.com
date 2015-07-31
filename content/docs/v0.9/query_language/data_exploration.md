@@ -4,6 +4,7 @@ aliases:
   - /docs/v0.9/query_language/querying_data.html
 ---
 
+
 InfluxDB features an SQL-like query language for querying data and performing aggregations on that data. This section describes the syntax of the query. All queries that return data use the keyword `SELECT`.
 
 The primary mechanism for issuing any of the queries listed below is through the HTTP API. For example, the command `SELECT * FROM cpu` can be executed using `curl` as follows:
@@ -12,13 +13,13 @@ The primary mechanism for issuing any of the queries listed below is through the
 curl -G 'http://localhost:8086/query' --data-urlencode 'db=mydb' --data-urlencode 'q=SELECT * FROM cpu'
 ```
 
-**NOTE:** When querying large amounts of data, a `chunk_size` query parameter should be passed along with the request. By default the chunk size is 10,000.
+> **Note:** When querying large amounts of data, a `chunk_size` query parameter should be passed along with the request. By default the chunk size is 10,000.
 
 ```
 curl -G 'http://localhost:8086/query' --data-urlencode 'db=mydb' --date-urlencode 'chunk_size=20000' --data-urlencode 'q=SELECT * FROM cpu'
 ```
 
-For more information see [3242](https://github.com/influxdb/influxdb/issues/3242).
+<dt> For more information see [3242](https://github.com/influxdb/influxdb/issues/3242). </dt>
 
 ## Quote Usage
 *Identifiers* are either unquoted or double quoted. Identifiers are database names, retention policies, measurements, or tag keys. String literals are always single quoted however.

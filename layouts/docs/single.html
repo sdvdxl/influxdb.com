@@ -1,7 +1,15 @@
 {{ partial "header.html" . }}
 {{ partial "logo.html" . }}
 <div class="page-content">
+	{{ partial "docs/sidebar.html" . }}
 	<article class="article-docs article-main-column">
+
+		<!-- <ul class="breadcrumbs">
+			<li><a href="#">Docs</a></li>
+			<li><a href="#">Query Language</a></li>
+			<li><a href="#">Data Exploration</a></li>
+		</ul> -->
+
 		<h1>{{ .Title }}</h1>
 		{{ if not (in .RelPermalink "v0.9") }}
 		<div class="flash">
@@ -15,7 +23,7 @@
 			{{ partial "docs/contribute.html" . }}
 		{{ end }}
 	</article>
-	{{ partial "docs/sidebar.html" . }}
+	
 </div>
 {{ partial "nav.html" . }}
 {{ partial "footer.html" . }}
