@@ -99,7 +99,7 @@ See the [line protocol syntax](https://influxdb.com/docs/v0.9/write_protocols/wr
 
 ### Reserved Words in InfluxQL
 
-Use of any of the [InfluxQL Reserved Words](https://github.com/influxdb/influxdb/blob/master/influxql/INFLUXQL.md#identifiers) as Identifiers or Strings will require quoting of the identifier or string in every use. It can lead to non-intuitive errors and is not recommended.
+Use of any of the [InfluxQL Reserved Words](https://github.com/influxdb/influxdb/blob/master/influxql/INFLUXQL.md#keywords) as Identifiers or Strings will require quoting of the identifier or string in every use. It can lead to non-intuitive errors and is not recommended.
 
 ### Querying Booleans
 
