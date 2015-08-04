@@ -54,15 +54,11 @@ brew install influxdb
 
 ## Hosted
 
-For users who don't want to install any software and are ready to use InfluxDB, you may want to check out our [managed hosted InfluxDB offering](http://customers.influxdb.com). __However, our hosted service is currently only running InfluxDB v0.8.8. Hosted 0.9 instances will be available soon.__
+For users who don't want to install any software and are ready to use InfluxDB, you may want to check out our [managed hosted InfluxDB offering](http://customers.influxdb.com). 
 
 ## Generate a configuration file
 
-All InfluxDB packages ship with an example configuration file. In addition, a valid configuration file can be displayed at any time using the command:
-
-```
-/opt/influxdb/influxd config
-```
+All InfluxDB packages ship with an example configuration file. In addition, a valid configuration file can be displayed at any time using the command `influxd config`. Redirect the output to a file to save a clean generated configuration file.
 
 ## Development Versions
 
