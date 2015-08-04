@@ -18,7 +18,7 @@ Installing Chronograf on either a Debian/Ubuntu or RedHat/CentOS distribution of
 - 64-bit system instructions
 
 		wget https://s3.amazonaws.com/get.influxdb.org/chronograf/chronograf-0.1.0-1.x86_64.rpm
-		sudo rpm -ivh chronograf-0.1.0-1.x86_64.rpm
+		sudo yum localinstall chronograf-0.1.0-1.x86_64.rpm
 
 # Usage
 
