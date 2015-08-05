@@ -177,7 +177,6 @@ statement           = alter_retention_policy_stmt |
                       create_database_stmt |
                       create_retention_policy_stmt |
                       create_user_stmt |
-                      delete_stmt |
                       drop_continuous_query_stmt |
                       drop_database_stmt |
                       drop_measurement_stmt |
@@ -310,20 +309,6 @@ CREATE USER jdoe WITH PASSWORD '1337password'
 -- Create a cluster admin.
 -- Note: Unlike the GRANT statement, the "PRIVILEGES" keyword is required here.
 CREATE USER jdoe WITH PASSWORD '1337password' WITH ALL PRIVILEGES
-```
-
-### DELETE
-
-```
-delete_stmt  = "DELETE" from_clause where_clause .
-```
-
-#### Example:
-
-```sql
--- delete data points from the cpu measurement where the region tag
--- equals 'uswest'
-DELETE FROM cpu WHERE region = 'uswest'
 ```
 
 ### DROP CONTINUOUS QUERY
