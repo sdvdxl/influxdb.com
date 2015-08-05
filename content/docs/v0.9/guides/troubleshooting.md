@@ -65,6 +65,10 @@ An HTTP status code of 5XX implies that the `influxd` process is either down or 
 
 ## Syntax Pitfalls
 
+#### When writing integer values
+
+When writing a point with an integer value you must add a trailing `i` to the end of the value. This allows influx to infer that an integer type is being written. If no `i` is provided, the value will be written as a float. For example `response_time,host=server1 value=100i` has an integer value of 100, where as `response_time,host=server1 value=100` has a floating point value of 100.
+
 ### When to Single-Quote
 
 #### Querying

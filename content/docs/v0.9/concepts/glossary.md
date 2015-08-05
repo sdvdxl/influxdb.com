@@ -79,7 +79,7 @@ Every point must have at least one **Field** or it will be rejected as invalid.
 
 #### Example
 
-The pairs `load=0.64`, `event=”panels cleaned”`, and `bikes_present=15` are all valid **Fields**.
+The pairs `load=0.64`, `event=”panels cleaned”`, and `bikes_present=15i` are all valid **Fields**.
 
 ## Field Key
 The **field key** is the key part of the key-value pair that makes up a **field** and is always stored as a string.
@@ -92,6 +92,8 @@ A **field value** is the value part of the key-value pair that makes up a **fiel
 **Field value** data may be stored as a string, boolean, int64, or float64.
 
 If the **field value** is number it may contain one decimal point.
+
+Integer valued fields must be written with a trailing `i`. The field `bikes_present=15i` stores an integer and the field `bikes_present=15` stores a float.
 
 Scientific notation is a valid numerical representation.
 

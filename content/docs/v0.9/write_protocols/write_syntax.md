@@ -40,9 +40,9 @@ require escaping. Backslash characters do not require escaping, but may not be u
 Field values may be stored as `float64`, `int64`, `boolean`, or `string`. All subsequent field values must match 
 the type of the first point written to given measurement. 
 
-`float64` values must contain a decimal. `1.0` is a float, `1` is an integer.
+`float64` values are the default numerical type. `1` is a float, `1i` is an integer.
 
-`int64` values may not contain a decimal. `1` is an integer, `1.0` is a float. 
+`int64` values must have a trailing `i`. `1i` is an integer, `1` is a float. 
 
 `boolean` values are `t`, `T`, `true`, `True`, or `TRUE` for TRUE, and  `f`, `F`, `false`, `False`, or `FALSE` for FALSE
 
@@ -52,46 +52,46 @@ the type of the first point written to given measurement.
 
 ###### Simplest Valid Point (measurement + field)
 ```
-disk_free value=442221834240
+disk_free value=442221834240i
 ```
 
 ###### With Timestamp
 ```
-disk_free value=442221834240 1435362189575692182
+disk_free value=442221834240i 1435362189575692182
 ```
 
 ###### With Tags
 ```
-disk_free,hostname=server01,disk_type=SSD value=442221834240
+disk_free,hostname=server01,disk_type=SSD value=442221834240i
 ```
 
 ###### With Tags, With Timestamp
 ```
-disk_free,hostname=server01,disk_type=SSD value=442221834240 1435362189575692182
+disk_free,hostname=server01,disk_type=SSD value=442221834240i 1435362189575692182
 ```
 
 ###### Multilple Fields
 ```
-disk_free free_space=442221834240,disk_type="SSD" 1435362189575692182
+disk_free free_space=442221834240i,disk_type="SSD" 1435362189575692182
 ```
 
 ###### Escaping Commas and Spaces
 ```
-total\ disk\ free,volumes=/net\,/home\,/ value=442221834240 1435362189575692182
+total\ disk\ free,volumes=/net\,/home\,/ value=442221834240i 1435362189575692182
 ```
 
 In the above example, the measurement is written as `total disk free` and the tag key `volumes` has a tag value of `/net,/home,/`
 
 ###### With Backslash in Tag Value
 ```
-disk_free,path=C:\Windows value=442221834240
+disk_free,path=C:\Windows value=442221834240i
 ```
 
 Backslashes do not need to be escaped when used in strings. Unless followed by a comma or a space, backslashes are treated as a normal character.
 
 ###### Escaping Field Key
 ```
-disk_free value=442221834240,working\ directories="C:\My Documents\Stuff for examples,C:\My Documents"
+disk_free value=442221834240i,working\ directories="C:\My Documents\Stuff for examples,C:\My Documents"
 ```
 
 In the above example, the second field key is `working directories` and the corresponding field value is `C:\My Documents\Stuff for examples,C:\My Documents`.
@@ -125,7 +125,7 @@ To write points using the command line interface, use the `insert` command.
 ###### Write a Point with the CLI
 
 ```
-> insert disk_free,hostname=server01 value=442221834240 1435362189575692182
+> insert disk_free,hostname=server01 value=442221834240i 1435362189575692182
 ```
 
 The CLI will return nothing on success and should give an informative parser error if the point cannot be written. There is currently no way to write a batch of points using the CLI, each point must be inserted individually.
@@ -157,13 +157,13 @@ In this context, "valid node" means a node that hosts a copy of the shard contai
 ###### Write a Point with `curl`
 
 ```
-curl -X POST 'http://localhost:8086/write?db=mydb' --data-binary 'disk_free,hostname=server01 value=442221834240 1435362189575692182'
+curl -X POST 'http://localhost:8086/write?db=mydb' --data-binary 'disk_free,hostname=server01 value=442221834240i 1435362189575692182'
 ```
 
 You can also supply the query string parameters elsewhere in the command. They must be URL encoded:
 
 ```
-curl -X POST 'http://localhost:8086/write' --data-urlencode 'db=mydb' --data-binary 'disk_free,hostname=server01 value=442221834240 1435362189575692182'
+curl -X POST 'http://localhost:8086/write' --data-urlencode 'db=mydb' --data-binary 'disk_free,hostname=server01 value=442221834240i 1435362189575692182'
 ```
 
 ###### Write a Point to a non-default Retention Policy
@@ -171,11 +171,11 @@ curl -X POST 'http://localhost:8086/write' --data-urlencode 'db=mydb' --data-bin
 Use the `rp=<retention_policy` query string parameter to supply a target retention policy. If not specified, the default retention policy for the target database will be used.
 
 ```
-curl -X POST 'http://localhost:8086/write?db=mydb&rp=six_month_rollup' --data-binary 'disk_free,hostname=server01 value=442221834240 1435362189575692182'
+curl -X POST 'http://localhost:8086/write?db=mydb&rp=six_month_rollup' --data-binary 'disk_free,hostname=server01 value=442221834240i 1435362189575692182'
 ```
 
 ```
-curl -X POST 'http://localhost:8086/write' --data-urlencode 'db=mydb' --data-urlencode 'rp=six_month_rollup' --data-binary 'disk_free,hostname=server01 value=442221834240 1435362189575692182'
+curl -X POST 'http://localhost:8086/write' --data-urlencode 'db=mydb' --data-urlencode 'rp=six_month_rollup' --data-binary 'disk_free,hostname=server01 value=442221834240i 1435362189575692182'
 ```
 
 ###### Write a Point Using Authentication
@@ -183,11 +183,11 @@ curl -X POST 'http://localhost:8086/write' --data-urlencode 'db=mydb' --data-url
 Use the `u=<user>` and `p=<password>` to pass the authentication details, if required. 
 
 ```
-curl -X POST 'http://localhost:8086/write?db=mydb&u=root&p=123456' --data-binary 'disk_free,hostname=server01 value=442221834240 1435362189575692182'
+curl -X POST 'http://localhost:8086/write?db=mydb&u=root&p=123456' --data-binary 'disk_free,hostname=server01 value=442221834240i 1435362189575692182'
 ```
 
 ```
-curl -X POST 'http://localhost:8086/write' --data-urlencode 'db=mydb' --data-urlencode 'u=root&p=correct horse battery staple' --data-binary 'disk_free,hostname=server01 value=442221834240 1435362189575692182'
+curl -X POST 'http://localhost:8086/write' --data-urlencode 'db=mydb' --data-urlencode 'u=root&p=correct horse battery staple' --data-binary 'disk_free,hostname=server01 value=442221834240i 1435362189575692182'
 ```
 
 ###### Specify Non-nanosecond Timestamps
@@ -197,7 +197,7 @@ Use the `precision=[n,u,ms,s,m,h]` query string parameter to supply a precision 
 All timestamps are assumed to be Unix nanoseconds unless otherwise specified. If you provide timestamps in any unit other than nanoseconds, you must supply the appropriate precision in the URL query string. Use `n`, `u`, `ms`, `s`, `m`, and `h` for nanoseconds, microseconds, milliseconds, seconds, minutes, and hours, respectively. 
 
 ```
-curl -X POST 'http://localhost:8086/write?db=mydb&precision=ms' --data-binary 'disk_free value=442221834240 1435362189575'
+curl -X POST 'http://localhost:8086/write?db=mydb&precision=ms' --data-binary 'disk_free value=442221834240i 1435362189575'
 ```
 
 ```

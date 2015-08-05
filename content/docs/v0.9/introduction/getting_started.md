@@ -68,9 +68,9 @@ The following lines are all examples of points that can be written to InfluxDB:
 
 ```
 cpu,host=serverA,region=us_west value=0.64
-payment,device=mobile,product=Notepad,method=credit billed=33,licenses=3 1434067467100293230
-stock,symbol=AAPL bid=127.46,ask=127.48 
-temperature,machine=unit42,type=assembly external=25,internal=37 1434067467000000000
+payment,device=mobile,product=Notepad,method=credit billed=33,licenses=3i 1434067467100293230
+stock,symbol=AAPL bid=127.46,ask=127.48
+temperature,machine=unit42,type=assembly external=25i,internal=37i 1434067467000000000
 ```
 
 _Note: Measurements, tags, and field names containing any character other than (A-Z,a-z,0-9,_) or starting with a digit must be double-quoted. More information on the line protocol can be found on the [Reading and Writing Data](../concepts/reading_and_writing_data.html) page._
@@ -102,7 +102,7 @@ _Note: We did not supply a timestamp when writing our point. When no timestamp i
 Let's try storing a different type of data -- sensor data. Enter the following data in the `Values` textbox:
 
 ```sql
-> INSERT temperature,machine=unit42,type=assembly external=25,internal=37
+> INSERT temperature,machine=unit42,type=assembly external=25i,internal=37i
 >
 ```
 
