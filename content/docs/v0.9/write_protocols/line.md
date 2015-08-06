@@ -41,7 +41,7 @@ Field keys are always strings and follow the same syntactical rules as described
 
 **Integers** are numeric values that do not include a decimal and are followed by a trailing `i` when inserted (e.g. 1i, 345i, 2015i, -10i). Note that all values _must_ have a trailing `i`. If they do not they will be written as floats.
 
-**Floats** are numeric values that are not followed by a trailing `i`. (e.g. 1, 1.0, -3.14, 6.0+e5, 10).
+**Floats** are numeric values that are not followed by a trailing `i`. (e.g. 1, 1.0, -3.14, 6.0e5, 10).
 
 **Boolean** values indicate true or false.  Valid boolean strings are (t, T, true, TRUE, f, F, false, and FALSE).
 
