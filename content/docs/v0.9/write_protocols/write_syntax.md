@@ -107,6 +107,8 @@ tag value is `tag,value,with"commas"`, the field key is `field_key\\\\` and the 
 
 ## Caveats
 
+> **Note:** Prior to version 0.9.3, integers were numeric values that did not include a decimal (e.g. 1, 345, 2015, -10) and were not followed by a trailing `i`. Including a trailing `i` when writing integers will causes an error in versions 0.9.2 and prior. See [issue](https://github.com/influxdb/influxdb/issues/3519) for more information.
+
 If you write points in a batch all points without explicit timestamps will receive the same timestamp when inserted. Since a point is defined only by its measurement, tag set, and timestamp, that can lead to duplicate points. When InfluxDB encounters a duplicate point it silently overwrites the previous point. It is a best practice to provide explicit timestamps with all points. 
 
 Measurements, tag keys, tag values, and field keys are never quoted. Spaces and commas must be escaped. Field keys 

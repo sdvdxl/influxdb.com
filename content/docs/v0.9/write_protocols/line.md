@@ -88,3 +88,5 @@ cpu,host=server\ 01,region=uswest value=1,msg="all systems nominal"
 cpu,host=server\ 01,region=us\,west value_int=1i
 ```
 In these examples, the "host" is set to `server 01`. The field value associated with field key `msg` is double-quoted, as it is a string. The second example shows a region of `us,west` with the comma properly escaped. In the first example `value` is written as a floating point number. In the second, `value_int` is an integer.
+
+> **Note:** Prior to version 0.9.3, integers were numeric values that did not include a decimal (e.g. 1, 345, 2015, -10) and were not followed by a trailing `i`. Including a trailing `i` when writing integers will causes an error in versions 0.9.2 and prior. See [issue](https://github.com/influxdb/influxdb/issues/3519) for more information.
