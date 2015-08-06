@@ -291,7 +291,7 @@ footer p {
 
 .article-docs {
 	padding: 5em;
-	color: #555;
+	color: #666;
 }
 .article-docs a:link,
 .article-docs a:active,
@@ -304,8 +304,12 @@ footer p {
 	color: #24b7e1;
 }
 .article-docs hr {
-	margin: 0px 0px 3em 0px;
-	border-color: #eee;
+	width: 100%;
+	height: 1px;
+	background-color: #eee;
+	margin: 0 0 3em 0;
+	border: none;
+	display: block;
 }
 
 /*.article-docs:first-of-type {
@@ -760,42 +764,69 @@ aside {
 .article-docs blockquote {
 	color: #6ba0b0;
 	font-style: italic;
-	padding-left: 3em;
-	border-left: 6px solid #c4d9df;
+	padding-left: 1.5em;
+	border-left: 6px solid #e6eff2;
+	border-radius: 3px;
+	width: calc(100% - 1.65rem);
+	margin-left: 1.65rem;
+	font-size: 0.875em;
 }
 .article-docs blockquote strong {
-	text-transform: capitalize;
+	text-transform: uppercase;
 }
 
 .article-docs dt {
 	font-size: 0.875em;
-	background-color: #faf8eb;
+	background-color: #fef4f2;
 	padding: 0.5em 0.5em 0.5em 3em;
 	border-radius: 3px;
 	position: relative;
-	color: #8e7e59;
+	color: #ea4a42;
+	width: calc(100% - 1.5em);
+	margin-left: 1.5em;
 }
 .article-docs dt:after {
-	content: '☕';
+	content: '🚨';
 	display: block;
 	position: absolute;
-	top: 0.27em;
+	top: 0.35em;
 	left: 1em;
-	color: #f00;
+	color: #8e7e59;
 }
 .support-plans #buynow a {
 	color: #fff;
 	text-decoration: none;
 }
 
+/* Font smoothing, makes text look less "bold" */
+.article-docs h1,
+.article-docs h2,
+.article-docs h3,
+.article-docs h4,
+.article-docs h5,
+.article-docs h6,
+.article-docs p,
+.article-docs li,
+.article-docs blockquote {
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+
 .article-docs h1, .article-basic h1 {
-	font-size: 3em;
-	font-weight: lighter;
+	font-size: 3.5em;
+	font-weight: 100;
 	margin-bottom: 1.5em;
 }
 
 .article-docs h2,
-.article-basic h2,
+.article-basic h2  {
+	font-size: 1.75em;
+	font-weight: bold;
+	padding-bottom: 0.5em;
+	border-bottom: 1px solid #ddd;
+	margin: 0 0 0.5em 0;
+}
 .article-docs h3,
 .article-basic h3,
 .article-docs h4,
@@ -804,9 +835,17 @@ aside {
 .article-basic h5,
 .article-docs h6,
 .article-basic h6 {
-	font-size: 1.25em;
-	font-weight: bold;
-	margin: 0 0 0.5em 0;
+	font-size: 1em;
+	margin-bottom: 0.25em;
+	/*color: #f00;*/
+}
+.article-docs h4,
+.article-basic h4,
+.article-docs h5,
+.article-basic h5,
+.article-docs h6,
+.article-basic h6 {
+	padding-left: 1.5em;
 }
 
 .article-docs h2.blog-heading {
@@ -852,24 +891,30 @@ aside {
 	text-decoration: underline;
 }
 
-.article-docs h3 {
-	color: #002a3f;
-	margin: 2em 0 0.5em;
-}
-
 .article-docs h5.blog-post-metadata {
 	font-weight: normal;
 }
 
 .article-docs p {
+	padding-left: 1.5em;
 	line-height: 1.75em;
-	margin: 0 0 3em 0;
+	margin: 0 0 2.75em 0;
+}
+.article-docs p + pre {
+	margin-top: -2.375em;
+}
+
+.article-docs li p + pre {
+	margin-top: 0em;
 }
 
 .article-docs ul {
 	list-style-type: disc;
 	padding-left: 3em;
 	margin-bottom: 3em;
+}
+.article-docs ul ul {
+	margin-top: 1.25em;
 }
 .article-docs ol {
 	padding-left: 3em;
@@ -1021,7 +1066,7 @@ aside {
 	visibility: hidden;
 	width: 96%;
 	z-index: 100;
-	color: #555;
+	color: #666;
 }
 
 .nav-docs a:link,
@@ -1037,7 +1082,7 @@ aside {
 .nav-docs h3 a:link,
 .nav-docs h3 a:active,
 .nav-docs h3 a:visited {
-	color: #555;
+	color: #666;
 	text-decoration: none;
 }
 .nav-docs h3 a:hover {
