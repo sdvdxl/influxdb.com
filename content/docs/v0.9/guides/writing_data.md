@@ -57,7 +57,7 @@ _Epoch and Precision_
 Timestamps can be supplied as an integer value at the end of the line. The precision is configurable per-request by including a `precision` url parameter. If no precision is specified, the line protocol will default to nanosecond precision. For example to set the time in seconds, use the following request.
 
 ```
-curl -i -XPOST 'http://localhost:8086/write?db=mydb&precision=s' --data-binary 'temperature,machine=unit42,type=assembly external=25i,internal=37i 1434059627'
+curl -i -XPOST 'http://localhost:8086/write?db=mydb&precision=s' --data-binary 'temperature,machine=unit42,type=assembly external=25,internal=37 1434059627'
 ```
 
 `n`, `u`, `ms`, `s`, `m`, and `h` are all supported and represent nanoseconds, microseconds, milliseconds, seconds, minutes, and hours, respectively.
