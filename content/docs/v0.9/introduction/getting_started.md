@@ -68,8 +68,8 @@ The following lines are all examples of points that can be written to InfluxDB:
 
 ```
 cpu,host=serverA,region=us_west value=0.64
-payment,device=mobile,product=Notepad,method=credit billed=33,licenses=3 1434067467100293230
-stock,symbol=AAPL bid=127.46,ask=127.48 
+payment,device=mobile,product=Notepad,method=credit billed=33,licenses=3i 1434067467100293230
+stock,symbol=AAPL bid=127.46,ask=127.48
 temperature,machine=unit42,type=assembly external=25,internal=37 1434067467000000000
 ```
 

@@ -43,6 +43,12 @@ cpu_load_short,direction=in,host=server01,region=us-west value=23422.0 142256854
 ### Tags
 Each point can have a set of key-value pairs associated with it. Both keys and values must be strings. Tags allow data to be easily and efficient queried, including or excluding data that matches a set of keys with particular values.
 
+### Fields
+
+Each point can have a set of key-value pairs associated with it. The keys must be strings; values can be a float, integer, boolean, or string. Once a field key is set its type cannot be changed.
+
+> **Note:** To write a field value as an integer, a trailing `i` must be added when the point is being inserted. For example the point `cpu,host=server1 value=10i` has an integer value of 10, where as the point `cpu,host=server1 value=10` has a floating point value of 10.
+
 ### Time format
 The following time format is accepted:
 
