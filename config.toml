@@ -19,3 +19,6 @@ uglyurls = true
 [params]
   CustomersUrl = "http://localhost:5000"
   StripeApiToken = "pk_test_raFtCBUQIROL9yvZdgFy532f"
+
+[blackfriday]
+  plainIdAnchors = true
