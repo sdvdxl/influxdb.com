@@ -831,9 +831,11 @@ aside {
 .article-docs h2 a:link,
 .article-docs h2 a:active,
 .article-docs h2 a:hover,
+.article-docs h2 a:visited,
 .article-basic h2 a:link,
 .article-basic h2 a:active,
-.article-basic h2 a:hover {
+.article-basic h2 a:hover,
+.article-basic h2 a:visited {
 	color: #666;
 	text-decoration: none;
 }
