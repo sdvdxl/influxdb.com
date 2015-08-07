@@ -1,6 +1,7 @@
 {{ partial "header.html" . }}
 {{ partial "logo.html" . }}
 <div class="page-content">
+	{{ partial "sidebar.html" . }}
 	<article class="article-docs article-main-column">
 		<h1 class="docs header">InfluxDB Documentation</h1>
 		Welcome to the InfluxDB documentation. Pick a version of the docs to get started, or navigate using the menu on the left for the documentation on the most recent version.
@@ -10,7 +11,6 @@
 		{{ end }}
 		</ul>
 	</article>
-	{{ partial "sidebar.html" . }}
 </div>
 {{ partial "nav.html" . }}
 {{ partial "footer.html" . }}
