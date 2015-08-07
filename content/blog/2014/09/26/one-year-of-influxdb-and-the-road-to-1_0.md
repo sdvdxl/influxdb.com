@@ -9,7 +9,7 @@ I'm sitting in a Starbucks in Tokyo as I write this. I'm here because [Shuhei Ta
 
 It's hard to imagine that only a year ago this project didn't exist.
 
-![first commit](/images/first_commit.png)
+![first commit](/img/blog/first_commit.png)
 
 Now that a year has gone by I wanted to take the opportunity to reflect on our path and look ahead to what we need to accomplish to get to version 1.0 of InfluxDB.
 
@@ -23,7 +23,7 @@ The first version of Errplane from 2012 was built on top of web services written
 
 Version 2.0 of the Errplane API was written Go using LevelDB as the underlying storage engine (two technologies that InfluxDB relies on).
 
-![errplane api commit](/images/errplane_api_commit.png)
+![errplane api commit](/img/blog/errplane_api_commit.png)
 
 Over the next 10 months we improved the Errplane API and pushed out two major versions. In its original design the API consisted of three separate services. One for data collection with a pub-sub mechanism, one for counting and aggregating (like StatsD), and a service for answering queries. The API was somewhat RESTful and could store both metrics and events data.
 
