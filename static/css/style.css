@@ -820,12 +820,22 @@ aside {
 }
 
 .article-docs h2,
-.article-basic h2  {
+.article-basic h2, {
+	color: #666;
 	font-size: 1.75em;
 	font-weight: bold;
 	padding-bottom: 0.5em;
 	border-bottom: 1px solid #ddd;
 	margin: 0 0 0.5em 0;
+}
+.article-docs h2 a:link,
+.article-docs h2 a:active,
+.article-docs h2 a:hover,
+.article-basic h2 a:link,
+.article-basic h2 a:active,
+.article-basic h2 a:hover {
+	color: #666;
+	text-decoration: none;
 }
 .article-docs h3,
 .article-basic h3,
