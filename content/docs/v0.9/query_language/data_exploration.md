@@ -434,7 +434,7 @@ GROUP BY time(1h), type fill(0)
 
 Queries merge series automatically for you on the fly. Remember that a series is a measurement plus its tag set. This means if you do a query like this:
 
-```
+```sql
 SELECT mean(value) FROM cpu
 WHERE time > now() - 1h
   AND region = 'uswest'
@@ -442,6 +442,39 @@ GROUP BY time(1m)
 ```
 
 All the series under `cpu` that have the tag `region = 'uswest'` will be merged together before computing the mean.
+
+## Limiting results returned
+
+InfluxQL supports two different clauses to limit the results returned. They are currently mutually exclusive, so you may use one OR the other, but not both in the same query.
+
+### Limiting results per series
+
+Adding a `LIMIT n` clause to the end of your query will return the first N points found for each series in the measurement queried. Because `ORDER BY` is not yet functional (see GitHub Issue [#2022](https://github.com/influxdb/influxdb/issues/2022) for more information) the first N points will always be the _oldest_ N points by timestamp.
+
+The following query will return the 10 oldest points from each series in the `cpu` measurement, meaning there will be 10 points returned for each unique tag set in `cpu`:
+
+```sql
+SELECT value FROM cpu LIMIT 10
+```
+
+Note: If N is greater than the number of points in the series, all points in the series will be returned.
+
+If instead we want the first 10 points from _any_ series in the `cpu` measurement, we should use `SLIMIT` rather than `LIMIT`
+
+### Limiting results per measurement
+
+Adding an `SLIMIT n` clause to the end of your query will return the first N points found in the measurement queried. Because `ORDER BY` is not yet functional (see GitHub Issue [#2022](https://github.com/influxdb/influxdb/issues/2022) for more information) the first N points will always be the _oldest_ N points by timestamp.
+
+The following query will return the 10 oldest points less than an hour old in the `cpu` measurement, regardless of the tag set, meaning there will be at most 10 points returned:
+
+```sql
+SELECT value FROM cpu WHERE time > now() - 1h SLIMIT 10
+```
+
+Note: If N is greater than the number of points in the measurement, all points in the measurement will be returned.
+
+If instead we want the first 10 points from each series in the `cpu` measurement, we should use `LIMIT` rather than `SLIMIT`
+
 
 ## Querying with an OFFSET
 
