@@ -65,14 +65,17 @@ The **tag set**, **measurement**, and **timestamp** fully describe a **point**.
 The total number of **series** under a given **measurement** is thus identical to the number of distinct **tag sets** applied to **points** within that **measurement**.
 
 ## Field
-- A **field** is a key-value pair that records an actual metric for a given **point**.
-- A **field** is made up of the **field key** and the **field value**.
-- **Fields** are not indexed, meaning queries on **field keys** or **field values** must scan all points matching the time range of the query. Queries on **fields** are thus not performant, but are assumed to be infrequent for typical use cases.
-- If you find yourself querying **fields** consider whether the key-value pair is better stored as a **tag**.
-- Regular expressions are not supported when querying against **fields** or **field values**.
-- Every point must have at least one **Field** or it will be rejected as invalid.
+A **field** is a key-value pair that records an actual metric for a given **point**.
 
----
+A **field** is made up of the **field key** and the **field value**.
+
+**Fields** are not indexed, meaning queries on **field keys** or **field values** must scan all points matching the time range of the query. Queries on **fields** are thus not performant, but are assumed to be infrequent for typical use cases.
+
+If you find yourself querying **fields** consider whether the key-value pair is better stored as a **tag**.
+
+Regular expressions are not supported when querying against **fields** or **field values**.
+
+Every point must have at least one **Field** or it will be rejected as invalid.
 
 #### Example
 
