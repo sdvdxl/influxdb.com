@@ -60,7 +60,7 @@ The second top-level key is also named `error`, and is set if the API call faile
 
 ### Timestamp Format
 
-The format of the returned timestamps complies with RFC3339, and has nanosecond precision.
+The format of the returned timestamps complies with RFC3339, and has nanosecond precision. By default, timestamps are returned in RFC3339 UTC, for example `2015-08-04T19:05:14.318570484Z`. The query string parameter `epoch` will cause the timestamps to come back in Unix epoch format.
 
 #### Timestamps can be returned in various different formats
 
@@ -82,6 +82,8 @@ curl -G 'http://localhost:8086/query' --data-urlencode "db=mydb" --data-urlencod
 Epoch in Nanoseconds:
 ```
 curl -G 'http://localhost:8086/query' --data-urlencode "db=mydb" --data-urlencode "epoch=ns" --data-urlencode "q=SELECT value FROM cpu_load_short WHERE region='us-west'"
+
+curl -G 'http://localhost:8086/query' --data-urlencode "db=mydb" --data-urlencode "epoch=true" --data-urlencode "q=SELECT value FROM cpu_load_short WHERE region='us-west'"
 ```
 
 ### Multiple queries
