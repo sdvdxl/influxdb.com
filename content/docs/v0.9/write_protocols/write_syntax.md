@@ -126,7 +126,7 @@ To write points using the command line interface, use the `insert` command.
 
 #### Write a Point with the CLI
 
-```
+```bash
 > insert disk_free,hostname=server01 value=442221834240i 1435362189575692182
 ```
 
@@ -158,13 +158,13 @@ In this context, "valid node" means a node that hosts a copy of the shard contai
 
 #### Write a Point with `curl`
 
-```
+```bash
 curl -X POST 'http://localhost:8086/write?db=mydb' --data-binary 'disk_free,hostname=server01 value=442221834240i 1435362189575692182'
 ```
 
 You can also supply the query string parameters elsewhere in the command. They must be URL encoded:
 
-```
+```bash
 curl -X POST 'http://localhost:8086/write' --data-urlencode 'db=mydb' --data-binary 'disk_free,hostname=server01 value=442221834240i 1435362189575692182'
 ```
 
@@ -172,11 +172,11 @@ curl -X POST 'http://localhost:8086/write' --data-urlencode 'db=mydb' --data-bin
 
 Use the `rp=<retention_policy` query string parameter to supply a target retention policy. If not specified, the default retention policy for the target database will be used.
 
-```
+```bash
 curl -X POST 'http://localhost:8086/write?db=mydb&rp=six_month_rollup' --data-binary 'disk_free,hostname=server01 value=442221834240i 1435362189575692182'
 ```
 
-```
+```bash
 curl -X POST 'http://localhost:8086/write' --data-urlencode 'db=mydb' --data-urlencode 'rp=six_month_rollup' --data-binary 'disk_free,hostname=server01 value=442221834240i 1435362189575692182'
 ```
 
@@ -184,11 +184,11 @@ curl -X POST 'http://localhost:8086/write' --data-urlencode 'db=mydb' --data-url
 
 Use the `u=<user>` and `p=<password>` to pass the authentication details, if required. 
 
-```
+```bash
 curl -X POST 'http://localhost:8086/write?db=mydb&u=root&p=123456' --data-binary 'disk_free,hostname=server01 value=442221834240i 1435362189575692182'
 ```
 
-```
+```bash
 curl -X POST 'http://localhost:8086/write' --data-urlencode 'db=mydb' --data-urlencode 'u=root&p=correct horse battery staple' --data-binary 'disk_free,hostname=server01 value=442221834240i 1435362189575692182'
 ```
 
@@ -198,11 +198,11 @@ Use the `precision=[n,u,ms,s,m,h]` query string parameter to supply a precision 
 
 All timestamps are assumed to be Unix nanoseconds unless otherwise specified. If you provide timestamps in any unit other than nanoseconds, you must supply the appropriate precision in the URL query string. Use `n`, `u`, `ms`, `s`, `m`, and `h` for nanoseconds, microseconds, milliseconds, seconds, minutes, and hours, respectively. 
 
-```
+```bash
 curl -X POST 'http://localhost:8086/write?db=mydb&precision=ms' --data-binary 'disk_free value=442221834240i 1435362189575'
 ```
 
-```
+```bash
 curl -X POST 'http://localhost:8086/write' --data-urlencode 'db=mydb&precision=s' --data-binary @points.txt
 ```
 
@@ -212,7 +212,7 @@ You can also pass a file using the `@` flag. The file can contain a batch of poi
 
 `curl -X POST 'http://<hostname>:<port>/write?db=<database>' --data-binary @<filename>`
 
-```
+```bash
 curl -X POST 'http://localhost:8086/write' --data-urlencode 'db=mydb&rp=myrp&u=root&p=root' --data-binary @points.txt
 ```
 

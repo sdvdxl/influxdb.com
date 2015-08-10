@@ -21,7 +21,7 @@ sudo dpkg -i influxdb_0.9.2_amd64.deb
 
 Then start the daemon by running:
 
-```
+```sh
 sudo /etc/init.d/influxdb start
 ```
 
@@ -36,7 +36,7 @@ sudo yum localinstall influxdb-0.9.2-1.x86_64.rpm
 
 Then start the daemon by running:
 
-```
+```sh
 sudo /etc/init.d/influxdb start
 ```
 
@@ -44,7 +44,7 @@ sudo /etc/init.d/influxdb start
 
 Users of OS X 10.8 and higher can install using the [Homebrew](http://brew.sh/) package manager.
 
-```
+```sh
 brew update
 brew install influxdb
 ```

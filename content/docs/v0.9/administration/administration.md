@@ -18,13 +18,13 @@ Full suite of administration commands are available through the query language. 
 
 The commands listed below can be executed by sending the command to the HTTP API `/query` endpoint as the URL parameter `q`. For example, using `curl`,
 
-```
+```sh
 curl -G 'http://localhost:8086/query' --data-urlencode "q=CREATE DATABASE mydb"
 ```
 
 or using the `influx` command line interface,
 
-```
+```sh
 influx -username test -password test
 > CREATE DATABASE mydb
 ```

@@ -9,7 +9,7 @@ With [InfluxDB installed](installation.html), you're ready to start doing awesom
 ## Logging in and creating your first database
 If you've installed InfluxDB locally, the `influx` command should be available via the command line. Executing `influx` will start the CLI and automatically connect to the local InfluxDB instance. If `influx` is not on your path, try `/opt/influxdb/influx`. The output should look like this:
 
-```
+```sh
 $ influx
 Connected to http://localhost:8086 version 0.9.0
 InfluxDB shell 0.9.0
@@ -135,7 +135,7 @@ This is all you need to know to write data into InfluxDB and query it back. Of c
 
 > **Note:** All identifiers are case-sensitive
 
-```
+```sql
 > show databases
 name: databases
 ---------------
@@ -145,7 +145,7 @@ MyDb
 MYDB
 ```
 
-```
+```sql
 > show series
 name: CaseSensitive
 -------------------
@@ -165,7 +165,7 @@ casesensitive,Tag1=key          key
 casesensitive,TAG1=key,tag1=key,Tag1=key  key key key
 ```
 
-```
+```sql
 > select * from casesensitive
 name: casesensitive
 tags: TAG1=, Tag1=, tag1=

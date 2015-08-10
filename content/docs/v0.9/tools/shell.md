@@ -138,7 +138,7 @@ You can set the `context` of all your queries in the CLI to a specific database 
 This will allow you to not have to specify the database for each query.  They query engine will then default
 to using the default retention policy for that database.
 
-```
+```sh
 > use foo
 Using database foo
 > show tag keys
@@ -212,7 +212,7 @@ exit
 
 The CLI allows you to execute a query via arguments so you can run commands without having to be in interactive mode.
 
-```
+```sh
 influx -execute="select * from cpu" -database=foo
 name: cpu
 ---------
@@ -224,7 +224,7 @@ time                    value
 
 You can combine this with other arguments such as `-format` as well to get different outputs:
 
-```
+```sh
 $ influx -execute="select * from cpu" -database=foo -format=csv
 name,time,value
 cpu,2015-05-01T00:00:00Z,1.1
@@ -232,12 +232,12 @@ cpu,2015-05-01T08:00:00Z,1.2
 cpu,2015-05-01T16:00:00Z,1.3
 ```
 
-```
+```sh
 $ influx -execute="select * from cpu" -database=foo -format=json
 {"results":[{"series":[{"name":"cpu","columns":["time","value"],"values":[["2015-05-01T00:00:00Z",1.1],["2015-05-01T08:00:00Z",1.2],["2015-05-01T16:00:00Z",1.3],["2015-05-02T00:00:00Z",2.1],["2015-05-02T08:00:00Z",2.2],["2015-05-02T16:00:00Z",2.3],["2015-05-03T00:00:00Z",3.1],["2015-05-03T08:00:00Z",3.2],["2015-05-03T16:00:00Z",3.3],["2015-05-04T00:00:00Z",4.1],["2015-05-04T08:00:00Z",4.2],["2015-05-04T16:00:00Z",4.3]]}]}]}
 ```
 
-```
+```sh
 $ influx -execute="select * from cpu" -database=foo -format=json -pretty=true
 {
     "results": [
@@ -269,18 +269,6 @@ $ influx -execute="select * from cpu" -database=foo -format=json -pretty=true
     ]
 }
 ```
-
-### Dumping the database (Currently not functional)
-
-The CLI allows you to dump your existing database to a JSON file that is valid for writing into InfluxDB via the [HTTP API endpoint](http://influxdb.com/docs/v0.9/concepts/reading_and_writing_data.html).
-
-```
-$ influx -dump=true -database=foo
-{"database":"foo","retentionPolicy":"default","points":[{"name":"cpu","time":"2015-05-01T00:00:00Z","tags":{},"fields":{"value":1.1}}]}
-{"database":"foo","retentionPolicy":"default","points":[{"name":"cpu","time":"2015-05-01T08:00:00Z","tags":{},"fields":{"value":1.2}}]}
-{"database":"foo","retentionPolicy":"default","points":[{"name":"cpu","time":"2015-05-01T16:00:00Z","tags":{},"fields":{"value":1.3}}]}
-```
-
 
 ### Command History
 

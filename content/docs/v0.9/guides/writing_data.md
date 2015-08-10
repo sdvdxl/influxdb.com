@@ -9,7 +9,7 @@ There are many ways to write data into InfluxDB including the built-in HTTP API,
 ## Writing data using the HTTP API
 The HTTP API is the primary means of putting data into InfluxDB. To write data simply send a `POST` to the endpoint `/write`. The destination database must be specified as a query parameter and the body of the POST must contain the retention policy and time-series data you wish to store. An example request sent to InfluxDB running on localhost, which writes a single point, is shown below.
 
-```
+```sh
 # Create your new database, this only needs to be done once.
 curl -G http://localhost:8086/query --data-urlencode "q=CREATE DATABASE mydb"
 
@@ -55,7 +55,7 @@ _Epoch and Precision_
 
 Timestamps can be supplied as an integer value at the end of the line. The precision is configurable per-request by including a `precision` url parameter. If no precision is specified, the line protocol will default to nanosecond precision. For example to set the time in seconds, use the following request.
 
-```
+```sh
 curl -i -XPOST 'http://localhost:8086/write?db=mydb&precision=s' --data-binary 'temperature,machine=unit42,type=assembly external=25,internal=37 1434059627'
 ```
 
@@ -69,7 +69,7 @@ If an error was encountered while processing the data, InfluxDB will respond wit
 
 For example, issuing a bad query such as:
 
-```
+```sh
 curl -G http://localhost:8086/query --data-urlencode "db=foo" --data-urlencode "q=show"
 ```
 

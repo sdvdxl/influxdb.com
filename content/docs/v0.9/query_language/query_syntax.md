@@ -30,7 +30,7 @@ All other identifiers must be wrapped in double-quotes (`"`). Double-quoted iden
 
 #### Bare Identifier Examples
 
-```
+```sql
 SELECT * FROM first_measurement
 SELECT * FROM FirstMeasurement
 SELECT * FROM _1st_MEASUREMENT
@@ -38,7 +38,7 @@ SELECT * FROM _1st_MEASUREMENT
 
 #### Double-quoted Identifier Examples
 
-```
+```sql
 SELECT * FROM "first measurement"
 SELECT * FROM "1st_measurement"
 SELECT * FROM "first.measurement"
@@ -56,7 +56,7 @@ String literals must always be single-quoted (`'`). String literals may contain 
 
 #### String Literal Examples
 
-```
+```sql
 SELECT * FROM mydb WHERE tag_key='a string value'
 SELECT * FROM mydb WHERE tag_key='a string\' value'
 SHOW TAG KEYS WHERE tag_key = 'string value'
@@ -80,7 +80,7 @@ If you do not supply an upper bound for the time range, InfluxDB will use `now()
 
 When using time ranges, you must put a space between any arithmetic operators and the time range parameters. You must not include any whitespace between the time range parameter and the unit supplied.
 
-```
+```sql
 SELECT * FROM mydb WHERE time > now() - 1d
 SELECT * FROM mydb WHERE time> now() - 1d
 SELECT * FROM mydb WHERE time >now() - 1d
@@ -88,7 +88,7 @@ SELECT * FROM mydb WHERE time > now()- 1d
 ``` 
 are all valid, but  
 
-```
+```sql
 SELECT * FROM mydb WHERE time > now() -1d
 SELECT * FROM mydb WHERE time > now() - 1 d
 ``` 
@@ -102,7 +102,7 @@ Querying with the CLI requires nothing other than selecting a database and then 
 
 You should first set a target database for all queries. This will be passed along with each subsequent query until a new selection is made. The CLI command is `USE` and the syntax is `USE <database>`.
 
-```
+```sh
 > use mydb
 Using database mydb
 ```
@@ -111,7 +111,9 @@ All subsequent queries will run against the `mydb` database.
 
 You do not need to select a target database. You may choose to explicitly name the database in each query:
 
-`> select * from mydb.myrp.mymeasurement`
+```sh
+> select * from mydb.myrp.mymeasurement
+```
 
 ### Output Formats
 
@@ -149,29 +151,41 @@ Use the `u=<user>` and `p=<password>` to pass the authentication details, if req
 
 #### Query to Show All Databases
 
-`curl -G 'http://localhost:8086/query' --data-urlencode 'q=SHOW DATABASES'`
+```sh
+curl -G 'http://localhost:8086/query' --data-urlencode 'q=SHOW DATABASES'
+```
 
 #### Query to Show All Measurements
 
 This query is against a particular database, so we must supply the `db=` parameter in the query string.
 
-`curl -G 'http://localhost:8086/query?db=mydb' --data-urlencode 'q=SHOW MEASUREMENTS'`
+```sh
+curl -G 'http://localhost:8086/query?db=mydb' --data-urlencode 'q=SHOW MEASUREMENTS'
+```
 
-`curl -G 'http://localhost:8086/query' --data-urlencode 'db=mydb&q=SHOW MEASUREMENTS'`
+```sh
+curl -G 'http://localhost:8086/query' --data-urlencode 'db=mydb&q=SHOW MEASUREMENTS'
+```
 
 #### Query Against Non-defaults with Authentication 
 
-`curl -G 'http://localhost:8086/query' --data-urlencode 'db=mydb&rp=six_months' --data-urlencode 'u=root&p=123456' --data-urlencode 'q=select * from disk_free where time > now() - 2w group by time(2h)'`
+```sh
+curl -G 'http://localhost:8086/query' --data-urlencode 'db=mydb&rp=six_months' --data-urlencode 'u=root&p=123456' --data-urlencode 'q=select * from disk_free where time > now() - 2w group by time(2h)'
+```
 
 #### Declare Database and Retention Policy in InfluxQL
 
 Rather than using the GET query string parameters you can specify the target database and/or retention policy directly in the InfluxQL query.
 
-`curl -G 'http://localhost:8086/query' --data-urlencode 'q=select * from mydb.myrp.disk_free'`
+```sh
+curl -G 'http://localhost:8086/query' --data-urlencode 'q=select * from mydb.myrp.disk_free'
+```
 
 If you want to specify the database but are using the default retention policy for that database, you can leave the retention policy undeclared:
 
-`curl -G 'http://localhost:8086/query' --data-urlencode 'q=select * from mydb..disk_free'`
+```sh
+curl -G 'http://localhost:8086/query' --data-urlencode 'q=select * from mydb..disk_free'
+```
 
 ### Caveats
 
