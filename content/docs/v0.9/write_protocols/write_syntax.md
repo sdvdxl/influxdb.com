@@ -4,33 +4,33 @@ title: Write Syntax
 
 Syntax is always a challenge to remember, so here's a reference
 
-# Line Protocol
+## Line Protocol
 
 The syntax for the line protocol is
 
 `measurement[,tag_key1=tag_value1...] field_key=field_value[,field_key2=field_value2] [timestamp]`
 
-## Whitespace
+### Whitespace
 
 A space must exist between the measurement and the field(s), or between the tag(s) and the field(s) if tags are 
 provided. The measurement and tags should be separated by a comma `,` with no whitespace. 
 
-## Timestamps
+### Timestamps
 
 Timestamps are not required. When no timestamp is provided the server will insert the point with the local server 
 timestamp. If a timestamp is provided it must be separated from the field(s) by a space. Timestamps must be in Unix 
 time and are assumed to be in nanoseconds. A different precision can be provided, see the HTTP syntax for details.
 
-## Key-value Separator
+### Key-value Separator
 
 Tag keys and values, and field keys and values must be separated by the equals sign `=` without spaces. 
 
-## Escaping Characters
+### Escaping Characters
 
 If a measurement, tag key, tag value, or field key contains a space ` ` or a comma `,` it must be escaped using the
 backslash character `\`.
 
-## Data Types
+### Data Types
 
 Measurements, tag keys, tag values, and field keys are always stored as strings in the database. 
 
@@ -48,55 +48,55 @@ the type of the first point written to given measurement.
 
 `string` values for field values must be double-quoted. Double-quotes contained within the string must be escaped. All other characters are supported without escaping.
 
-## Examples
+### Examples
 
-###### Simplest Valid Point (measurement + field)
+#### Simplest Valid Point (measurement + field)
 ```
 disk_free value=442221834240i
 ```
 
-###### With Timestamp
+#### With Timestamp
 ```
 disk_free value=442221834240i 1435362189575692182
 ```
 
-###### With Tags
+#### With Tags
 ```
 disk_free,hostname=server01,disk_type=SSD value=442221834240i
 ```
 
-###### With Tags, With Timestamp
+#### With Tags, With Timestamp
 ```
 disk_free,hostname=server01,disk_type=SSD value=442221834240i 1435362189575692182
 ```
 
-###### Multilple Fields
+#### Multilple Fields
 ```
 disk_free free_space=442221834240i,disk_type="SSD" 1435362189575692182
 ```
 
-###### Escaping Commas and Spaces
+#### Escaping Commas and Spaces
 ```
 total\ disk\ free,volumes=/net\,/home\,/ value=442221834240i 1435362189575692182
 ```
 
 In the above example, the measurement is written as `total disk free` and the tag key `volumes` has a tag value of `/net,/home,/`
 
-###### With Backslash in Tag Value
+#### With Backslash in Tag Value
 ```
 disk_free,path=C:\Windows value=442221834240i
 ```
 
 Backslashes do not need to be escaped when used in strings. Unless followed by a comma or a space, backslashes are treated as a normal character.
 
-###### Escaping Field Key
+#### Escaping Field Key
 ```
 disk_free value=442221834240i,working\ directories="C:\My Documents\Stuff for examples,C:\My Documents"
 ```
 
 In the above example, the second field key is `working directories` and the corresponding field value is `C:\My Documents\Stuff for examples,C:\My Documents`.
 
-###### Showing all escaping and quoting behavior
+#### Showing all escaping and quoting behavior
 
 ```
 "measurement\ with\ quotes",tag\ key\ with\ spaces=tag\,value\,with"commas" field_key\\\\="string field value, only \" need be quoted"
@@ -105,7 +105,7 @@ In the above example, the second field key is `working directories` and the corr
 In the above example, the measurement is `"measurement with quotes"`, the tag key is `tag key with spaces`, the 
 tag value is `tag,value,with"commas"`, the field key is `field_key\\\\` and the field value is `string field value, only " need be quoted`. 
 
-## Caveats
+### Caveats
 
 > **Note:** Prior to version 0.9.3, integers were numeric values that did not include a decimal (e.g. 1, 345, 2015, -10) and were not followed by a trailing `i`. Including a trailing `i` when writing integers will cause an error in versions 0.9.2 and prior. See [issue](https://github.com/influxdb/influxdb/issues/3519) for more information.
 
@@ -120,11 +120,11 @@ Avoid using Keywords as identifiers (database names, retention policy names, mea
 
 All values in InfluxDB are case-sensitive: `MyDB` != `mydb` != `MYDB`. The exception is Keywords, which are case-insensitive.
 
-# CLI
+## CLI
 
 To write points using the command line interface, use the `insert` command. 
 
-###### Write a Point with the CLI
+#### Write a Point with the CLI
 
 ```
 > insert disk_free,hostname=server01 value=442221834240i 1435362189575692182
@@ -133,7 +133,7 @@ To write points using the command line interface, use the `insert` command.
 The CLI will return nothing on success and should give an informative parser error if the point cannot be written. There is currently no way to write a batch of points using the CLI, each point must be inserted individually.
 
 
-# HTTP
+## HTTP
 
 To write points using HTTP, POST to the `/write` endpoint at port `8086`. You must specify the target database in the query string using `db=<target_database>`. 
 
@@ -156,7 +156,7 @@ The following query string parameters can be passed as part of the GET string wh
  - `any` - a write is confirmed if hinted-handoff is successful, even if all target nodes report a write failure
 In this context, "valid node" means a node that hosts a copy of the shard containing the series being written to. In a clustered system, the replication factor should equal the number of valid nodes. 
 
-###### Write a Point with `curl`
+#### Write a Point with `curl`
 
 ```
 curl -X POST 'http://localhost:8086/write?db=mydb' --data-binary 'disk_free,hostname=server01 value=442221834240i 1435362189575692182'
@@ -168,7 +168,7 @@ You can also supply the query string parameters elsewhere in the command. They m
 curl -X POST 'http://localhost:8086/write' --data-urlencode 'db=mydb' --data-binary 'disk_free,hostname=server01 value=442221834240i 1435362189575692182'
 ```
 
-###### Write a Point to a non-default Retention Policy
+#### Write a Point to a non-default Retention Policy
 
 Use the `rp=<retention_policy` query string parameter to supply a target retention policy. If not specified, the default retention policy for the target database will be used.
 
@@ -180,7 +180,7 @@ curl -X POST 'http://localhost:8086/write?db=mydb&rp=six_month_rollup' --data-bi
 curl -X POST 'http://localhost:8086/write' --data-urlencode 'db=mydb' --data-urlencode 'rp=six_month_rollup' --data-binary 'disk_free,hostname=server01 value=442221834240i 1435362189575692182'
 ```
 
-###### Write a Point Using Authentication
+#### Write a Point Using Authentication
 
 Use the `u=<user>` and `p=<password>` to pass the authentication details, if required. 
 
@@ -192,7 +192,7 @@ curl -X POST 'http://localhost:8086/write?db=mydb&u=root&p=123456' --data-binary
 curl -X POST 'http://localhost:8086/write' --data-urlencode 'db=mydb' --data-urlencode 'u=root&p=correct horse battery staple' --data-binary 'disk_free,hostname=server01 value=442221834240i 1435362189575692182'
 ```
 
-###### Specify Non-nanosecond Timestamps
+#### Specify Non-nanosecond Timestamps
 
 Use the `precision=[n,u,ms,s,m,h]` query string parameter to supply a precision for the timestamps.
 
@@ -206,7 +206,7 @@ curl -X POST 'http://localhost:8086/write?db=mydb&precision=ms' --data-binary 'd
 curl -X POST 'http://localhost:8086/write' --data-urlencode 'db=mydb&precision=s' --data-binary @points.txt
 ```
 
-###### Write a Batch of Points with `curl`
+#### Write a Batch of Points with `curl`
 
 You can also pass a file using the `@` flag. The file can contain a batch of points, one per line. Points must be separated by newline characters `\n`. Batches should be 5000 points or fewer for best performance.
 
@@ -216,7 +216,7 @@ You can also pass a file using the `@` flag. The file can contain a batch of poi
 curl -X POST 'http://localhost:8086/write' --data-urlencode 'db=mydb&rp=myrp&u=root&p=root' --data-binary @points.txt
 ```
 
-## Caveats
+### Caveats
 
 Use `curl`'s `--data-binary` encoding method for all writes in the line protocol format. Using any encoding method other than `--data-binary` is likely to lead to issues with writing points. `-d`, `--data-urlencode`, and `--data-ascii` may all strip out newlines or introduce new unintended formatting.
 

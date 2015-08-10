@@ -206,7 +206,7 @@ _Example_
 SHOW TAG VALUES WITH KEY=host
 ```
 
-Note that `host` is **not** quoted.
+> **Note:** `host` is **not** quoted.
 
 which results in the following response:
 

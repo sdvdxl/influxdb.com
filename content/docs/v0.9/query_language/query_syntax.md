@@ -2,57 +2,81 @@
 title: Query Syntax
 ---
 
-# Quoting Requirements
+The InfluxDB Query Language (InfluxQL) syntax is a SQL-like query language tailored for querying ranges of time. This page explains the InfluxQL syntax. See the [specification](/docs/v0.9/query_language/spec.html) for a formal explanation of InfluxQL.
 
-## Double-quote Identifiers
+## Identifiers (Double-quoted)
 
-All identifiers must be double-quoted if they contain a character other than `A-Z`, `a-z`, `0-9`, or `_`, or if they begin with a digit. Any identifier that matches a Keyword must always be double-quoted whenever used in a query. Keywords in InfluxDB are referenced on the [InfluxQL Syntax](../query_language/spec.html) page.
+Identifiers are user defined references to objects in the database. They are distinct from string literals, which are single quoted values. In InfluxQL, all of the following are all references with identifiers:
 
-Identifiers refer to an object in the system rather than a stored string value. The following are all Identifiers
-- cluster and database users
-- database name
-- retention policy name
-- measurement name
+- usernames
+- database names
+- retention policy names
+- measurement names
 - tag keys
 - field keys
+- continuous queries
 
-###### Double-quote Identifier With Spaces, Leading Digit, Periods, Hyphens, Unicode, etc.
+### Identifier Quoting Requirements
+
+Identifiers can be either bare (no quotes) or wrapped in double-quotes. Bare (unquoted) identifiers are allowed for convenience and must meet all of the following rules,
+
+- contain only `A-Z`, `a-z`, `0-9`, or `_`
+- begin with `A-Z`, `a-z`, or `_`
+- not match a [keyword](/docs/v0.9/query_language/spec.html#keywords).
+
+All other identifiers must be wrapped in double-quotes (`"`). Double-quoted identifers may contain any unicode characters except for double quotes, new lines and backslashes, which must be backslash (`\`) escaped.
+
+> **Tip:** Using double quoted identifiers is almost always recommended.
+
+#### Bare Identifier Examples
 
 ```
-SELECT * FROM first_measurement  
-SELECT * FROM "first measurement"  
-SELECT * FROM "1st_measurement" 
-SELECT * FROM "first.measurement"  
-SELECT * FROM "first-measurement"  
+SELECT * FROM first_measurement
+SELECT * FROM FirstMeasurement
+SELECT * FROM _1st_MEASUREMENT
+```
+
+#### Double-quoted Identifier Examples
+
+```
+SELECT * FROM "first measurement"
+SELECT * FROM "1st_measurement"
+SELECT * FROM "first.measurement"
+SELECT * FROM "first-measurement"
 SELECT * FROM "α-measurement"
 ```
 
-## Single-quote Strings
+## String Literals (Single-quoted)
 
-All string values must always be single-quoted. All tag values are strings, and any field values that are not integers, floats, or booleans are also strings.
+String literals are values (like integers or booleans). In InfluxQL, all tag values are string literals, and any field values that are not integers, floats, or booleans are also strings. String literals are also used when checking equality with identifiers.
 
-###### Single-quote String Values
+### String Literal Quoting Requirements
+
+String literals must always be single-quoted (`'`). String literals may contain any unicode characters except for single quotes, new lines and backslashes, which must be backslash (`\`) escaped.
+
+#### String Literal Examples
 
 ```
-SELECT * FROM mydb WHERE tag_key='some string'
-SELECT * FROM mydb WHERE field_key='another string'
+SELECT * FROM mydb WHERE tag_key='a string value'
+SELECT * FROM mydb WHERE tag_key='a string\' value'
+SHOW TAG KEYS WHERE tag_key = 'string value'
 ```
 
-# Time Ranges
+## Time Ranges
 
 When querying you often want to limit the set of returned points to a particular time range. This is done with the `now()` function in conjunction with the set of possible time range descriptors.
 
-## `now()` is Local 
+### `now()` is Local 
 
 `now()` is the Unix time of the server at the time the query is executed on that server. In a cluster, `now()` will come from the node that receives and processes the query, regardless of where the queried data resides. 
 
-## Implicit Time Range Boundaries
+### Implicit Time Range Boundaries
 
 If you do not supply a lower bound for the time range, InfluxDB will use epoch `0`, "1970-01-01T00:00:00Z", as the lower bound.
 
 If you do not supply an upper bound for the time range, InfluxDB will use `now()` as the upper bound.
 
-# Whitespace requirements
+## Whitespace requirements
 
 When using time ranges, you must put a space between any arithmetic operators and the time range parameters. You must not include any whitespace between the time range parameter and the unit supplied.
 
@@ -70,11 +94,11 @@ SELECT * FROM mydb WHERE time > now() - 1 d
 ``` 
 are not.
 
-# CLI
+## CLI
 
 Querying with the CLI requires nothing other than selecting a database and then typing in the direct query.
 
-###### Select Target Database
+### Select Target Database
 
 You should first set a target database for all queries. This will be passed along with each subsequent query until a new selection is made. The CLI command is `USE` and the syntax is `USE <database>`.
 
@@ -89,21 +113,21 @@ You do not need to select a target database. You may choose to explicitly name t
 
 `> select * from mydb.myrp.mymeasurement`
 
-## Output Formats
+### Output Formats
 
 The CLI can return the results in three formats, column, JSON, and CSV. The default is column. You can change the output settings with `format`. Run `help` from within the CLI for more information.
 
-## Non-interactive Mode
+### Non-interactive Mode
 
 The CLI can run queries in non-interactive mode and the output can be redirected as desired. Run `influx -help` from the command line for more information.
 
-# HTTP
+## HTTP
 
 To query the database using HTTP, submit a GET request to the `/query` endpoint at port `8086`. Specify the desired query to run using the query string parameter `q=<query>`.
 
 Successful queries will return a `204` HTTP Status Code. Queries will return a `400` for invalid syntax.
 
-## Query String Parameters for Reads
+### Query String Parameters for Reads
 
 - `q=<query>`
 - `db=<database>`
@@ -111,23 +135,23 @@ Successful queries will return a `204` HTTP Status Code. Queries will return a `
 - `u=<username>`, `p=<password>`
 - `precision=[n,u,ms,s,m,h]`
 
-## Database
+### Database
 
 If required, specify the desired target database in the query string using `db=<target_database>`. 
 
-## Retention Policy
+### Retention Policy
 
 Use the `rp=<retention_policy>` query string parameter to supply a target retention policy for the query. If not specified, the default retention policy for the target database will be used.
 
-## Authentication
+### Authentication
 
 Use the `u=<user>` and `p=<password>` to pass the authentication details, if required. 
 
-###### Query to Show All Databases
+#### Query to Show All Databases
 
 `curl -G 'http://localhost:8086/query' --data-urlencode 'q=SHOW DATABASES'`
 
-###### Query to Show All Measurements
+#### Query to Show All Measurements
 
 This query is against a particular database, so we must supply the `db=` parameter in the query string.
 
@@ -135,11 +159,11 @@ This query is against a particular database, so we must supply the `db=` paramet
 
 `curl -G 'http://localhost:8086/query' --data-urlencode 'db=mydb&q=SHOW MEASUREMENTS'`
 
-###### Query Against Non-defaults with Authentication 
+#### Query Against Non-defaults with Authentication 
 
 `curl -G 'http://localhost:8086/query' --data-urlencode 'db=mydb&rp=six_months' --data-urlencode 'u=root&p=123456' --data-urlencode 'q=select * from disk_free where time > now() - 2w group by time(2h)'`
 
-###### Declare Database and Retention Policy in InfluxQL
+#### Declare Database and Retention Policy in InfluxQL
 
 Rather than using the GET query string parameters you can specify the target database and/or retention policy directly in the InfluxQL query.
 
@@ -149,7 +173,7 @@ If you want to specify the database but are using the default retention policy f
 
 `curl -G 'http://localhost:8086/query' --data-urlencode 'q=select * from mydb..disk_free'`
 
-## Caveats
+### Caveats
 
 Use `--data-urlencode` for all parameters passed to `curl` when hitting the `/query` endpoint.
 

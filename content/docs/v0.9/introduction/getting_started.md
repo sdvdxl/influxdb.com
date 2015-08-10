@@ -4,7 +4,7 @@ title: Getting Started with InfluxDB
 
 With [InfluxDB installed](installation.html), you're ready to start doing awesome things. In this section we'll use the `influx` command line interface (CLI). The CLI is included in all InfluxDB packages and is a lightweight and simple way to interact with the database. The CLI communicates with InfluxDB by making requests to the InfluxDB API. 
 
-_Note: The database can also be used by making direct HTTP requests to the API. See [Reading and Writing Data](../concepts/reading_and_writing_data.html) for examples._
+> **Note:** The database can also be used by making direct HTTP requests to the API. See [Reading and Writing Data](../concepts/reading_and_writing_data.html) for examples.
 
 ## Logging in and creating your first database
 If you've installed InfluxDB locally, the `influx` command should be available via the command line. Executing `influx` will start the CLI and automatically connect to the local InfluxDB instance. If `influx` is not on your path, try `/opt/influxdb/influx`. The output should look like this:
@@ -16,7 +16,7 @@ InfluxDB shell 0.9.0
 > 
 ```
 
-_Note: The InfluxDB HTTP API runs on port `8086` by default. Therefore, `influx` will connect to port `8086` and `localhost` by default. If you need to alter these defaults run `influx --help` or read the [man page](../clients/shell.html)
+> **Note:** The InfluxDB HTTP API runs on port `8086` by default. Therefore, `influx` will connect to port `8086` and `localhost` by default. If you need to alter these defaults run `influx --help` or read the [man page](../clients/shell.html)
 
 The command line is now ready to take input in the form of Influx Query Language (a.k.a InfluxQL) statements. To exit the InfluxQL shell, type `exit` and hit return or type `ctrl` + `D`.
 
@@ -29,7 +29,7 @@ Throughout this guide, we'll use the database name `mydb`.
 > 
 ```
 
-_Note: After hitting enter, a new prompt appears and nothing else is displayed. In the CLI, this means the statement was executed and there were no errors to display. There will always be an error displayed if something went wrong. No news is good news!_
+> **Note:** After hitting enter, a new prompt appears and nothing else is displayed. In the CLI, this means the statement was executed and there were no errors to display. There will always be an error displayed if something went wrong. No news is good news!
 
 The `SHOW DATABASES` statement can be used to show all existing databases.
 
@@ -73,7 +73,7 @@ stock,symbol=AAPL bid=127.46,ask=127.48
 temperature,machine=unit42,type=assembly external=25,internal=37 1434067467000000000
 ```
 
-_Note: Measurements, tags, and field names containing any character other than (A-Z,a-z,0-9,_) or starting with a digit must be double-quoted. More information on the line protocol can be found on the [Reading and Writing Data](../concepts/reading_and_writing_data.html) page._
+> **Note:** Measurements, tags, and field names containing any character other than (A-Z,a-z,0-9,_) or starting with a digit must be double-quoted. More information on the line protocol can be found on the [Reading and Writing Data](../concepts/reading_and_writing_data.html) page.
 
 To insert a single time-series datapoint into InfluxDB using the CLI, enter `INSERT` followed by a point:
 
@@ -97,7 +97,7 @@ time                value
 > 
 ```
 
-_Note: We did not supply a timestamp when writing our point. When no timestamp is supplied for a point, InfluxDB assigns the local current timestamp when the point is ingested. That means your timestamp will be different._
+> **Note:** We did not supply a timestamp when writing our point. When no timestamp is supplied for a point, InfluxDB assigns the local current timestamp when the point is ingested. That means your timestamp will be different.
 
 Let's try storing a different type of data -- sensor data. Enter the following data in the `Values` textbox:
 
@@ -106,7 +106,7 @@ Let's try storing a different type of data -- sensor data. Enter the following d
 >
 ```
 
-Note that in this example we write two values in the `fields` section. Up to 255 different `fields` can be stored per `measurement`. 
+> **Note:** In this example we write two values in the `fields` section. Up to 255 different `fields` can be stored per `measurement`. 
 
 All fields are returned on query:
 
@@ -133,7 +133,8 @@ InfluxDB supports a sophisticated query language, allowing many different types 
 
 This is all you need to know to write data into InfluxDB and query it back. Of course, to write significant amounts of data you will want to access the HTTP API directly, or use one of the many client libraries.
 
-**Note:** All identifiers are case-sensitive
+> **Note:** All identifiers are case-sensitive
+
 ```
 > show databases
 name: databases

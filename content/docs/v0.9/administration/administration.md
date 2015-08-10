@@ -14,7 +14,7 @@ Full suite of administration commands are available through the query language. 
 - Delete measurements and series
 - Create and delete continuous queries
 
-_Note: When authentication is enabled, only admin users can execute most of the commands listed on this page. See the documentation on [authentication](authentication.html) and [authorization](authorization.html) for more information._
+> **Note:** When authentication is enabled, only admin users can execute most of the commands listed on this page. See the documentation on [authentication](authentication.html) and [authorization](authorization.html) for more information.
 
 The commands listed below can be executed by sending the command to the HTTP API `/query` endpoint as the URL parameter `q`. For example, using `curl`,
 
@@ -42,10 +42,10 @@ Identifiers may be quoted or unquoted and must follow these rules:
 
 Throughout this page, identifiers are denoted by a word enclosed in `<>` characters, e.g. `<database>`.  
 
-# Database Management
+## Database Management
 Databases can be created, dropped, and listed. User privileges are also set on a per-database basis.
 
-## Creating a database
+### Creating a database
 ```sql
 CREATE DATABASE <database>
 ```
@@ -219,7 +219,8 @@ Users can be created, modified, listed, and deleted.
 ```sql
 CREATE USER <username> WITH PASSWORD '<password>'
 ```
-Note that it is required that _password_ be quoted.
+
+> **Note:** Passwords are [InfluxQL string literals](/docs/v0.9/query_language/spec.html#literals) and must be single quoted. Any single quotes or newlines in the password must be backslashed escaped.
 
 _Example_
 
@@ -231,7 +232,6 @@ CREATE USER todd WITH PASSWORD 'mypassword'
 ```sql
 SET PASSWORD FOR <username> = '<password>'
 ```
-Note that it is required that _password_ be quoted.
 
 _Example_
 
@@ -329,7 +329,7 @@ REVOKE READ|WRITE|ALL
     FROM <user>
 ```
 
-__Note: If a user with ALL privileges has WRITE privileges revoked, they will be left with READ privileges and vice versa.__
+> **Note:** If a user with ALL privileges has WRITE privileges revoked, they will be left with READ privileges and vice versa.
 
 _Example_
 
