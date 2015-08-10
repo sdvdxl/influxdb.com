@@ -7,7 +7,7 @@ There are various ways to learn about the data contained within an InfluxDB syst
 The primary mechanism for issuing any of the commands listed below is through the HTTP API. For example, the command `SHOW MEASUREMENTS` can be executed using `curl` as follows:
 
 ```sh
-curl -G 'http://localhost:8086/query' --data-urlencode "q=SHOW MEASUREMENTS"
+curl -G 'http://localhost:8086/query?db=mydb' --data-urlencode "q=SHOW MEASUREMENTS"
 ```
 
 ## Show Measurements
