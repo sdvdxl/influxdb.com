@@ -31,7 +31,7 @@ RedHat and CentOS users can install by downloading and installing the rpm like t
 ```bash
 # 64-bit system install instructions
 wget http://influxdb.s3.amazonaws.com/influxdb-0.9.2-1.x86_64.rpm
-sudo rpm -ivh influxdb-0.9.2-1.x86_64.rpm
+sudo yum localinstall influxdb-0.9.2-1.x86_64.rpm
 ```
 
 Then start the daemon by running:
