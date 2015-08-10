@@ -33,9 +33,8 @@ InfluxDB is schemaless so the series and columns (fields and tags) get created o
 ### Writing multiple points
 As you can see in the example below, you can post multiple points to multiple series at the same time by separating each point with a new line. Batching points in this manner will result in much higher performance.
 
-```
-curl -i -XPOST 'http://localhost:8086/write?db=mydb' --data-binary '
-cpu_load_short,host=server01,region=us-west value=0.64
+```sh
+curl -i -XPOST 'http://localhost:8086/write?db=mydb' --data-binary 'cpu_load_short,host=server01,region=us-west value=0.64
 cpu_load_short,host=server02,region=us-west value=0.55 1422568543702900257
 cpu_load_short,direction=in,host=server01,region=us-west value=23422.0 1422568543702900257'
 ```
