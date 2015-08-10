@@ -2,7 +2,7 @@
 title: Troubleshooting
 ---
 
-# Frequent Sources of Confusion
+This page addresses frequent sources of confusion and documents places where InfluxDB behaves in an unexpected way to other database systems. Outstanding issues and bugs which users may run into are also referenced here.
 
 ## Time Ranges
 

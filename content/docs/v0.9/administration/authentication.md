@@ -42,13 +42,13 @@ _Example_
 
 Send a request with user credentials via _Basic Authentication_.
 
-```
+```sh
 curl -G http://localhost:8086/query -u mydb_username:mydb_password --data-urlencode "q=CREATE DATABASE mydb"
 ```
 
 Send a request with user credentials via query parameters.
 
-```
+```sh
 curl -G http://localhost:8086/query --data-urlencode "u=mydb_username" --data-urlencode "p=mydb_password" --data-urlencode "q=CREATE DATABASE mydb"
 ```
 

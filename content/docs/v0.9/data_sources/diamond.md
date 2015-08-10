@@ -2,7 +2,7 @@
 title: Diamond
 ---
 
-# Saving Diamond Metrics into InfluxDB
+## Saving Diamond Metrics into InfluxDB
 
 Diamond is a metrics collection and delivery daemon written in Python.  It is capable of collecting cpu, memory, network, i/o, load and disk metrics. Additionally, it features an API for implementing custom collectors for gathering metrics from almost any source.
 

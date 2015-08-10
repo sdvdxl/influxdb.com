@@ -9,7 +9,7 @@ A **series** is a collection of data points along a timeline that share a common
 <measurement>,<tag set>
 ```
 
-Note: The **field set** is not part of the series identification.
+> **Note:** The [field set](/docs/v0.9/concepts/glossary.html#field) is not part of the series identification.
 
 ## Measurement
 A **measurement** is the name of the value that is recorded in the **series**, and can be shared amongst many **series**.

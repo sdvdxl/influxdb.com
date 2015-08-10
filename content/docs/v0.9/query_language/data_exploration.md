@@ -9,13 +9,13 @@ InfluxDB features an SQL-like query language for querying data and performing ag
 
 The primary mechanism for issuing any of the queries listed below is through the HTTP API. For example, the command `SELECT * FROM cpu` can be executed using `curl` as follows:
 
-```
+```sh
 curl -G 'http://localhost:8086/query' --data-urlencode 'db=mydb' --data-urlencode 'q=SELECT * FROM cpu'
 ```
 
 > **Note:** When querying large amounts of data, a `chunk_size` query parameter should be passed along with the request. By default the chunk size is 10,000.
 
-```
+```sh
 curl -G 'http://localhost:8086/query' --data-urlencode 'db=mydb' --date-urlencode 'chunk_size=20000' --data-urlencode 'q=SELECT * FROM cpu'
 ```
 
@@ -140,7 +140,7 @@ Regular expressions are surrounded by `/` characters and use Golang's regular ex
 /us.*/
 ```
 
-*NOTE*: Use of regular expressions is explained in the following sections.
+> **NOTE:** Use of regular expressions is explained in the following sections.
 
 ## Arithmetic in expressions
 
@@ -197,7 +197,7 @@ Return all points of 5 series
 SELECT * FROM "otherDB"../disk.*/ SLIMIT 5
 ```
 
-*Note*. `SLIMIT N` returns all of the points for `N` different series, where as `LIMIT N` returns `N` points from all matching series. The series are ordered by their internal InfluxDB index. Therefore although the results of `SLIMIT` are not intuitive, they are deterministic.
+> **Note:** `SLIMIT N` returns all of the points for `N` different series, where as `LIMIT N` returns `N` points from all matching series. The series are ordered by their internal InfluxDB index. Therefore although the results of `SLIMIT` are not intuitive, they are deterministic.
 
 Return the oldest point from the 1h retention policy where the measurement name begins with lowercase disk.
 
@@ -205,7 +205,7 @@ Return the oldest point from the 1h retention policy where the measurement name 
 SELECT * FROM "1h"./disk.*/ LIMIT 1
 ```
 
-*NOTE*: Regular expressions cannot be used to specify multiple databases or retention policies. Only measurements.
+> **NOTE:** Regular expressions cannot be used to specify multiple databases or retention policies. Only measurements.
 
 ## Dropping measurements, series, and databases
 
@@ -423,7 +423,7 @@ WHERE time > now() - 3h
 GROUP BY time(1h) fill(none)
 ```
 
-Note that `fill` must go at the end of the group by clause if there are other arguments:
+> **Note:** `fill` must go at the end of the group by clause if there are other arguments:
 
 ```sql
 SELECT count(type) FROM events
@@ -458,7 +458,7 @@ The following query will return the 10 oldest points from each series in the `cp
 SELECT value FROM cpu LIMIT 10
 ```
 
-Note: If N is greater than the number of points in the series, all points in the series will be returned.
+> **Note:** If N is greater than the number of points in the series, all points in the series will be returned.
 
 If instead we want the first 10 points from _any_ series in the `cpu` measurement, we should use `SLIMIT` rather than `LIMIT`
 
@@ -472,7 +472,7 @@ The following query will return the 10 oldest points less than an hour old in th
 SELECT value FROM cpu WHERE time > now() - 1h SLIMIT 10
 ```
 
-Note: If N is greater than the number of points in the measurement, all points in the measurement will be returned.
+> **Note:** If N is greater than the number of points in the measurement, all points in the measurement will be returned.
 
 If instead we want the first 10 points from each series in the `cpu` measurement, we should use `LIMIT` rather than `SLIMIT`
 

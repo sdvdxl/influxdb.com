@@ -50,7 +50,7 @@ InfluxDB also has support for incremental backups. Snapshotting from the server 
 
 For example, if you ran:
 
-```
+```sh
 $ influxd backup /tmp/snapshot
 ```
 
