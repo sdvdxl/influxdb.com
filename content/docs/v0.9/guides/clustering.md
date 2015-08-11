@@ -11,6 +11,7 @@ In 0.9.1 and 0.9.2 clusters were restricted 3 nodes and must be fully replicated
 Starting with version 0.9.3, Influxdb supports arbitrarily sized clusters and no longer need to be fully replicated. Additionally new data nodes can be added to a cluster. The first three nodes to join a cluster are raft `peers`. All subsequent nodes are data nodes and do not participate in consensus. See Pull Request [#3478](https://github.com/influxdb/influxdb/pull/3478) for more information.
 
 ## Configuration
+The following is the current recommended procedure for configuring a cluster. While it is still possible to configure your cluster using `peers` in the `[meta]` section of your config file, we encourage the use of the `-join` flag instead.
 
 ### Start the Initial Raft Cluster
 
@@ -34,8 +35,6 @@ At this point you'll want to verify that that your initial raft cluster is healt
 |  3 | "hostname_3:bind-address_3" |  true |
 
 If you do not see all three raft nodes, your cluster is not healthy.
-
-`<ADD NOTES ON WHAT TO DO IF YOUR CLUSTER ISNT HEALTHY. THINGS TO TRY, ETC>`
 
 > **Warning:** If you're having a hard time setting up your cluster, try settings the `/var/opt/influxdb/meta/peers.json` file manually to be `["<hostname 1>:<bind-address 1>","<hostname 2>:<bind-address 2>","<hostname 3>:<bind-address 1>"]` and `/var/opt/influxdb/meta/id` to be `1`, `2`, and `3` for each node respectively
 
