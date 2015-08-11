@@ -49,7 +49,7 @@ Once you have verified that your raft cluster is healthy and running appropriate
 2. In the new nodes `/etc/init.d/influxdb` file, set `INFLUXD_OPTS="-join hostname_1:bind-address_1,hostname_2:bind-address_2"`.
 3. Start InfluxDB on the new node.
 
-> **Warning** Currently InfluxDB supports writes to any node in the cluster, however queries must be directed at one of the 3 raft peers. This is a bug. See issue [3574](https://github.com/influxdb/influxdb/issues/3574) for more information.
+> **Note:** When using the `-join` you need only specify one `hostname:bind-address` pair. However, if more than one is provided, Influx will try to connect with the additional pairs in the case that it cannot connect with the first one.
 
 To verify that the new node has successfully joined the cluster, issue a `SHOW SERVERS` query to one of the nodes in the cluster. You should see something along the lines of this:
 
@@ -62,6 +62,8 @@ To verify that the new node has successfully joined the cluster, issue a `SHOW S
 |  n | "hostname_n:bind-address_n" |  false |
 
 If you do not, then your node was not successfully added to the cluster.
+
+> **Warning** Currently InfluxDB supports writes to any node in the cluster, however queries must be directed at one of the 3 raft peers. This is a bug. See issue [3574](https://github.com/influxdb/influxdb/issues/3574) for more information.
 
 ## Unimplemented Features
 
