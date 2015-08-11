@@ -22,7 +22,7 @@
 		[].slice.call(document.querySelectorAll(".article-docs h2")).forEach(function(el,i){
 			var id, text;
 			id = el.id;
-			text = el.innerText;
+			text = el.innerText ? el.innerText : el.textContent;
 			el.innerHTML = '<a href="#' + id + '">' + text + '</a>';
 		});
 	</script>
