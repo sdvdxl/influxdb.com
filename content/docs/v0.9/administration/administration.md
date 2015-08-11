@@ -148,7 +148,7 @@ The response returned is:
 Durations such as `1h`, `90m`, `12h`, `7d`, and `4w`, are all supported and mean 1 hour, 90 minutes, 12 hours, 7 days, and 4 weeks, respectively. For infinite retention -- meaning the data will never be deleted -- use `INF` for duration. The minimum retention period is 1 hour.
 
 ### Show existing retention policies
-To delete a retention policy issue the following command:
+To show the retention policies on a given database issue the following command:
 
 ```sql
 SHOW RETENTION POLICIES ON <database>
@@ -171,12 +171,16 @@ The response returned is:
                     "columns": [
                         "name",
                         "duration",
-                        "replicaN"
+                        "replicaN",
+                        "default"
                     ],
                     "values": [
-                        "mypolicy",
-                        "24h0m0s",
-                        1
+                        [
+                            "mypolicy",
+                            "9240h0m0s",
+                            1,
+                            true
+                        ]
                     ]
                 }
             ]
@@ -210,6 +214,20 @@ The response returned is:
 ```json
 {"results":[{}]}
 ```
+
+### Deleting a retention policy
+To delete a retention policy, issue the following command:
+
+```sql
+DROP RETENTION POLICY <retentionpolicy> ON <database>
+```
+
+The response returned is:
+
+```json
+{"results":[{}]}
+```
+
 
 ## User Management
 Users can be created, modified, listed, and deleted.
