@@ -79,7 +79,7 @@ Every point must have at least one **Field** or it will be rejected as invalid.
 
 #### Example
 
-The pairs `load=0.64`, `event=”panels cleaned”`, and `bikes_present=15i` are all valid **Fields**.
+The pairs `load=0.64`, `event="panels cleaned"`, and `bikes_present=15i` are all valid **Fields**.
 
 ## Field Key
 The **field key** is the key part of the key-value pair that makes up a **field** and is always stored as a string.
