@@ -6,7 +6,7 @@ aliases:
 
 > **Note:** Clustering is still in a beta state right now. There are still a good number of rough edges. If you notice any issues please [report them](https://github.com/influxdb/influxdb/issues/new).
 
-In 0.9.1 and 0.9.2 clusters were restricted 3 nodes and must be fully replicated, meaning all data is copied to all nodes and retention policies must have replication set to 3 for all three nodes in the cluster.
+In 0.9.1 and 0.9.2 clusters are restricted 3 nodes and must be fully replicated, meaning all data is copied to all nodes and retention policies must have replication set to 3 for all three nodes in the cluster.
 
 Starting with version 0.9.3, Influxdb supports arbitrarily sized clusters and no longer need to be fully replicated. Additionally new data nodes can be added to a cluster. The first three nodes to join a cluster are raft `peers`. All subsequent nodes are data nodes and do not participate in consensus. See Pull Request [#3478](https://github.com/influxdb/influxdb/pull/3478) for more information.
 
