@@ -13,7 +13,7 @@ In 0.9.1 and 0.9.2 clusters are restricted 3 nodes and must be fully replicated,
 Starting with version 0.9.3, Influxdb supports arbitrarily sized clusters that need not be fully replicated. Additionally new data nodes can be added to a cluster. The first three nodes to join a cluster are raft `peers`. All subsequent nodes are data nodes and do not participate in consensus. See Pull Request [#3478](https://github.com/influxdb/influxdb/pull/3478) for more information.
 
 ## Configuration
-The following is the current recommended procedure for configuring a cluster. While it is still possible to configure your cluster using `peers` in the `[meta]` section of your config file, we encourage the use of the `-join` flag instead.
+The following is the current recommended procedure for configuring a cluster.
 
 > **Note:** In versions 0.9.1 and 0.9.2, a cluster needs to be configured by specifying peers. If you plan on using clustering it is highly recommended that you upgrade to version 0.9.3+.
 
