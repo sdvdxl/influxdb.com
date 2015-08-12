@@ -2,6 +2,8 @@
 title: Clustering
 aliases:
   - /docs/v0.9/guides/clustering.html
+  - /docs/v0.9/concepts/clustering.html
+
 ---
 
 > **Note:** Clustering is still in a beta state right now. There are still a good number of rough edges. If you notice any issues please [report them](https://github.com/influxdb/influxdb/issues/new).
@@ -13,14 +15,16 @@ Starting with version 0.9.3, Influxdb supports arbitrarily sized clusters that n
 ## Configuration
 The following is the current recommended procedure for configuring a cluster. While it is still possible to configure your cluster using `peers` in the `[meta]` section of your config file, we encourage the use of the `-join` flag instead.
 
+> **Note:** In versions 0.9.1 and 0.9.2, a cluster needs to be configured by specifying peers. If you plan on using clustering it is highly recommended that you upgrade to version 0.9.3+.
+
 ### Start the Initial Raft Cluster
 
-Throughout this example, each node will be given a number that denotes the order in which it was started (e.g. 1 for the first node, 2 for the second node, etc).
+Throughout this example, each node will be given a number that denotes the order in which it was started (e.g. 1 for the first node, 2 for the second node, etc). It is also assumed that you are running some version of Linux and while it is possible to build a cluster locally, it is not recommended.
 
 1. Install InfluxDB on the 3 machines.
-2. For each node's `/etc/opt/influxdb/influxdb.conf` file, replace `hostname = "localhost"` with your hosts actual name.
+2. For each node's `/etc/opt/influxdb/influxdb.conf` file, replace `hostname = "localhost"` with your host's actual name.
 3. For each node's `/etc/opt/influxdb/influxdb.conf` file, update the `bind-address` to another port if `8088` is unacceptable.
-4. Start InfluxDB on the first node.
+4. Start InfluxDB on the first node. Note that the `bind-address` may differ from node to node (e.g. one can use 8088, another use 9099, and the other 10101).
 5. In `/etc/init.d/influxdb` on the second node, set `INFLUXD_OPTS="-join hostname_1:bind-address_1"`.
 6. Start InfluxDB on the second node.
 7. In `/etc/init.d/influxdb` on the third node, set `INFLUXD_OPTS="-join hostname_1:bind-address_1,hostname_2:bind-address_2"`.
@@ -36,7 +40,7 @@ At this point you'll want to verify that that your initial raft cluster is healt
 
 If you do not see all three raft nodes, your cluster is not healthy.
 
-> **Warning:** If you're having a hard time setting up your cluster, try settings the `/var/opt/influxdb/meta/peers.json` file manually to be `["<hostname 1>:<bind-address 1>","<hostname 2>:<bind-address 2>","<hostname 3>:<bind-address 1>"]` and `/var/opt/influxdb/meta/id` to be `1`, `2`, and `3` for each node respectively
+> **Warning:** If you're having a hard time setting up your cluster, try setting the `/var/opt/influxdb/meta/peers.json` file manually to be `["<hostname 1>:<bind-address 1>","<hostname 2>:<bind-address 2>","<hostname 3>:<bind-address 1>"]` and `/var/opt/influxdb/meta/id` to be `1`, `2`, and `3` for each node respectively
 
 ### Add More Data Nodes
 
@@ -66,7 +70,7 @@ If you do not, then your node was not successfully added to the cluster.
 
 ## Unimplemented Features
 
-* Add new raft members - If you have a one node cluster, and add a new node, it should eventually add the first 3 nodes as part of the raft cluster.  This is more involved and needs more work.  For now, all new nodes are data-only nodes.
-* Join retries - If all the join addresses fail to join, the node will not retry need to be restarted to retry the join.
-* Leader RPC retries - remote calls to the raft cluster use a random member from the set of peers.  If that member is down, the call will fail and return an error.  Many of these could be retried automatically.
+* Add new raft members - If you have a one node cluster, and add nodes, it should eventually add the first 3 nodes as part of the raft cluster. Configuring which nodes participate in raft consensus after the first three nodes form a cluster is not currently possible. For now, all new nodes are data-only nodes.
+* If all the join addresses fail to join, the node will not retry need to be restarted to retry the join.
+* Leader RPC retries - remote calls to the raft cluster use a random member from the set of peers.  If that member is down, the call will fail and return an error.  Many of these could be retried automatically. As a result, it may appear as if a cluster is unavailable, when it is actually only a single node that is failing.
 * Removing nodes (raft or data-only).  
