@@ -18,8 +18,8 @@ The following is the current recommended procedure for configuring a cluster. Wh
 Throughout this example, each node will be given a number that denotes the order in which it was started (e.g. 1 for the first node, 2 for the second node, etc).
 
 1. Install InfluxDB on the 3 machines.
-2. For each nodes `/etc/opt/influxdb/influxdb.conf` file, replace `hostname = "localhost"` with your hosts actual name.
-3. For each nodes `/etc/opt/influxdb/influxdb.conf` file, update the `bind-address` to another port if `8088` is unacceptable.
+2. For each node's `/etc/opt/influxdb/influxdb.conf` file, replace `hostname = "localhost"` with your hosts actual name.
+3. For each node's `/etc/opt/influxdb/influxdb.conf` file, update the `bind-address` to another port if `8088` is unacceptable.
 4. Start InfluxDB on the first node.
 5. In `/etc/init.d/influxdb` on the second node, set `INFLUXD_OPTS="-join hostname_1:bind-address_1"`.
 6. Start InfluxDB on the second node.
@@ -43,9 +43,9 @@ If you do not see all three raft nodes, your cluster is not healthy.
 Once you have verified that your raft cluster is healthy and running appropriately, extra data nodes can be added.
 
 1. Install InfluxDB on the new node.
-2. In the new nodes `/etc/opt/influxdb/influxdb.conf` file, replace `hostname = "localhost"` with the nodes hosts actual name.
-3. In the new nodes `/etc/opt/influxdb/influxdb.conf` file, update the `bind-address` to another port if `8088` is unacceptable.
-2. In the new nodes `/etc/init.d/influxdb` file, set `INFLUXD_OPTS="-join hostname_1:bind-address_1,hostname_2:bind-address_2"`.
+2. In the new node's `/etc/opt/influxdb/influxdb.conf` file, replace `hostname = "localhost"` with the nodes hosts actual name.
+3. In the new node's `/etc/opt/influxdb/influxdb.conf` file, update the `bind-address` to another port if `8088` is unacceptable.
+2. In the new node's `/etc/init.d/influxdb` file, set `INFLUXD_OPTS="-join hostname_1:bind-address_1,hostname_2:bind-address_2"`.
 3. Start InfluxDB on the new node.
 
 > **Note:** When using the `-join` you need only specify one `hostname:bind-address` pair. However, if more than one is provided, Influx will try to connect with the additional pairs in the case that it cannot connect with the first one.
