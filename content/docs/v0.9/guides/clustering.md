@@ -22,12 +22,12 @@ The following is the current recommended procedure for configuring a cluster.
 Throughout this example, each node will be given a number that denotes the order in which it was started (e.g. 1 for the first node, 2 for the second node, etc). It is also assumed that you are running some version of Linux and while it is possible to build a cluster locally, it is not recommended.
 
 1. Install InfluxDB on the 3 machines.
-2. For each node's `/etc/opt/influxdb/influxdb.conf` file, replace `hostname = "localhost"` with your host's actual name.
-3. For each node's `/etc/opt/influxdb/influxdb.conf` file, update the `bind-address` to another port if `8088` is unacceptable.
-4. Start InfluxDB on the first node. Note that the `bind-address` may differ from node to node (e.g. one can use 8088, another use 9099, and the other 10101).
-5. In `/etc/init.d/influxdb` on the second node, set `INFLUXD_OPTS="-join hostname_1:bind-address_1"`.
+2. For each node's `/etc/opt/influxdb/influxdb.conf` file, replace `hostname = "localhost"` with your host's actual name. This hostname must be resolved by all members in the cluster. It can be an IP or a hostname and optional port number if necessary.
+3. For each node's `/etc/opt/influxdb/influxdb.conf` file, update the `bind-address` to another port if `8088` is unacceptable. The `bind-address` can also specify the host interface IP to use (e.g. `10.0.1.10:8088`). By default it will bind on all interfaces. Note that the `port` may differ from node to node (e.g. one can use 8088, another use 9099, and the other 10101).
+4. Start InfluxDB on the first node.
+5. In `/etc/init.d/influxdb` on the second node, set `INFLUXD_OPTS="-join hostname_1:port_1"`.
 6. Start InfluxDB on the second node.
-7. In `/etc/init.d/influxdb` on the third node, set `INFLUXD_OPTS="-join hostname_1:bind-address_1,hostname_2:bind-address_2"`.
+7. In `/etc/init.d/influxdb` on the third node, set `INFLUXD_OPTS="-join hostname_1:port_1,hostname_2:port_2"`.
 8. Start InfluxDB on the third node.
 
 > **Note:** As an alternative to steps 3 and 4, an additional `-hostname host[:port]` flag may be provided to `INFLUXD_OPTS`.
@@ -51,8 +51,8 @@ Once you have verified that your raft cluster is healthy and running appropriate
 1. Install InfluxDB on the new node.
 2. In the new node's `/etc/opt/influxdb/influxdb.conf` file, replace `hostname = "localhost"` with the nodes hosts actual name.
 3. In the new node's `/etc/opt/influxdb/influxdb.conf` file, update the `bind-address` to another port if `8088` is unacceptable.
-2. In the new node's `/etc/init.d/influxdb` file, set `INFLUXD_OPTS="-join hostname_1:bind-address_1,hostname_2:bind-address_2"`.
-3. Start InfluxDB on the new node.
+4. In the new node's `/etc/init.d/influxdb` file, set `INFLUXD_OPTS="-join hostname_1:port_1,hostname_2:port_2"`.
+5. Start InfluxDB on the new node.
 
 > **Note:** When using the `-join` you need only specify one `hostname:port` pair. However, if more than one is provided, Influx will try to connect with the additional pairs in the case that it cannot connect with the first one.
 
