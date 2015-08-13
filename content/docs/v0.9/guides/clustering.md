@@ -56,6 +56,9 @@ Once you have verified that your raft cluster is healthy and running appropriate
 
 > **Note:** When using the `-join` you need only specify one `hostname:port` pair. However, if more than one is provided, Influx will try to connect with the additional pairs in the case that it cannot connect with the first one.
 
+
+> **Note:** As an alternative to steps 2 and 3, an additional `-hostname host[:port]` flag may be provided to `INFLUXD_OPTS`.
+
 To verify that the new node has successfully joined the cluster, issue a `SHOW SERVERS` query to one of the nodes in the cluster. You should see something along the lines of this:
 
 | id | cluster_addr | raft |
