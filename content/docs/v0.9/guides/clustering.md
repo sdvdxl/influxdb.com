@@ -50,7 +50,7 @@ Once you have verified that your raft cluster is healthy and running appropriate
 
 1. Install InfluxDB on the new node.
 2. In the new node's `/etc/opt/influxdb/influxdb.conf` file, replace `hostname = "localhost"` with the nodes hosts actual name.
-3. In the new node's `/etc/opt/influxdb/influxdb.conf` file, update the `bind-address` to another port if `8088` is unacceptable.
+3. In the new node's `/etc/opt/influxdb/influxdb.conf` file, update the `bind-address` to another port if `8088` is unacceptable. The `bind-address` can also specify the host interface IP to use (e.g. `10.0.1.10:8088`). By default it will bind on all interfaces. Note that the `port` may differ from node to node (e.g. one can use 8088, another use 9099, and the other 10101).
 4. In the new node's `/etc/init.d/influxdb` file, set `INFLUXD_OPTS="-join hostname_1:port_1,hostname_2:port_2"`.
 5. Start InfluxDB on the new node.
 
