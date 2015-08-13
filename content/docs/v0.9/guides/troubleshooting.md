@@ -30,7 +30,7 @@ The largest valid timestamp is 9023372036854775807, (approximately 2255-12-09T23
 
 #### Epoch 0
 
-The timestamp value 0 is epoch (1970-01-01T00:00:00Z). Within InfluxDB, epoch 0 is often used as a `null` timstamp equivalent. If you request a query that has no timestamp to return, such as an aggregation function with an unbounded time range, you will get epoch 0 as the returned timestamp. See GitHub Issue [#3337](https://github.com/influxdb/influxdb/issues/3337) for more information.
+The timestamp value 0 is epoch (1970-01-01T00:00:00Z). Within InfluxDB, epoch 0 is often used as a `null` timestamp equivalent. If you request a query that has no timestamp to return, such as an aggregation function with an unbounded time range, you will get epoch 0 as the returned timestamp. See GitHub Issue [#3337](https://github.com/influxdb/influxdb/issues/3337) for more information.
 
 #### Line Protocol bug with negative timestamps
 
