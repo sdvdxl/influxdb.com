@@ -3,6 +3,7 @@ title: Clustering
 aliases:
   - /docs/v0.9/guides/clustering.html
   - /docs/v0.9/concepts/clustering.html
+  - /docs/v0.9/advanced_topics/clustering.html
 
 ---
 
@@ -71,7 +72,5 @@ If you do not, then your node was not successfully added to the cluster.
 
 ## Unimplemented Features
 
-* Add new raft members - If you have a one node cluster, and add nodes, it should eventually add the first 3 nodes as part of the raft cluster. Configuring which nodes participate in raft consensus after the first three nodes form a cluster is not currently possible. For now, all new nodes are data-only nodes.
-* If all the join addresses fail to join, the node will not retry need to be restarted to retry the join.
-* Leader RPC retries - remote calls to the raft cluster use a random member from the set of peers.  If that member is down, the call will fail and return an error.  Many of these could be retried automatically. As a result, it may appear as if a cluster is unavailable, when it is actually only a single node that is failing.
+* Configuring which nodes participate in raft consensus after the first three nodes form a cluster is not currently possible. For now, all new nodes are data-only nodes.
 * Removing nodes (raft or data-only).  
