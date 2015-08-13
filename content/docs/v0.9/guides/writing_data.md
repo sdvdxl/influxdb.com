@@ -28,7 +28,7 @@ In the example above. the destination database is `mydb` and the retention polic
 
 
 ### Schemaless Design
-InfluxDB is schemaless so the series and columns (fields and tags) get created on the fly. You can add columns to existing series without penalty. Tag keys, tag values, and field keys are always strings, but field values may be integers, floats, strings, or booleans. If you attempt to write data with a different type than previously used (for example writing a string to a tag that previously accepted integers), InfluxDB will reject the data.
+InfluxDB is schemaless so the series and columns (fields and tags) get created on the fly. You can add columns to existing series without penalty. Tag keys, tag values, and field keys are always strings, but field values may be integers, floats, strings, or booleans. If you attempt to write data with a different type than previously used (for example writing a string to a value that previously accepted integers), InfluxDB will reject the data.
 
 ### Writing multiple points
 As you can see in the example below, you can post multiple points to multiple series at the same time by separating each point with a new line. Batching points in this manner will result in much higher performance.
