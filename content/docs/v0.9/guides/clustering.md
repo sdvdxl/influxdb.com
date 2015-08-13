@@ -29,17 +29,19 @@ Throughout this example, each node will be given a number that denotes the order
 7. In `/etc/init.d/influxdb` on the third node, set `INFLUXD_OPTS="-join hostname_1:bind-address_1,hostname_2:bind-address_2"`.
 8. Start InfluxDB on the third node.
 
+> **Note:** As an alternative to steps 3 and 4, an additional `-hostname host[:port]` flag may be provided to `INFLUXD_OPTS`.
+
 At this point you'll want to verify that that your initial raft cluster is healthy. To do this, issue a `SHOW SERVERS` query to each node in your raft cluster. You should see something along the lines of this:
 
 | id | cluster_addr | raft |
 |----|--------------|------|
-|  1 | "hostname_1:bind-address_1" |  true |
-|  2 | "hostname_2:bind-address_2" |  true |
-|  3 | "hostname_3:bind-address_3" |  true |
+|  1 | "hostname_1:port_1" |  true |
+|  2 | "hostname_2:port_2" |  true |
+|  3 | "hostname_3:port_3" |  true |
 
 If you do not see all three raft nodes, your cluster is not healthy.
 
-> **Warning:** If you're having a hard time setting up your cluster, try setting the `/var/opt/influxdb/meta/peers.json` file manually to be `["<hostname 1>:<bind-address 1>","<hostname 2>:<bind-address 2>","<hostname 3>:<bind-address 1>"]` and `/var/opt/influxdb/meta/id` to be `1`, `2`, and `3` for each node respectively
+> **Note:** If you're having a hard time setting up your cluster, try setting the `/var/opt/influxdb/meta/peers.json` file manually to be `["<hostname 1>:<port 1>","<hostname 2>:<port 2>","<hostname 3>:<port 3>"]`.
 
 ### Add More Data Nodes
 
@@ -51,17 +53,17 @@ Once you have verified that your raft cluster is healthy and running appropriate
 2. In the new node's `/etc/init.d/influxdb` file, set `INFLUXD_OPTS="-join hostname_1:bind-address_1,hostname_2:bind-address_2"`.
 3. Start InfluxDB on the new node.
 
-> **Note:** When using the `-join` you need only specify one `hostname:bind-address` pair. However, if more than one is provided, Influx will try to connect with the additional pairs in the case that it cannot connect with the first one.
+> **Note:** When using the `-join` you need only specify one `hostname:port` pair. However, if more than one is provided, Influx will try to connect with the additional pairs in the case that it cannot connect with the first one.
 
 To verify that the new node has successfully joined the cluster, issue a `SHOW SERVERS` query to one of the nodes in the cluster. You should see something along the lines of this:
 
 | id | cluster_addr | raft |
 |----|:--------------:|------|
-|  1 | "hostname_1:bind-address_1" |  true  |
-|  2 | "hostname_2:bind-address_2" |  true  |
-|  3 | "hostname_3:bind-address_3" |  true  |
+|  1 | "hostname_1:port_1" |  true  |
+|  2 | "hostname_2:port_2" |  true  |
+|  3 | "hostname_3:port_3" |  true  |
 | ...|        ...                  |  false |
-|  n | "hostname_n:bind-address_n" |  false |
+|  n | "hostname_n:port_n" |  false |
 
 If you do not, then your node was not successfully added to the cluster.
 
