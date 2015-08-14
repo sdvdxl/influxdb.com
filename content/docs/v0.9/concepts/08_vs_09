@@ -1,0 +1,28 @@
+---
+title: Differences Between InfluxDB 0.8 and InfluxDB 0.9 
+---
+
+There are significant breaking changes between the 0.8.x versions of InfluxDB and the 0.9.x versions. The API, the schema, the data store, and the clustering algorithm have all been significantly altered and in imcompatible ways. The InfluxQL syntax has remained largely the same, although there are functions which exist only in one or the other version, and a few functions are implemented differently in the two versions.
+
+This page aims to ease the transition to InfluxDB 0.9 for those more familiar with 0.8. It is not a comprehensive list of the differences, that would be prohibitively large. Less than half of the 0.8 code is retained in 0.9.0.
+
+## Data Storage Engine
+
+In InfluxDB 0.8 users could choose from a selection of underlying storage engines, with RocksDB, LevelDB, HyperLevelDB, and LMDB as available options. In InfluxDB 0.9 the underlying storage engine is always [BoltDB](https://github.com/boltdb/bolt), a copy-on-write B+tree. 
+
+TODO: justification
+
+## Write Protocols
+
+In InfluxDB 0.8 the primary write method is a JSON protocol. In InfluxDB 0.9 the JSON write protocol is deprecated and replaced by the [line](https://influxdb.com/docs/v0.9/write_protocols/line.html) [protocol](https://influxdb.com/docs/v0.9/write_protocols/write_syntax.html). 
+
+The JSON write protocol was deprecated because JSON marshalling, unmarshalling, and parsing was consuming well over half of the total CPU used to process writes. 
+
+measurement + tagset in 0.9 is like series name in 0.8, so metadata moved from identifier to multiple identifiers.
+API endpoints simplified
+CLI
+admin GUI simplified in favor of HTTP API administration
+clustering redone entirely (CP + AP for metastore + data)
+InfluxQL re-written
+performance different
+CQs re-implemented
