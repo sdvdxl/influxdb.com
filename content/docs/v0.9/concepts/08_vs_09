@@ -6,11 +6,13 @@ There are significant breaking changes between the 0.8.x versions of InfluxDB an
 
 This page aims to ease the transition to InfluxDB 0.9 for those more familiar with 0.8. It is not a comprehensive list of the differences, that would be prohibitively large. Less than half of the 0.8 code is retained in 0.9.0.
 
-## Data Storage Engine
 
-In InfluxDB 0.8 users could choose from a selection of underlying storage engines, with RocksDB, LevelDB, HyperLevelDB, and LMDB as available options. In InfluxDB 0.9 the underlying storage engine is always [BoltDB](https://github.com/boltdb/bolt), a copy-on-write B+tree. 
+## Schemas
 
-TODO: justification
+
+
+### measurement + tagset in 0.9 is like series name in 0.8, so metadata moved from identifier to multiple identifiers.
+
 
 ## Write Protocols
 
@@ -24,18 +26,31 @@ InfluxDB 0.8 has multiple endpoints for the API, often encoding concepts such as
 
 This makes the API easier to incorporate into libraries and other code, as it does not require any knowledge of the data structure to make valid calls to the API endpoints.
 
+## clustering redone entirely (CP + AP for metastore + data)
+
+
 ## Command Line Interface
 
 InfluxDB 0.9 introduces a command line interface (CLI) making it even easier to interact with the database. Rather than rely on the Admin UI or manually crafting HTTP requests, InfuxDB 0.9 users can send writes and queries in a pseudo-interactive shell, with query output available in muliple formats, including JSON, CSV, and columnar.
 
 The CLI does not interact directly with the influxd process, it is a wrapper around the Go client and uses the same HTTP API as any other client or library. 
 
+## Admin UI
 
-measurement + tagset in 0.9 is like series name in 0.8, so metadata moved from identifier to multiple identifiers.
+In InfluxDB 0.8 the Administration User Interface supported a number of configuration and adminsitration features, some of which could not be performed any other way. In InfluxDB 0.9 all database administration, configuration, and information is available via the HTTP API and the Admin UI has been substantially simplified. 
 
-CLI
-admin GUI simplified in favor of HTTP API administration
-clustering redone entirely (CP + AP for metastore + data)
-InfluxQL re-written
-performance different
-CQs re-implemented
+## Data Storage Engine
+
+In InfluxDB 0.8 users could choose from a selection of underlying storage engines, with RocksDB, LevelDB, HyperLevelDB, and LMDB as available options. In InfluxDB 0.9 the underlying storage engine is always [BoltDB](https://github.com/boltdb/bolt), a copy-on-write B+tree. 
+
+TODO: justification
+
+## InfluxQL re-written
+
+As a result of the new schema, the query language was substantially overhauled. A number of functions available in InfluxDB 0.8 have not yet been re-implmented in InfluxDB 0.9, including [MODE](https://github.com/influxdb/influxdb/issues/1823), [HISTOGRAM](https://github.com/influxdb/influxdb/issues/3674), [DIFFERENCE](https://github.com/influxdb/influxdb/issues/1825), [TOP](https://github.com/influxdb/influxdb/issues/1821), [BOTTOM](https://github.com/influxdb/influxdb/issues/1820), and the [ORDER BY](https://github.com/influxdb/influxdb/issues/2022) clause. Links go to the open issues to re-implement each function or behavior.
+
+TODO: other justifications/improvements?
+
+## Continuous Query Engine Redone
+
+To incorporate the clustering and InfluxQL changes the continuous query implementation 
