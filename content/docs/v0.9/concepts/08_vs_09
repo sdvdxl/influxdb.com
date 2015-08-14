@@ -18,8 +18,21 @@ In InfluxDB 0.8 the primary write method is a JSON protocol. In InfluxDB 0.9 the
 
 The JSON write protocol was deprecated because JSON marshalling, unmarshalling, and parsing was consuming well over half of the total CPU used to process writes. 
 
+## API Endpoints
+
+InfluxDB 0.8 has multiple endpoints for the API, often encoding concepts such as the database and shard space in the HTTP endpoint. InfluxDB 0.9 simplifies the common API interactions, using a common endpoint `/query` for all queries, and `/write` for all writes, regardless of database or retention policy. The database and retention policy are passed as query string parameters in InfluxDB 0.9. 
+
+This makes the API easier to incorporate into libraries and other code, as it does not require any knowledge of the data structure to make valid calls to the API endpoints.
+
+## Command Line Interface
+
+InfluxDB 0.9 introduces a command line interface (CLI) making it even easier to interact with the database. Rather than rely on the Admin UI or manually crafting HTTP requests, InfuxDB 0.9 users can send writes and queries in a pseudo-interactive shell, with query output available in muliple formats, including JSON, CSV, and columnar.
+
+The CLI does not interact directly with the influxd process, it is a wrapper around the Go client and uses the same HTTP API as any other client or library. 
+
+
 measurement + tagset in 0.9 is like series name in 0.8, so metadata moved from identifier to multiple identifiers.
-API endpoints simplified
+
 CLI
 admin GUI simplified in favor of HTTP API administration
 clustering redone entirely (CP + AP for metastore + data)
