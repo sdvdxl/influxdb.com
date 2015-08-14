@@ -4,21 +4,22 @@ aliases:
   - /docs/v0.9/query_language/querying_data.html
 ---
 
+
 InfluxDB features an SQL-like query language for querying data and performing aggregations on that data. This section describes the syntax of the query. All queries that return data use the keyword `SELECT`.
 
 The primary mechanism for issuing any of the queries listed below is through the HTTP API. For example, the command `SELECT * FROM cpu` can be executed using `curl` as follows:
 
-```
+```sh
 curl -G 'http://localhost:8086/query' --data-urlencode 'db=mydb' --data-urlencode 'q=SELECT * FROM cpu'
 ```
 
-**NOTE:** When querying large amounts of data, a `chunk_size` query parameter should be passed along with the request. By default the chunk size is 10,000.
+> **Note:** When querying large amounts of data, a `chunk_size` query parameter should be passed along with the request. By default the chunk size is 10,000.
 
-```
+```sh
 curl -G 'http://localhost:8086/query' --data-urlencode 'db=mydb' --date-urlencode 'chunk_size=20000' --data-urlencode 'q=SELECT * FROM cpu'
 ```
 
-For more information see [3242](https://github.com/influxdb/influxdb/issues/3242).
+<dt> For more information see [3242](https://github.com/influxdb/influxdb/issues/3242). </dt>
 
 ## Quote Usage
 *Identifiers* are either unquoted or double quoted. Identifiers are database names, retention policies, measurements, or tag keys. String literals are always single quoted however.
@@ -139,7 +140,7 @@ Regular expressions are surrounded by `/` characters and use Golang's regular ex
 /us.*/
 ```
 
-*NOTE*: Use of regular expressions is explained in the following sections.
+> **NOTE:** Use of regular expressions is explained in the following sections.
 
 ## Arithmetic in expressions
 
@@ -196,7 +197,7 @@ Return all points of 5 series
 SELECT * FROM "otherDB"../disk.*/ SLIMIT 5
 ```
 
-*Note*. `SLIMIT N` returns all of the points for `N` different series, where as `LIMIT N` returns `N` points from all matching series. The series are ordered by their internal InfluxDB index. Therefore although the results of `SLIMIT` are not intuitive, they are deterministic.
+> **Note:** `SLIMIT N` returns all of the points for `N` different series, where as `LIMIT N` returns `N` points from all matching series. The series are ordered by their internal InfluxDB index. Therefore although the results of `SLIMIT` are not intuitive, they are deterministic.
 
 Return the oldest point from the 1h retention policy where the measurement name begins with lowercase disk.
 
@@ -204,7 +205,7 @@ Return the oldest point from the 1h retention policy where the measurement name 
 SELECT * FROM "1h"./disk.*/ LIMIT 1
 ```
 
-*NOTE*: Regular expressions cannot be used to specify multiple databases or retention policies. Only measurements.
+> **NOTE:** Regular expressions cannot be used to specify multiple databases or retention policies. Only measurements.
 
 ## Dropping measurements, series, and databases
 
@@ -422,7 +423,7 @@ WHERE time > now() - 3h
 GROUP BY time(1h) fill(none)
 ```
 
-Note that `fill` must go at the end of the group by clause if there are other arguments:
+> **Note:** `fill` must go at the end of the group by clause if there are other arguments:
 
 ```sql
 SELECT count(type) FROM events
@@ -434,7 +435,7 @@ GROUP BY time(1h), type fill(0)
 
 Queries merge series automatically for you on the fly. Remember that a series is a measurement plus its tag set. This means if you do a query like this:
 
-```
+```sql
 SELECT mean(value) FROM cpu
 WHERE time > now() - 1h
   AND region = 'uswest'
@@ -442,6 +443,39 @@ GROUP BY time(1m)
 ```
 
 All the series under `cpu` that have the tag `region = 'uswest'` will be merged together before computing the mean.
+
+## Limiting results returned
+
+InfluxQL supports two different clauses to limit the results returned. They are currently mutually exclusive, so you may use one OR the other, but not both in the same query.
+
+### Limiting results per series
+
+Adding a `LIMIT n` clause to the end of your query will return the first N points found for each series in the measurement queried. Because `ORDER BY` is not yet functional (see GitHub Issue [#2022](https://github.com/influxdb/influxdb/issues/2022) for more information) the first N points will always be the _oldest_ N points by timestamp.
+
+The following query will return the 10 oldest points from each series in the `cpu` measurement, meaning there will be 10 points returned for each unique tag set in `cpu`:
+
+```sql
+SELECT value FROM cpu LIMIT 10
+```
+
+> **Note:** If N is greater than the number of points in the series, all points in the series will be returned.
+
+If instead we want the first 10 points from _any_ series in the `cpu` measurement, we should use `SLIMIT` rather than `LIMIT`
+
+### Limiting results per measurement
+
+Adding an `SLIMIT n` clause to the end of your query will return the first N points found in the measurement queried. Because `ORDER BY` is not yet functional (see GitHub Issue [#2022](https://github.com/influxdb/influxdb/issues/2022) for more information) the first N points will always be the _oldest_ N points by timestamp.
+
+The following query will return the 10 oldest points less than an hour old in the `cpu` measurement, regardless of the tag set, meaning there will be at most 10 points returned:
+
+```sql
+SELECT value FROM cpu WHERE time > now() - 1h SLIMIT 10
+```
+
+> **Note:** If N is greater than the number of points in the measurement, all points in the measurement will be returned.
+
+If instead we want the first 10 points from each series in the `cpu` measurement, we should use `LIMIT` rather than `SLIMIT`
+
 
 ## Querying with an OFFSET
 

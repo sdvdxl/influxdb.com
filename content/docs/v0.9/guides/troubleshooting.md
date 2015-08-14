@@ -2,7 +2,7 @@
 title: Troubleshooting
 ---
 
-# Frequent Sources of Confusion
+This page addresses frequent sources of confusion and documents places where InfluxDB behaves in an unexpected way to other database systems. Outstanding issues and bugs which users may run into are also referenced here.
 
 ## Time Ranges
 
@@ -30,7 +30,7 @@ The largest valid timestamp is 9023372036854775807, (approximately 2255-12-09T23
 
 #### Epoch 0
 
-The timestamp value 0 is epoch (1970-01-01T00:00:00Z). Within InfluxDB, epoch 0 is often used as a `null` timstamp equivalent. If you request a query that has no timestamp to return, such as an aggregation function with an unbounded time range, you will get epoch 0 as the returned timestamp. See GitHub Issue [#3337](https://github.com/influxdb/influxdb/issues/3337) for more information.
+The timestamp value 0 is epoch (1970-01-01T00:00:00Z). Within InfluxDB, epoch 0 is often used as a `null` timestamp equivalent. If you request a query that has no timestamp to return, such as an aggregation function with an unbounded time range, you will get epoch 0 as the returned timestamp. See GitHub Issue [#3337](https://github.com/influxdb/influxdb/issues/3337) for more information.
 
 #### Line Protocol bug with negative timestamps
 
@@ -64,6 +64,10 @@ An HTTP status code of 4XX implies that the request that was sent in could not b
 An HTTP status code of 5XX implies that the `influxd` process is either down or significantly impaired. Further writes and reads are likely to fail permanently until the node or cluster is returned to health.
 
 ## Syntax Pitfalls
+
+#### When writing integer values
+
+When writing a point with an integer value you must add a trailing `i` to the end of the value. This allows influx to infer that an integer type is being written. If no `i` is provided, the value will be written as a float. For example `response_time,host=server1 value=100i` has an integer value of 100, where as `response_time,host=server1 value=100` has a floating point value of 100.
 
 ### When to Single-Quote
 

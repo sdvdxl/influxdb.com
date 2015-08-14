@@ -124,19 +124,18 @@ string_lit          = `'` { unicode_char } `'`' .
 
 Duration literals specify a length of time.  An integer literal followed immediately (with no spaces) by a duration unit listed below is interpreted as a duration literal.
 
-```
-Duration unit definitions
--------------------------
-| Units  | Meaning                                 |
-|--------|-----------------------------------------|
-| u or µ | microseconds (1 millionth of a second)  |
-| ms     | milliseconds (1 thousandth of a second) |
-| s      | second                                  |
-| m      | minute                                  |
-| h      | hour                                    |
-| d      | day                                     |
-| w      | week                                    |
-```
+#### Duration unit definitions
+
+ Units  | Meaning
+--------|-----------------------------------------
+ u or µ | microseconds (1 millionth of a second)
+ ms     | milliseconds (1 thousandth of a second)
+ s      | second
+ m      | minute
+ h      | hour
+ d      | day
+ w      | week
+
 
 ```
 duration_lit        = int_lit duration_unit .
@@ -177,7 +176,6 @@ statement           = alter_retention_policy_stmt |
                       create_database_stmt |
                       create_retention_policy_stmt |
                       create_user_stmt |
-                      delete_stmt |
                       drop_continuous_query_stmt |
                       drop_database_stmt |
                       drop_measurement_stmt |
@@ -301,6 +299,8 @@ create_user_stmt = "CREATE USER" user_name "WITH PASSWORD" password
                    [ "WITH ALL PRIVILEGES" ] .
 ```
 
+> **Note:** Unlike the GRANT statement, the "PRIVILEGES" keyword is required in the CREATE USER statement.
+
 #### Examples:
 
 ```sql
@@ -308,22 +308,7 @@ create_user_stmt = "CREATE USER" user_name "WITH PASSWORD" password
 CREATE USER jdoe WITH PASSWORD '1337password'
 
 -- Create a cluster admin.
--- Note: Unlike the GRANT statement, the "PRIVILEGES" keyword is required here.
 CREATE USER jdoe WITH PASSWORD '1337password' WITH ALL PRIVILEGES
-```
-
-### DELETE
-
-```
-delete_stmt  = "DELETE" from_clause where_clause .
-```
-
-#### Example:
-
-```sql
--- delete data points from the cpu measurement where the region tag
--- equals 'uswest'
-DELETE FROM cpu WHERE region = 'uswest'
 ```
 
 ### DROP CONTINUOUS QUERY
@@ -402,7 +387,7 @@ DROP USER jdoe
 
 ### GRANT
 
-NOTE: Users can be granted privileges on databases that do not exist.
+> **NOTE:** Users can be granted privileges on databases that do not exist.
 
 ```
 grant_stmt = "GRANT" privilege [ on_clause ] to_clause

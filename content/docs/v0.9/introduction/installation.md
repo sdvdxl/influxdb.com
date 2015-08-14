@@ -21,7 +21,7 @@ sudo dpkg -i influxdb_0.9.2_amd64.deb
 
 Then start the daemon by running:
 
-```
+```sh
 sudo /etc/init.d/influxdb start
 ```
 
@@ -31,12 +31,12 @@ RedHat and CentOS users can install by downloading and installing the rpm like t
 ```bash
 # 64-bit system install instructions
 wget http://influxdb.s3.amazonaws.com/influxdb-0.9.2-1.x86_64.rpm
-sudo rpm -ivh influxdb-0.9.2-1.x86_64.rpm
+sudo yum localinstall influxdb-0.9.2-1.x86_64.rpm
 ```
 
 Then start the daemon by running:
 
-```
+```sh
 sudo /etc/init.d/influxdb start
 ```
 
@@ -44,7 +44,7 @@ sudo /etc/init.d/influxdb start
 
 Users of OS X 10.8 and higher can install using the [Homebrew](http://brew.sh/) package manager.
 
-```
+```sh
 brew update
 brew install influxdb
 ```
@@ -54,7 +54,7 @@ brew install influxdb
 
 ## Hosted
 
-For users who don't want to install any software and are ready to use InfluxDB, you may want to check out our [managed hosted InfluxDB offering](http://customers.influxdb.com). __However, our hosted service is currently only running InfluxDB v0.8.8. Hosted 0.9 instances will be available soon.__
+For users who don't want to install any software and are ready to use InfluxDB, you may want to check out our [managed hosted InfluxDB offering](http://customers.influxdb.com). 
 
 ## Generate a configuration file
 
@@ -72,9 +72,23 @@ Edit the `influxdb.generated.conf` file to have the desired configuration settin
 /opt/influxdb/influxd -config /etc/influxdb/influxdb.generated.conf
 ```
 
-If no `-config` option is supplied, InfluxDB will use the default configuration file that ships with the installer. The actual location of the file depends on your OS. It is an identical file to the generated configuration file except that the default file has multiple comments.
+In addition, a valid configuration file can be displayed at any time using the command `influxd config`. Redirect the output to a file to save a clean generated configuration file.
 
-> Note: The `influxd` command has two similarly named flags. The `config` flag prints a generated default configuration file to STDOUT but does not launch the `influxd` process. The `-config` flag takes a single argument, which is the path to the InfluxDB configuration file to use when launching the process.
+If no `-config` option is supplied, InfluxDB will use an internal default configuration equialent to the output of `influxd config`
+
+> Note: The `influxd` command has two similarly named flags. The `config` flag prints a generated default configuration file to STDOUT but does not launch the `influxd` process. The `-config` flag takes a single argument, which is the path to the InfluxDB configuration file to use when launching the process. 
+
+The `config` and `-config` flags can be combined to output the union of the internal default configuration and the configuration file passed to `-config`. The options specificed in the configuration file will overwrite any internally generated configration.
+
+```shell
+/opt/influxdb/influxd config -config /etc/influxdb/influxdb.partial.conf
+```
+
+The output will show every option configured in the `influxdb.partial.conf` file and will substitute internal defaults for any configuration options not specified in that file. 
+
+The example configuration file shipped with the installer is for information only. It is an identical file to the internally generated configuration except that the example file has comments.
+
+
 
 
 ## Development Versions

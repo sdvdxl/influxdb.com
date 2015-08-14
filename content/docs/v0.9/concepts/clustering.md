@@ -31,7 +31,7 @@ Configuring a cluster with three host machines A, B, and C:
 5. On all three machines add `peers = ["IP_address_A:bind_address_port_A", "IP_address_B:bind_address_port_B", "IP_address_C:bind_address_port_C"]` to the `[meta]` section of the config file. For example,
     
     ```
-    peers = ["10.202.47.11:8088", "10.202.47.12:8088", "10.202.47.13:8088”]
+    peers = ["10.202.47.11:8088", "10.202.47.12:8088", "10.202.47.13:8088"]
     ```
 6. On all three machines, add `replication = 3` in the `[retention]` section of the config file.
 7. Launch `influxd` on hosts A, B, and C in any order.

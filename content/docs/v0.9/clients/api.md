@@ -2,7 +2,7 @@
 title: HTTP API Client Libraries
 ---
 
-This is a list of the client libraries which currently support InfluxDB version 0.9.
+This is a list of the client libraries which have some support for InfluxDB version 0.9. Functionality will vary, and there are, as yet, no standard features that all libraries must implement in order to be listed here.
 
 ## Go
 - [Influx Go](https://github.com/influxdb/influxdb/blob/master/client/README.md) by InfluxDB
@@ -27,6 +27,7 @@ This is a list of the client libraries which currently support InfluxDB version 
 
 ## PHP
 
+- [InfluxDB-PHP Github](https://github.com/influxdb/influxdb-php) by [thecodeassassin](https://github.com/thecodeassassin)
 - [InfluxPHP Github](https://github.com/crodas/InfluxPHP) by [crodas](https://github.com/crodas)
 - [InfluxDB PHP SDK Github](https://github.com/corley/influxdb-php-sdk) by [corley](https://github.com/corley)
 

@@ -9,7 +9,7 @@ A **series** is a collection of data points along a timeline that share a common
 <measurement>,<tag set>
 ```
 
-Note: The **field set** is not part of the series identification.
+> **Note:** The [field set](/docs/v0.9/concepts/glossary.html#field) is not part of the series identification.
 
 ## Measurement
 A **measurement** is the name of the value that is recorded in the **series**, and can be shared amongst many **series**.
@@ -79,7 +79,7 @@ Every point must have at least one **Field** or it will be rejected as invalid.
 
 #### Example
 
-The pairs `load=0.64`, `event=”panels cleaned”`, and `bikes_present=15` are all valid **Fields**.
+The pairs `load=0.64`, `event="panels cleaned"`, and `bikes_present=15i` are all valid **Fields**.
 
 ## Field Key
 The **field key** is the key part of the key-value pair that makes up a **field** and is always stored as a string.
@@ -92,6 +92,8 @@ A **field value** is the value part of the key-value pair that makes up a **fiel
 **Field value** data may be stored as a string, boolean, int64, or float64.
 
 If the **field value** is number it may contain one decimal point.
+
+Integer valued fields must be written with a trailing `i`. The field `bikes_present=15i` stores an integer and the field `bikes_present=15` stores a float.
 
 Scientific notation is a valid numerical representation.
 

@@ -5,39 +5,6 @@
  * @author Lea Verou
  */
 
-code[class*="language-"],
-pre[class*="language-"] {
-	color: black;
-	text-shadow: 0 1px white;
-	font-family: Consolas, Monaco, 'Andale Mono', monospace;
-	direction: ltr;
-	text-align: left;
-	white-space: pre;
-	word-spacing: normal;
-	word-break: normal;
-	line-height: 1.5;
-
-	-moz-tab-size: 4;
-	-o-tab-size: 4;
-	tab-size: 4;
-
-	-webkit-hyphens: none;
-	-moz-hyphens: none;
-	-ms-hyphens: none;
-	hyphens: none;
-}
-
-pre[class*="language-"]::-moz-selection, pre[class*="language-"] ::-moz-selection,
-code[class*="language-"]::-moz-selection, code[class*="language-"] ::-moz-selection {
-	text-shadow: none;
-	background: #b3d4fc;
-}
-
-pre[class*="language-"]::selection, pre[class*="language-"] ::selection,
-code[class*="language-"]::selection, code[class*="language-"] ::selection {
-	text-shadow: none;
-	background: #b3d4fc;
-}
 
 @media print {
 	code[class*="language-"],
@@ -46,29 +13,59 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	}
 }
 
+
 /* Code blocks */
-pre[class*="language-"] {
-	padding: 1em;
-	margin: .5em 0;
+.article-docs code {
+	font-family: font-family: Consolas, "Lucida Console", Monaco, monospace;
+	-moz-tab-size: 1;
+	-o-tab-size: 1;
+	tab-size: 1;
+	color: #8271f1;
+	direction: ltr;
+	text-align: left;
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+	font-size: 0.875rem;
+	display: inline;
+	border-radius: 3px;
+	border: 1px solid #e6eff2;
+	background-color: #fafcfe;
+	padding: 0.25em 0.5em;
+	position: relative;
+	top:-0.1em;
+	-webkit-font-smoothing: subpixel-antialiased !important;
+	-moz-osx-font-smoothing: auto !important;
+}
+
+.article-docs pre {
+	padding: 0.75em 1em;
 	overflow: auto;
+	border-radius: 3px;
+	border: 1px solid #e6eff2;
+	border-left-width: 6px;
+	background-color: #fafcfe;
+	margin-bottom: 2.5em;
+	width: calc(100% - 1.5em);
+	margin-left: 1.5em;
 }
-
-:not(pre) > code[class*="language-"],
-pre[class*="language-"] {
-	background: #f5f2f0;
-}
-
-/* Inline code */
-:not(pre) > code[class*="language-"] {
-	padding: .1em;
-	border-radius: .3em;
+.article-docs pre code {
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	line-height: 1.5em;
+	border: none;
+	padding: 0;
+	border-radius: 0;
+	background-color: transparent;
 }
 
 .token.comment,
 .token.prolog,
 .token.doctype,
 .token.cdata {
-	color: slategray;
+	color: slategray !important;
 }
 
 .token.punctuation {

@@ -25,7 +25,7 @@ layout = "sidebar"
 - 64-bit system install instructions
 
 		wget https://s3.amazonaws.com/influxdb/influxdb-0.9.2-1.x86_64.rpm
-		sudo rpm -ivh influxdb-0.9.2-1.x86_64.rpm
+		sudo yum localinstall influxdb-0.9.2-1.x86_64.rpm
 
 ## Version 0.9.3 (Nightly)
 Nightly builds are created once-a-day using the top-of-tree of [master](https://github.com/influxdb/influxdb/tree/master) source code. These builds will include all the latest fixes, but also undergo only basic testing.
@@ -42,7 +42,7 @@ Nightly builds are created once-a-day using the top-of-tree of [master](https://
 - 64-bit system install instructions
 
         wget https://s3.amazonaws.com/influxdb/influxdb-nightly-1.x86_64.rpm
-        sudo rpm -ivh influxdb-nightly-1.x86_64.rpm
+        sudo yum localinstall influxdb-nightly-1.x86_64.rpm
 
 
 ### Deprecated Releases
@@ -75,5 +75,5 @@ Deprecated versions are no longer actively developed.
 - 64-bit system install instructions
 
 		wget http://get.influxdb.org/telegraf/telegraf-0.1.4-1.x86_64.rpm
-		sudo rpm -ivh telegraf-0.1.4-.x86_64.rpm
+		sudo yum localinstall telegraf-0.1.4-.x86_64.rpm
 

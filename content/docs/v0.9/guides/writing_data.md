@@ -9,7 +9,7 @@ There are many ways to write data into InfluxDB including the built-in HTTP API,
 ## Writing data using the HTTP API
 The HTTP API is the primary means of putting data into InfluxDB. To write data simply send a `POST` to the endpoint `/write`. The destination database must be specified as a query parameter and the body of the POST must contain the retention policy and time-series data you wish to store. An example request sent to InfluxDB running on localhost, which writes a single point, is shown below.
 
-```
+```sh
 # Create your new database, this only needs to be done once.
 curl -G http://localhost:8086/query --data-urlencode "q=CREATE DATABASE mydb"
 
@@ -28,20 +28,25 @@ In the example above. the destination database is `mydb` and the retention polic
 
 
 ### Schemaless Design
-InfluxDB is schemaless so the series and columns (fields and tags) get created on the fly. You can add columns to existing series without penalty. Tag keys, tag values, and field keys are always strings, but field values may be integers, floats, strings, or booleans. If you attempt to write data with a different type than previously used (for example writing a string to a tag that previously accepted integers), InfluxDB will reject the data.
+InfluxDB is schemaless so the series and columns (fields and tags) get created on the fly. You can add columns to existing series without penalty. Tag keys, tag values, and field keys are always strings, but field values may be integers, floats, strings, or booleans. If you attempt to write data with a different type than previously used (for example writing a string to a value that previously accepted integers), InfluxDB will reject the data.
 
 ### Writing multiple points
 As you can see in the example below, you can post multiple points to multiple series at the same time by separating each point with a new line. Batching points in this manner will result in much higher performance.
 
-```
-curl -i -XPOST 'http://localhost:8086/write?db=mydb' --data-binary '
-cpu_load_short,host=server01,region=us-west value=0.64
+```sh
+curl -i -XPOST 'http://localhost:8086/write?db=mydb' --data-binary 'cpu_load_short,host=server01,region=us-west value=0.64
 cpu_load_short,host=server02,region=us-west value=0.55 1422568543702900257
 cpu_load_short,direction=in,host=server01,region=us-west value=23422.0 1422568543702900257'
 ```
 
 ### Tags
 Each point can have a set of key-value pairs associated with it. Both keys and values must be strings. Tags allow data to be easily and efficient queried, including or excluding data that matches a set of keys with particular values.
+
+### Fields
+
+Each point can have a set of key-value pairs associated with it. The keys must be strings; values can be a float, integer, boolean, or string. Once a field key is set its type cannot be changed.
+
+> **Note:** To write a field value as an integer, a trailing `i` must be added when the point is being inserted. For example the point `cpu,host=server1 value=10i` has an integer value of 10, where as the point `cpu,host=server1 value=10` has a floating point value of 10.
 
 ### Time format
 The following time format is accepted:
@@ -50,7 +55,7 @@ _Epoch and Precision_
 
 Timestamps can be supplied as an integer value at the end of the line. The precision is configurable per-request by including a `precision` url parameter. If no precision is specified, the line protocol will default to nanosecond precision. For example to set the time in seconds, use the following request.
 
-```
+```sh
 curl -i -XPOST 'http://localhost:8086/write?db=mydb&precision=s' --data-binary 'temperature,machine=unit42,type=assembly external=25,internal=37 1434059627'
 ```
 
@@ -64,7 +69,7 @@ If an error was encountered while processing the data, InfluxDB will respond wit
 
 For example, issuing a bad query such as:
 
-```
+```sh
 curl -G http://localhost:8086/query --data-urlencode "db=foo" --data-urlencode "q=show"
 ```
 

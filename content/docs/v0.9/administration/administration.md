@@ -14,17 +14,17 @@ Full suite of administration commands are available through the query language. 
 - Delete measurements and series
 - Create and delete continuous queries
 
-_Note: When authentication is enabled, only admin users can execute most of the commands listed on this page. See the documentation on [authentication](authentication.html) and [authorization](authorization.html) for more information._
+> **Note:** When authentication is enabled, only admin users can execute most of the commands listed on this page. See the documentation on [authentication](authentication.html) and [authorization](authorization.html) for more information.
 
 The commands listed below can be executed by sending the command to the HTTP API `/query` endpoint as the URL parameter `q`. For example, using `curl`,
 
-```
+```sh
 curl -G 'http://localhost:8086/query' --data-urlencode "q=CREATE DATABASE mydb"
 ```
 
 or using the `influx` command line interface,
 
-```
+```sh
 influx -username test -password test
 > CREATE DATABASE mydb
 ```
@@ -42,10 +42,10 @@ Identifiers may be quoted or unquoted and must follow these rules:
 
 Throughout this page, identifiers are denoted by a word enclosed in `<>` characters, e.g. `<database>`.  
 
-# Database Management
+## Database Management
 Databases can be created, dropped, and listed. User privileges are also set on a per-database basis.
 
-## Creating a database
+### Creating a database
 ```sql
 CREATE DATABASE <database>
 ```
@@ -148,7 +148,7 @@ The response returned is:
 Durations such as `1h`, `90m`, `12h`, `7d`, and `4w`, are all supported and mean 1 hour, 90 minutes, 12 hours, 7 days, and 4 weeks, respectively. For infinite retention -- meaning the data will never be deleted -- use `INF` for duration. The minimum retention period is 1 hour.
 
 ### Show existing retention policies
-To delete a retention policy issue the following command:
+To show the retention policies on a given database issue the following command:
 
 ```sql
 SHOW RETENTION POLICIES ON <database>
@@ -171,12 +171,16 @@ The response returned is:
                     "columns": [
                         "name",
                         "duration",
-                        "replicaN"
+                        "replicaN",
+                        "default"
                     ],
                     "values": [
-                        "mypolicy",
-                        "24h0m0s",
-                        1
+                        [
+                            "mypolicy",
+                            "9240h0m0s",
+                            1,
+                            true
+                        ]
                     ]
                 }
             ]
@@ -211,6 +215,20 @@ The response returned is:
 {"results":[{}]}
 ```
 
+### Deleting a retention policy
+To delete a retention policy, issue the following command:
+
+```sql
+DROP RETENTION POLICY <retentionpolicy> ON <database>
+```
+
+The response returned is:
+
+```json
+{"results":[{}]}
+```
+
+
 ## User Management
 Users can be created, modified, listed, and deleted.
 
@@ -219,7 +237,8 @@ Users can be created, modified, listed, and deleted.
 ```sql
 CREATE USER <username> WITH PASSWORD '<password>'
 ```
-Note that it is required that _password_ be quoted.
+
+> **Note:** Passwords are [InfluxQL string literals](/docs/v0.9/query_language/spec.html#literals) and must be single quoted. Any single quotes or newlines in the password must be backslashed escaped.
 
 _Example_
 
@@ -231,7 +250,6 @@ CREATE USER todd WITH PASSWORD 'mypassword'
 ```sql
 SET PASSWORD FOR <username> = '<password>'
 ```
-Note that it is required that _password_ be quoted.
 
 _Example_
 
@@ -329,7 +347,7 @@ REVOKE READ|WRITE|ALL
     FROM <user>
 ```
 
-__Note: If a user with ALL privileges has WRITE privileges revoked, they will be left with READ privileges and vice versa.__
+> **Note:** If a user with ALL privileges has WRITE privileges revoked, they will be left with READ privileges and vice versa.
 
 _Example_
 
