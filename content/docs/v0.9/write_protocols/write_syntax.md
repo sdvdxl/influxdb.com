@@ -10,10 +10,37 @@ The syntax for the line protocol is
 
 `measurement[,tag_key1=tag_value1...] field_key=field_value[,field_key2=field_value2] [timestamp]`
 
+For example:
+
+```sh
+measurement,tkey1=tval1,tkey2=tval2 fkey=fval,fkey2=fval2 1234567890000000000
+```
+
 ### Whitespace
 
 A space must exist between the measurement and the field(s), or between the tag(s) and the field(s) if tags are 
-provided. The measurement and tags should be separated by a comma `,` with no whitespace. 
+provided. The measurement and tags must be separated by a single comma `,` with no whitespace. 
+
+There must also be whitespace between the field(s) and the timestamp, if one is provided.
+
+Valid (`value` and `otherval` are fields, `foo` and `bat` are tags)
+```sh
+measurement value=12
+measurement value=12 1439587925
+measurement,foo=bar value=12 
+measurement,foo=bar value=12 1439587925
+measurement,foo=bar,bat=baz value=12,otherval=21 1439587925
+```
+
+Invalid
+```sh
+measurement,value=12
+measurement value=12,1439587925
+measurement foo=bar value=12 
+measurement,foo=bar,value=12 1439587925
+measurement,foo=bar
+measurement,foo=bar 1439587925
+```
 
 ### Timestamps
 
@@ -27,8 +54,7 @@ Tag keys and values, and field keys and values must be separated by the equals s
 
 ### Escaping Characters
 
-If a measurement, tag key, tag value, or field key contains a space ` ` or a comma `,` it must be escaped using the
-backslash character `\`.
+If a measurement, tag key, tag value, or field key contains a space ` `, comma `,`, or an equals sign `=` it must be escaped using the backslash character `\`. Backslash characters do not need to be escaped.
 
 ### Data Types
 
@@ -82,12 +108,19 @@ total\ disk\ free,volumes=/net\,/home\,/ value=442221834240i 1435362189575692182
 
 In the above example, the measurement is written as `total disk free` and the tag key `volumes` has a tag value of `/net,/home,/`
 
+#### Escaping Equals Signs
+```
+disk_free,a\=b=y\=z value=442221834240i 
+```
+
+In the above example, the tag key `a=b` has a tag value of `y=z`
+
 #### With Backslash in Tag Value
 ```
 disk_free,path=C:\Windows value=442221834240i
 ```
 
-Backslashes do not need to be escaped when used in strings. Unless followed by a comma or a space, backslashes are treated as a normal character.
+Backslashes do not need to be escaped when used in strings. Unless followed by a comma, space, or equals sign backslashes are treated as a normal character.
 
 #### Escaping Field Key
 ```
