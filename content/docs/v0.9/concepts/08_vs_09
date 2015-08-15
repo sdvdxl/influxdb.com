@@ -21,7 +21,11 @@ The change means that as series incorporate additional tags all queries will con
 
 ## Joins
 
-InfluxDB 0.8
+InfluxDB 0.8 allows both MERGE and JOIN operations between series. The MERGE operation returns a single aggregation of two or more series. The JOIN operation allows values from two different series to appear in the same select statement. JOIN is often used to perform mathematical operations on values from two different series, such as dividing two values to find a ratio. For example: `SELECT errors_per_minute.value / pages_per_minute.value FROM errors_per_minute INNER JOIN pages_per_minute`.
+
+In InfluxDB 0.9 neither the MERGE nor JOIN operations are supported. The MERGE operation is no longer needed. All series within a measurement are automatically merged when queried, unless explicitly excluded by tags in the WHERE clause.
+
+The lack of a JOIN operation means that fields from different measurements cannot be directly referenced in the same SELECT clause. It is no longer possible to run a query like `SELECT errors_per_minute.value / pages_per_minute.value FROM errors_per_minute INNER JOIN pages_per_minute`. It is possible to query more than one measurement at once using regular expressions. However, every field referenced in the query must be present in each measurement and cannot be filtered by measurement.
 
 ## Data Retention
 
