@@ -14,11 +14,11 @@ InfluxDB also recognizes that your schema preferences may change over time. In I
 
 ## Terminology
 
-The table below is a (very) simple example of a table  called `foodships` in an SQL database with the unindexed column `#_foodships` and the indexed columns `id`, `planet`, and `time`.
+The table below is a (very) simple example of a table  called `foodships` in an SQL database with the unindexed column `#_foodships` and the indexed columns `park_id`, `planet`, and `time`.
 
 ``` sql
 +------+---------+---------------------+--------------+
-| id   | planet  | time                | #_foodships |
+| park_id   | planet  | time                | #_foodships |
 +------+---------+---------------------+--------------+
 |    1 | Earth   | 1429185600000000000 |            0 |
 |    1 | Earth   | 1429185601000000000 |            3 |
@@ -43,7 +43,7 @@ Those same data look like this in InfluxDB:
 
 ```sql
 name: foodships
-tags: id=1, planet=Earth
+tags: park_id=1, planet=Earth
 time			#_foodships
 ----			------------
 2015-04-16T12:00:00Z	0
@@ -52,7 +52,7 @@ time			#_foodships
 2015-04-16T12:00:03Z	15
 
 name: foodships
-tags: id=2, planet=Saturn
+tags: park_id=2, planet=Saturn
 time			#_foodships
 ----			------------
 2015-04-16T12:00:00Z	5
@@ -61,7 +61,7 @@ time			#_foodships
 2015-04-16T12:00:03Z	14
 
 name: foodships
-tags: id=3, planet=Jupiter
+tags: park_id=3, planet=Jupiter
 time			#_foodships
 ----			------------
 2015-04-16T12:00:00Z	20
@@ -70,7 +70,7 @@ time			#_foodships
 2015-04-16T12:00:03Z	20
 
 name: foodships
-tags: id=4, planet=Saturn
+tags: park_id=4, planet=Saturn
 time			#_foodships
 ----			------------
 2015-04-16T12:00:00Z	5
@@ -82,7 +82,7 @@ time			#_foodships
 Referencing the example above, in general:
 
 * An InfluxDB measurement (`foodships`) is similar to an SQL database table.
-* InfluxDB tags ( `id` and `planet`) are like indexed columns in an SQL database.
+* InfluxDB tags ( `park_id` and `planet`) are like indexed columns in an SQL database.
 * InfluxDB fields (`#_foodships`) are like unindexed columns in an SQL database.
 * InfluxDB points (for example, `2015-04-16T12:00:00Z	5`) are similar to SQL rows.
 
