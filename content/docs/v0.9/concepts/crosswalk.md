@@ -10,7 +10,7 @@ InfluxDB is designed to work with time-series data. SQL databases can handle tim
 
 In InfluxDB, a timestamp identifies a single point in any given data series. This is like an SQL database table where the primary key is pre-set by the system and is always time.
 
-InfluxDB also recognizes that your schema preferences may change over time. In InfluxDB you don't have to define schemas up front. Data points can have one of the fields on a measurement, all of the fields on a measurment, or any number in-between. You can add new fields to a measurement simply by writing a point for that new field. If you need an explanation of the terms measurements, tags, and fields check out the next section for an SQL database to InfluxDB terminology crosswalk.
+InfluxDB also recognizes that your schema preferences may change over time. In InfluxDB you don't have to define schemas up front. Data points can have one of the fields on a measurement, all of the fields on a measurement, or any number in-between. You can add new fields to a measurement simply by writing a point for that new field. If you need an explanation of the terms measurements, tags, and fields check out the next section for an SQL database to InfluxDB terminology crosswalk.
 
 ## Terminology
 
@@ -18,7 +18,7 @@ The table below is a (very) simple example of a table  called `foodships` in an 
 
 ``` sql
 +---------+---------+---------------------+--------------+
-| park_id | planet  | time                | no_foodships |
+| park_id | planet  | time                | #_foodships  |
 +---------+---------+---------------------+--------------+
 |       1 | Earth   | 1429185600000000000 |            0 |
 |       1 | Earth   | 1429185601000000000 |            3 |
@@ -88,7 +88,7 @@ Referencing the example above, in general:
 
 Building on this comparison of database terminology, InfluxDB's [continuous queries](https://influxdb.com/docs/v0.9/query_language/continuous_queries.html) and [replication policies](https://influxdb.com/docs/v0.9/administration/administration.html) are similar to stored procedures in an SQL database. They're specified once and then performed regularly and automatically.
 
-Of course, there are some major disparities between SQL databases and InfluxDB. SQL JOINs aren't available for InfluxDB measurements; your schema design should reflect that difference. And, as we mentioned above, a measurement is like an SQL table where the primary index is always pre-set to time. InfluxDB timestamps must be in UNIX epoch (GMT) or formatted as a date-time string valid under RFC 3339. 
+Of course, there are some major disparities between SQL databases and InfluxDB. SQL `JOIN`s aren't available for InfluxDB measurements; your schema design should reflect that difference. And, as we mentioned above, a measurement is like an SQL table where the primary index is always pre-set to time. InfluxDB timestamps must be in UNIX epoch (GMT) or formatted as a date-time string valid under RFC3339. 
 
 For more detailed descriptions of the InfluxDB terms mentioned in this section see our [Glossary of Terms](https://influxdb.com/docs/v0.9/concepts/glossary.html).
 	
@@ -96,30 +96,30 @@ For more detailed descriptions of the InfluxDB terms mentioned in this section s
 
 InfluxQL is an SQL-like query language for interacting with InfluxDB. It has been lovingly crafted to feel familiar to those coming from other SQL or SQL-like environments while also providing features specific to storing and analyzing time series data.
 
-InfluxQL's SELECT statement follows the form of an SQL SELECT statement:
+InfluxQL's `SELECT` statement follows the form of an SQL `SELECT` statement:
 
 ```sql
-SELECT stuff FROM measurement_name WHERE some_conditions
+SELECT <stuff> FROM <measurement_name> WHERE <some_conditions>
 ```
-where WHERE is optional. To get the InfluxDB output in the section above, you'd enter:
+where `WHERE` is optional. To get the InfluxDB output in the section above, you'd enter:
 
 ```sql
 SELECT * FROM foodships
 ```
 
-If you only wanted to see data for the planet Saturn, you'd enter:
+If you only wanted to see data for the planet `Saturn`, you'd enter:
 
 ```sql
 SELECT * FROM foodships WHERE planet = 'Saturn'
 ```
 
-If you wanted to see data for the planet Saturn after 12:00:01 GMT on April 16, 2015, you'd enter:
+If you wanted to see data for the planet `Saturn` after 12:00:01 GMT on April 16, 2015, you'd enter:
 
 ```sql
 SELECT * FROM foodships WHERE planet = 'Saturn' AND time > '2015-04-16 12:00:01'
 ```
 
-As shown in the example above, InfluxQL allows you to specify the time range of your query in the WHERE clause. You can use date-time strings wrapped in single quotes that have the format `YYYY-MM-DD HH:MM:SS.mmm` ( `mmm` is milliseconds and is optional). You can also use relative time with `now()` which refers to the server's current timestamp:
+As shown in the example above, InfluxQL allows you to specify the time range of your query in the `WHERE` clause. You can use date-time strings wrapped in single quotes that have the format `YYYY-MM-DD HH:MM:SS.mmm` ( `mmm` is milliseconds and is optional). You can also use relative time with `now()` which refers to the server's current timestamp:
 
 ```sql
 SELECT * FROM foodships WHERE time > now() -1h
@@ -138,7 +138,7 @@ That query outputs the data in the `foodships` measure where the timestamp is ne
 
 <br/>
 
-InfluxQL also supports regular expressions, arithmetic in expressions, SHOW statements, and GROUP BY statements. See our [data exploration](https://influxdb.com/docs/v0.9/query_language/data_exploration.html) page for an in-depth discussion of those topics. InfluxQL functions include COUNT, MIN, MAX, MEDIAN, DERIVATIVE (a function in progress), and more. For a full list check out the [functions](https://influxdb.com/docs/v0.9/query_language/functions.html) page.
+InfluxQL also supports regular expressions, arithmetic in expressions, `SHOW` statements, and `GROUP BY` statements. See our [data exploration](https://influxdb.com/docs/v0.9/query_language/data_exploration.html) page for an in-depth discussion of those topics. InfluxQL functions include `COUNT`, `MIN`, `MAX`, `MEDIAN`, `DERIVATIVE` (a function in progress), and more. For a full list check out the [functions](https://influxdb.com/docs/v0.9/query_language/functions.html) page.
 
 Now that you have the general idea, check out our [Getting Started Guide](https://influxdb.com/docs/v0.9/introduction/getting_started.html).
 
