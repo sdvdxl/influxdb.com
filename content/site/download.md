@@ -63,6 +63,11 @@ Nightly builds are created once-a-day using the top-of-tree of [master](https://
         sudo yum localinstall influxdb-nightly-1.x86_64.rpm
 
 
+### 32-Bit Packages
+The industry is gradually [moving away from support for 32-bit x86 architectures](https://golang.org/doc/go1.5) so we do not provide packaged 32-bit binaries. However, we do endeavour to ensure the source can be compiled for a 32-bit x86 architecture at all times. To that end our [CI system](https://circleci.com/gh/influxdb/influxdb/tree/master) currently compiles 32-bit binaries and runs the unit test suite against the 32-bit build, in addition to the main 64-bit build. If compilation or unit testing for 32-bit architecture fails, we fix it.
+
+However, we do reserve the right to break 32-bit compatibilty in the future, should design and implementation require it, but there are no plans to do so at this time.
+
 ### Deprecated Releases
 
 Deprecated versions are no longer actively developed.
