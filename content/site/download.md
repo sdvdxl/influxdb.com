@@ -46,7 +46,7 @@ Release candidates are made available for testing one week prior to release of t
         sudo rpm -ivh influxdb-0.9.3_rc1-1.x86_64.rpm
 
 ## Version 0.9.4 (Nightly)
-Nightly builds are created once-a-day using the top-of-tree of [master](https://github.com/influxdb/influxdb/tree/master) source code. These builds will include all the latest fixes, but also undergo only basic testing.
+Nightly builds are created once-a-day, at midnight Los Angeles, CA time, using the top-of-tree of [master](https://github.com/influxdb/influxdb/tree/master) source code. These builds will include all the latest fixes, but also undergo only basic testing.
 
 #### Ubuntu & Debian
 
