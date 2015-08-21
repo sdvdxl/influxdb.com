@@ -17,15 +17,15 @@ layout = "sidebar"
 
 - 64-bit system install instructions
 
-		wget https://s3.amazonaws.com/influxdb/influxdb_0.9.2_amd64.deb
-		sudo dpkg -i influxdb_0.9.2_amd64.deb
+		wget https://s3.amazonaws.com/influxdb/influxdb_0.9.2.1_amd64.deb
+		sudo dpkg -i influxdb_0.9.2.1_amd64.deb
 
 #### RedHat & CentOS
 
 - 64-bit system install instructions
 
-		wget https://s3.amazonaws.com/influxdb/influxdb-0.9.2-1.x86_64.rpm
-		sudo yum localinstall influxdb-0.9.2-1.x86_64.rpm
+		wget https://s3.amazonaws.com/influxdb/influxdb-0.9.2.1-1.x86_64.rpm
+		sudo yum localinstall influxdb-0.9.2.1-1.x86_64.rpm
 
 
 ## Version 0.9.3 (Release Candidate)
