@@ -54,7 +54,7 @@ Once you have verified that your raft cluster is healthy and running appropriate
 4. In the new node's `/etc/init.d/influxdb` file, set `INFLUXD_OPTS="-join hostname_1:port_1,hostname_2:port_2"`.
 5. Start InfluxDB on the new node.
 
-> **Note:** When using the `-join` you need only specify one `hostname:<port>` pair. However, if more than one is provided, Influx will try to connect with the additional pairs in the case that it cannot connect with the first one.
+> **Note:** When using the `-join` you need only specify one `hostname:port` pair. However, if more than one is provided, Influx will try to connect with the additional pairs in the case that it cannot connect with the first one.
 
 
 > **Note:** As an alternative to steps 2 and 3, an additional `-hostname host[:port]` flag may be provided to `INFLUXD_OPTS`.
