@@ -28,22 +28,22 @@ layout = "sidebar"
 		sudo yum localinstall influxdb-0.9.2.1-1.x86_64.rpm
 
 
-## Version 0.9.3 (Release Candidate)
+## Version 0.9.3 (Release Candidate 2)
 Release candidates are made available for testing one week prior to release of the stable point release.
 
 ### Ubuntu & Debian
 
 - 64-bit system install instructions
 
-        wget https://s3.amazonaws.com/influxdb/influxdb_0.9.3-rc1_amd64.deb
-        sudo dpkg -i influxdb_0.9.3-rc1_amd64.deb
+        wget https://s3.amazonaws.com/influxdb/influxdb_0.9.3-rc2_amd64.deb
+        sudo dpkg -i influxdb_0.9.3-rc2_amd64.deb
 
 ### RedHat & CentOS
 
 - 64-bit system install instructions
 
-        wget https://s3.amazonaws.com/influxdb/influxdb-0.9.3_rc1-1.x86_64.rpm
-        sudo rpm -ivh influxdb-0.9.3_rc1-1.x86_64.rpm
+        wget https://s3.amazonaws.com/influxdb/influxdb-0.9.3_rc2-1.x86_64.rpm
+        sudo rpm -ivh influxdb-0.9.3_rc2-1.x86_64.rpm
 
 ## Version 0.9.4 (Nightly)
 Nightly builds are created once-a-day, at midnight Los Angeles, CA time, using the top-of-tree of [master](https://github.com/influxdb/influxdb/tree/master) source code. These builds will include all the latest fixes, but also undergo only basic testing.
