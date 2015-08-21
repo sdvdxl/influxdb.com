@@ -113,13 +113,13 @@ If you only wanted to see data for the planet `Saturn`, you'd enter:
 SELECT * FROM foodships WHERE planet = 'Saturn'
 ```
 
-If you wanted to see data for the planet `Saturn` after 12:00:01 GMT on April 16, 2015, you'd enter:
+If you wanted to see data for the planet `Saturn` after 12:00:01 UTC on April 16, 2015, you'd enter:
 
 ```sql
 SELECT * FROM foodships WHERE planet = 'Saturn' AND time > '2015-04-16 12:00:01'
 ```
 
-As shown in the example above, InfluxQL allows you to specify the time range of your query in the `WHERE` clause. You can use date-time strings wrapped in single quotes that have the format `YYYY-MM-DD HH:MM:SS.mmm` ( `mmm` is milliseconds and is optional). You can also use relative time with `now()` which refers to the server's current timestamp:
+As shown in the example above, InfluxQL allows you to specify the time range of your query in the `WHERE` clause. You can use date-time strings wrapped in single quotes that have the format `YYYY-MM-DD HH:MM:SS.mmm` ( `mmm` is milliseconds and is optional, and you can also specify microseconds or nanoseconds). You can also use relative time with `now()` which refers to the server's current timestamp:
 
 ```sql
 SELECT * FROM foodships WHERE time > now() -1h
