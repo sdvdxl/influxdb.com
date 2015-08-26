@@ -905,6 +905,7 @@ aside {
 
 .article-docs h5.blog-post-metadata {
 	font-weight: normal;
+    padding-left: 0;
 }
 
 .article-docs p {
@@ -912,6 +913,16 @@ aside {
 	line-height: 1.75em;
 	margin: 0 0 2.75em 0;
 }
+
+.article-docs.article-blog p {
+	padding-left: 0;
+}
+
+.article-docs.article-blog h3 {
+    font-size: 1.25em;
+    margin-bottom: 0.75em;
+}
+
 .article-docs p + pre {
 	margin-top: -2.375em;
 }
