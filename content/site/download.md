@@ -4,7 +4,7 @@ layout = "sidebar"
 +++
 # InfluxDB Downloads
 
-## Version 0.9.2 (Stable)
+## Version 0.9.3 (Stable)
 
 #### OS X
 
@@ -17,33 +17,16 @@ layout = "sidebar"
 
 - 64-bit system install instructions
 
-		wget https://s3.amazonaws.com/influxdb/influxdb_0.9.2.1_amd64.deb
-		sudo dpkg -i influxdb_0.9.2.1_amd64.deb
+		wget https://s3.amazonaws.com/influxdb/influxdb_0.9.3_amd64.deb
+		sudo dpkg -i influxdb_0.9.3_amd64.deb
 
 #### RedHat & CentOS
 
 - 64-bit system install instructions
 
-		wget https://s3.amazonaws.com/influxdb/influxdb-0.9.2.1-1.x86_64.rpm
-		sudo yum localinstall influxdb-0.9.2.1-1.x86_64.rpm
+		wget https://s3.amazonaws.com/influxdb/influxdb-0.9.3-1.x86_64.rpm
+		sudo yum localinstall influxdb-0.9.3-1.x86_64.rpm
 
-
-## Version 0.9.3 (Release Candidate 3)
-Release candidates are made available for testing one week prior to release of the stable point release.
-
-### Ubuntu & Debian
-
-- 64-bit system install instructions
-
-        wget https://s3.amazonaws.com/influxdb/influxdb_0.9.3-rc3_amd64.deb
-        sudo dpkg -i influxdb_0.9.3-rc3_amd64.deb
-
-### RedHat & CentOS
-
-- 64-bit system install instructions
-
-        wget https://s3.amazonaws.com/influxdb/influxdb-0.9.3_rc3-1.x86_64.rpm
-        sudo rpm -ivh influxdb-0.9.3_rc3-1.x86_64.rpm
 
 ## Version 0.9.4 (Nightly)
 Nightly builds are created once-a-day, at midnight Los Angeles, CA time, using the top-of-tree of [master](https://github.com/influxdb/influxdb/tree/master) source code. These builds will include all the latest fixes, but also undergo only basic testing.
@@ -77,7 +60,7 @@ Deprecated versions are no longer actively developed.
 
 # Telegraf Downloads
 
-## Version 0.1.4
+## Version 0.1.6
 
 #### OS X
 
@@ -90,13 +73,13 @@ Deprecated versions are no longer actively developed.
 
 - 64-bit system install instructions
 
-		wget http://get.influxdb.org/telegraf/telegraf_0.1.4_amd64.deb
-		sudo dpkg -i telegraf_0.1.4_amd64.deb
+		wget http://get.influxdb.org/telegraf/telegraf_0.1.6_amd64.deb
+		sudo dpkg -i telegraf_0.1.6_amd64.deb
 
 #### RedHat & CentOS
 
 - 64-bit system install instructions
 
-		wget http://get.influxdb.org/telegraf/telegraf-0.1.4-1.x86_64.rpm
-		sudo yum localinstall telegraf-0.1.4-.x86_64.rpm
+		wget http://get.influxdb.org/telegraf/telegraf-0.1.6-1.x86_64.rpm
+		sudo yum localinstall telegraf-0.1.6-.x86_64.rpm
 
