@@ -905,10 +905,10 @@ aside {
 
 .article-docs h5.blog-post-metadata {
 	font-weight: normal;
+    padding-left: 0;
 }
 
 .article-docs p {
-	padding-left: 1.5em;
 	line-height: 1.75em;
 	margin: 0 0 2.75em 0;
 }
