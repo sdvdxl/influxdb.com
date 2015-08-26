@@ -17,9 +17,45 @@ InfluxDB can potentially have many open files. You will need to up the open file
 
 Replace the `riak` user with `influxdb` and you should be good to go.
 
+## InfluxDB 0.8.9 Installion
+
+> **Note:** The only addition in InfluxDB version 0.8.9 is an export tool to facilitate migrations to InfluxDB version 0.9. Migration instructions can be found on the [InfluxDB 0.9 Importer README page](https://github.com/influxdb/influxdb/blob/master/importer/README.md).
+
+## Ubuntu & Debian
+Debian users can install version 0.8.9 by downloading the package and installing it like this:
+
+```bash
+# for 64-bit systems
+wget http://get.influxdb.org.s3.amazonaws.com/influxdb_0.8.9_amd64.deb
+sudo dpkg -i influxdb_0.8.9_amd64.deb
+```
+
+Then start the daemon by running:
+
+```
+sudo /etc/init.d/influxdb start
+```
+
+## RedHat & CentOS
+RedHat and CentOS users can install version 0.8.9 by downloading and installing the rpm like this:
+
+```bash
+# for 64-bit systems
+wget http://get.influxdb.org.s3.amazonaws.com/influxdb-0.8.9-1.x86_64.rpm
+sudo yum localinstall influxdb-0.8.9-1.x86_64.rpm
+```
+
+Then start the daemon by running:
+
+```
+sudo /etc/init.d/influxdb start
+```
+
+## InfluxDB 0.8.8 Installion
+
 ## OS X
 
-Installation of version 0.8.x on OS X 10.8 and higher is available through [Homebrew](http://brew.sh/) [Tap](https://github.com/Homebrew/homebrew/blob/master/share/doc/homebrew/brew-tap.md). 
+Installation of version 0.8.8 on OS X 10.8 and higher is available through [Homebrew](http://brew.sh/) [Tap](https://github.com/Homebrew/homebrew/blob/master/share/doc/homebrew/brew-tap.md). 
 
 Installing the package on OS X:
 
@@ -28,7 +64,7 @@ brew install homebrew/versions/influxdb08
 ```
 
 ## Ubuntu & Debian
-Debian users can install by downloading the package and installing it like this:
+Debian users can install 0.8.9 by downloading the package and installing it like this:
 
 ```bash
 # for 64-bit systems
