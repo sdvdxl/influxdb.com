@@ -13,7 +13,7 @@ In 0.9.1 and 0.9.2 clusters are restricted to three nodes and must be fully repl
 
 Starting with version 0.9.3, InfluxDB supports arbitrarily sized clusters that need not be fully replicated. Additionally new data nodes can be added to a cluster. The first three nodes to join a cluster are raft peers. All subsequent nodes are data nodes and do not participate in consensus.
 
-<dt> Although version 0.9.3 need not be fully replicated, there are still some missing features. Distributed meta-queries, for example, are not fully functional.</dt>
+<dt> Although version 0.9.3 need not be fully replicated, there are still some missing features. Distributed meta-queries, for example, are not fully functional. See issues [3295](https://github.com/influxdb/influxdb/issues/3295) and [3296](https://github.com/influxdb/influxdb/issues/3296) for more information.</dt>
 
 
 ## Configuration
