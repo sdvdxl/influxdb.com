@@ -93,8 +93,6 @@ A **field value** is the value part of the key-value pair that makes up a **fiel
 
 If the **field value** is number it may contain one decimal point.
 
-Integer valued fields must be written with a trailing `i`. The field `bikes_present=15i` stores an integer and the field `bikes_present=15` stores a float.
-
 Scientific notation is a valid numerical representation.
 
 **Field values** must be unique per **field key**, meaning you cannot assign `load=0.64` and `load=1.5` to the same **point**.

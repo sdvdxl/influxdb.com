@@ -61,14 +61,15 @@ If a measurement, tag key, tag value, or field key contains a space ` `, comma `
 Measurements, tag keys, tag values, and field keys are always stored as strings in the database. 
 
 `string` values have a length limit of 64 KB. All Unicode characters should be valid, although commas and spaces 
-require escaping. Backslash characters do not require escaping, but may not be used directly preceding a comma or space. (Note that `string` field values have different quoting and escaping rules than the measurement, tag, and field name `string` syntax.)
+require escaping. Backslash characters do not require escaping, but may not be used directly preceding a comma or space. (Note that `string` field values have different quoting and escaping rules than the measurement, tag, and field name `string` syntax.) The field `location="us-west"` stores a string value.
 
 Field values may be stored as `float64`, `int64`, `boolean`, or `string`. All subsequent field values must match 
 the type of the first point written to given measurement. 
 
 `float64` values are the default numerical type. `1` is a float, `1i` is an integer.
 
-`int64` values must have a trailing `i`. `1i` is an integer, `1` is a float. 
+`int64` values must have a trailing `i`. The field `bikes_present=15i` stores an integer and the field `bikes_present=15` stores a float.
+
 
 `boolean` values are `t`, `T`, `true`, `True`, or `TRUE` for TRUE, and  `f`, `F`, `false`, `False`, or `FALSE` for FALSE
 
