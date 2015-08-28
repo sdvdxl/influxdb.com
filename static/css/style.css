@@ -1219,7 +1219,7 @@ aside {
 	width: auto;
 }
 
-.contact-form input[type="submit"]{
+.contact-form input[type="submit"], .contact-form input.submit {
 	background-color: #008fb8;
 	border: 0;
 	color: #fff;
@@ -1228,10 +1228,10 @@ aside {
 	transition: 0.25s background-color;
 	vertical-align: middle;
 	-webkit-appearance: none;
-	width: auto;
+	width: 100%;
 }
 
-.contact-form input[type="submit"]:hover{
+.contact-form input[type="submit"]:hover, .contact-form input.submit:hover {
 	background-color: #fa0;
 }
 
