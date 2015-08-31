@@ -2,148 +2,179 @@
 title: Troubleshooting
 ---
 
-This page addresses frequent sources of confusion and documents places where InfluxDB behaves in an unexpected way to other database systems. Outstanding issues and bugs which users may run into are also referenced here.
+This page addresses frequent sources of confusion and places where InfluxDB behaves in an unexpected way relative to other database systems. Where applicable, we link to outstanding issues on GitHub.
 
-## Time Ranges
+**Querying data**  
 
-### Lower Bound
+* [Getting unexpected results with `GROUP BY time()`](../guides/troubleshooting.html#getting-unexpected-results-with-group-by-time)  
+* [Querying past `now()`](../guides/troubleshooting.html#querying-past-now)  
+* [Querying outside the min/max time range](../guides/troubleshooting.html#querying-outside-the-min-max-time-range)  
+* [Querying a time range that spans epoch 0](../guides/troubleshooting.html#querying-a-time-range-that-spans-epoch-0)  
+* [Querying with booleans](../guides/troubleshooting.html#querying-with-booleans)  
+* [Working with really big or really small integers](../guides/troubleshooting.html#working-with-really-big-or-really-small-integers) 
+* [Doing math on timestamps](../guides/troubleshooting.html#doing-math-on-timestamps)  
+* [Getting an unexpected epoch 0 timestamp in query returns](../guides/troubleshooting.html#getting-an-unexpected-epoch-0-timestamp-in-query-returns)  
+* [Getting large query returns in batches](../guides/troubleshooting.html#getting-large-query-returns-in-batches)  
+* [Identifying write precision from returned timestamps](../guides/troubleshooting.html#identifying-write-precision-from-returned-timestamps)  
+* [Single quoting and double quoting in queries](../guides/troubleshooting.html#single-quoting-and-double-quoting-in-queries)  
 
-If you do not specify an explicit lower boundary for the time range of your query InfluxDB will use epoch 0 (1970-01-01T00:00:00Z) as the implicit lower boundary. This frequently causes unexpected results when using a `GROUP BY time` clause. See GitHub Issue [#2702](https://github.com/influxdb/influxdb/issues/2702) for more details. The fix is to specify an explicitly bounded time range containing fewer than 100,000 intervals of the supplied `GROUP BY` length. For example, if the query has `GROUP BY time(10m)` you must ensure the time range contains fewer than 1,000,000 minutes (10 minutes per interval * 100,000 intervals). 
+**Writing data**  
 
-### Upper Bound
+* [Writing integers](../guides/troubleshooting.html#writing-integers)  
+* [Writing data with negative timestamps](../guides/troubleshooting.html#writing-data-with-negative-timestamps)  
+* [Words and characters to avoid](../guides/troubleshooting.html#words-and-characters-to-avoid)  
+* [Single quoting and double quoting when writing data](../guides/troubleshooting.html#single-quoting-and-double-quoting-when-writing-data)  
 
-If you do not specify an explicit upper boundary for the time range of your query InfluxDB will use `now()` as the implicit upper boundary. To query points in the future, you must explicitly set an upper boundary in the future. For example, `SELECT * FROM foo WHERE time < now() + 1000d`
+**Authentication**  
 
-### Special Times
+* [Single quoting the password string](../guides/troubleshooting.html#single-quoting-the-password-string) 
+* [Escaping the single quote in a password](../guides/troubleshooting.html#escaping-the-single-quote-in-a-password)  
 
-#### now()
 
-`now()` when used in queries returns the current nanosecond timestamp of the node processing the query. 
+# Querying data
+## Getting unexpected results with `GROUP BY time()`
+A query that includes a `GROUP BY time()` clause can yield unexpected results. In some cases, InfluxDB returns a single aggregated value with the timestamp `'1970-01-01T00:00:00Z'` even when the data include more than one instance of the time interval specified in `time()`. In other cases, InfluxDB returns `ERR: too many points in the group by interval. maybe you forgot to specify a where time clause?` even when the query already includes a `WHERE` time clause.
 
-#### Oldest/Smallest Timestamp
+Those returns typically proceed from the combination of the following two features of InfluxDB:
 
-The smallest valid timestamp is -9023372036854775808, (approximately 1684-01-22T14:50:02Z)
+* By default, InfluxDB uses epoch 0 (`1970-01-01T00:00:00Z`) as the lower bound and `now()` as the upper bound in queries. 
+* A query that includes `GROUP BY time()` must cover fewer than 100,000 instances of the supplied time interval. 
 
-#### Newest/Largest Timestamp
+If your `WHERE` time clause is simply `WHERE time < now()` InfluxDB queries the data back to epoch 0 - that behavior often causes the query to breach the 100,000 instances rule and InfluxDB returns a confusing error or result. Avoid perplexing `GROUP BY time()` returns by specifying a valid time interval in the `WHERE` clause.
 
-The largest valid timestamp is 9023372036854775807, (approximately 2255-12-09T23:13:56Z)
+<dt> [GitHub Issue 2977](https://github.com/influxdb/influxdb/issues/2977) </dt>
 
-#### Epoch 0
+## Querying past `now()`
+By default, `now()` (the current nanosecond timestamp of the node that is processing the query) is the upper bound for queries in InfluxDB. To query points that occur in the future you must provide explicit directions in the `WHERE` clause. 
 
-The timestamp value 0 is epoch (1970-01-01T00:00:00Z). Within InfluxDB, epoch 0 is often used as a `null` timestamp equivalent. If you request a query that has no timestamp to return, such as an aggregation function with an unbounded time range, you will get epoch 0 as the returned timestamp. See GitHub Issue [#3337](https://github.com/influxdb/influxdb/issues/3337) for more information.
+The first query below asks InfluxDB to return everything from `hillvalley` that occurs between epoch 0 (`1970-01-01T00:00:00Z`) and `now()`. The second query asks InfluxDB to return everything from `hillvalley` that occurs between epoch 0 and 1,000 days from `now()`.
 
-#### Line Protocol bug with negative timestamps
+`SELECT * FROM hillvalley`  
+`SELECT * FROM hillvalley WHERE time < now() + 1000d`
 
-InfluxDB does store negative UNIX timestamps but there is currently a bug in the line protocol parser that treats negative timestamps as invalid syntax (GitHub Issue [#3367](https://github.com/influxdb/influxdb/issues/3367).
+## Querying outside the min/max time range 
+Queries with a time range that exceeds the minimum or maximum timestamps valid for InfluxDB currently return no results, rather than an error message.
 
-#### Queries cannot return results that span Epoch 0
+Smallest valid timestamp: `-9023372036854775808` (approximately `1684-01-22T14:50:02Z`)  
+Largest valid timestamp: `9023372036854775807` (approximately `2255-12-09T23:13:56Z`)
 
-Points prior to epoch 0 (1970-01-01T00:00:00Z) are valid and should be written with negative timestamps. However, queries can only return points from before epoch 0 or after epoch 0, not both. A query with a time range that spans epoch 0 will only return partial results. See GitHub Issue [#2703](https://github.com/influxdb/influxdb/issues/2703) for more details.
+<dt> [GitHub Issue #3369](https://github.com/influxdb/influxdb/issues/3369)  </dt>
 
-#### Queries outside the maximum time range silently fail
+## Querying a time range that spans epoch 0
+Currently, InfluxDB can return results for queries that cover either the time range before epoch 0 or the time range after epoch 0, not both. A query with a time range that spans epoch 0 returns partial results. 
 
-Queries with a time range that exceeds the minimum or maximum timestamps valid for InfluxDB will currently return no results, rather than an error message. See GitHub Issue [#3369](https://github.com/influxdb/influxdb/issues/3369) for more information.
+Note that InfluxDB has supported negative timestamps (timestamps that occur before epoch 0) in the past, but users should be aware of a bug when attempting to [write data with negative timestamps](../guides/troubleshooting.html#writing-data-with-negative-timestamps).
 
-### Time Precision and trailing zeros
+<dt> [GitHub Issue #2703](https://github.com/influxdb/influxdb/issues/2703)  </dt>
 
-All timestamps are stored in the database as nanosecond values, regardless of the write precision supplied. When returning query results, trailing zeros are silently dropped from timestamps. See GitHub Issue [#2977](https://github.com/influxdb/influxdb/issues/2977) for more information.
+## Querying with booleans
+Acceptable boolean syntax differs for data writes and data queries.
 
-### Math on Timestamps
+| Boolean syntax |  Writes | Queries  |
+-----------------------|-----------|--------------|
+|  `t`,`f` |	✔️ | ❌ |
+|  `T`,`F` |  ✔️ |  ❌ |
+|  `true`,`false` | ✔️  | ✔️  |
+|  `True`,`False` |  ✔️ |  ✔️ |
+|  `TRUE`,`FALSE` |  ✔️ |  ✔️ |
 
-It is not currently possible to execute mathematical operators or functions against timestamp values. All time calculations must be carried out by the client receiving the InfluxDB query results.
+For example, `SELECT ... WHERE tag1=True` returns all points with `tag1` set to `TRUE`, but `SELECT ... WHERE tag1=T` returns an empty set of points and no error. 
 
-## Return Codes
+****CHECK THIS? I'M GETTING T, t give returns in a query and F,f give falses****
 
-### 2xx Means Understood
-An HTTP status code of 204 is returned if InfluxDB could successfully parse the request that was sent. In the case that the request was understood but could not be completed, a 204 is still returned. However, the body of the response will contain an error message specifying what went wrong. A valid parseable query with no matching results will return a 204 with no error message.
+## Working with really big or really small integers
+InfluxDB stores all integers as signed `int64` data types. The minimum and maximum valid values for `int64` are `-9023372036854775808` and `9023372036854775807`. See [Go builtins](http://golang.org/pkg/builtin/#int64) for more information. 
 
-### 4xx Means Not Understood
-An HTTP status code of 4XX implies that the request that was sent in could not be understood and InfluxDB does not know what was being asked of it. These generally indicate a syntax error with the write or query request. 
+Values close to but within those limits may lead to unexpected results, as some functions and operators convert the `int64` data type to `float64` during calculation, causing overflow issues.
 
-### 5xx Means Cluster Not Healthy
-An HTTP status code of 5XX implies that the `influxd` process is either down or significantly impaired. Further writes and reads are likely to fail permanently until the node or cluster is returned to health.
+<dt> [GitHub Issue #3130](https://github.com/influxdb/influxdb/issues/3130)  </dt>
 
-## Syntax Pitfalls
+## Doing math on timestamps
+Currently, it is not possible to execute mathematical operators or functions against timestamp values. All time calculations must be carried out by the client receiving the InfluxDB query results.
 
-#### When writing integer values
+## Getting an unexpected epoch 0 timestamp in query returns
+In InfluxDB, epoch 0  (`1970-01-01T00:00:00Z`)  is often used as a null timestamp equivalent. If you request a query that has no timestamp to return, such as an aggregation function with an unbounded time range, InfluxDB returns epoch 0 as the timestamp. 
 
-When writing a point with an integer value you must add a trailing `i` to the end of the value. This allows influx to infer that an integer type is being written. If no `i` is provided, the value will be written as a float. For example `response_time,host=server1 value=100i` has an integer value of 100, where as `response_time,host=server1 value=100` has a floating point value of 100.
+<dt> [GitHub Issue #3337](https://github.com/influxdb/influxdb/issues/3337) </dt>
 
-### When to Single-Quote
+## Getting large query returns in batches
+Large query results are returned in batches of 10,000 points unless you use the query string parameter `chunk_size` to explicitly set the batch size.  For example, get results in batches of 20,000 points with:
 
-#### Querying
+`curl -G 'http://localhost:8086/query' --data-urlencode "db=deluge" --data-urlencode "chunk_size=20000" --data-urlencode "q=SELECT * FROM liters"`
 
-When querying, you must single-quote all string values. For example, `SELECT ... WHERE tag_key='tag_value'` Unquoted strings will be parsed as identifiers.
+<dt> See [GitHub Issue #3242](https://github.com/influxdb/influxdb/issues/3242) for more information on the challenges this can cause, especially with Grafana visualization. </dt>
 
-When querying, never single-quote identifiers. The will be parsed as strings, not identifiers. Double-quotes are used for identifiers.
+## Identifying write precision from returned timestamps
+InfluxDB stores all timestamps as nanosecond values regardless of the write precision supplied. It is important to note that when returning query results, the database silently drops trailing zeros from timestamps which obscures the initial write precision. 
 
-See the [query syntax](https://influxdb.com/docs/v0.9/query_language/query_syntax.html) page for more information.
+In the example below, the tags `precision_supplied` and `timestamp_supplied` show the time precision and timestamp that the user provided at the write. Because InfluxDB silently drops trailing zeros on returned timestamps, the write precision is not recognizable in the returned timestamps.
 
-#### Writing
+```sh
+name: trails
+-------------
+time                  value	 precision_supplied  timestamp_supplied
+1970-01-01T01:00:00Z  3      n                   3600000000000
+1970-01-01T01:00:00Z  5      h                   1
+1970-01-01T02:00:00Z  4      n                   7200000000000
+1970-01-01T02:00:00Z  6      h                   2
+```
 
-When writing via the line protocol, never use single-quotes. All special characters should be escaped, not quoted. See the [line protocol syntax](https://influxdb.com/docs/v0.9/write_protocols/write_syntax.html) page for more information.
+<dt> [GitHub Issue #2977](https://github.com/influxdb/influxdb/issues/2977) </dt>
 
-#### Escaping the 'password' string
+## Single quoting and double quoting in queries
+Single quote string values (for example, tag-values) but do not single quote identifiers (database names, retention policy names, user names, measurement names, tag keys, and field keys). 
 
-The `CREATE USER with PASSWORD 'password'` query always requires single-quoting the password string. There is a GitHub Issue [#123](https://github.com/influxdb/influxdb.com/issues/123) open against the documentation repo to determine and document proper escaping within the password string.
+Double quote identifiers if they start with a digit or contain characters other than `[a-z]`, `[A-Z]`, `[0-9]`, or `_`. You can double quote identifiers even if they don't contain special characters but it isn't necessary.
 
-### When to Double-Quote
+Yes: `SELECT bikes_available FROM bikes WHERE station_id='9'`
 
-#### Querying
+Yes: `SELECT "bikes_available" FROM "bikes" WHERE "station_id"='9'`
 
-When querying, it is always safe to double-quote identifiers. Identifiers starting with a digit or containing characters other than `[A-z]`, `[0-9]`, or `_` must always be double-quoted. See the [query syntax](https://influxdb.com/docs/v0.9/query_language/query_syntax.html) page for more information.
+Yes: `SELECT * from "cr@zy" where "p^e"='2'`
 
-#### Writing
+No: `SELECT 'bikes_available' FROM 'bikes' WHERE 'station_id'="9"`
 
-When writing in the line protocol, never double-quote identifiers. Instead reserved characters should be escaped with backslash: `\`. 
+No: `SELECT * from cr@zy where p^e='2'`
 
-When writing in the line protocol, you must always double-quote field values that are strings. Double-quoting a number or a boolean will store it as a string value for that field. 
+See the [Query Syntax](../query_language/query_syntax.html) page for more information.
 
-See the [line protocol syntax](https://influxdb.com/docs/v0.9/write_protocols/write_syntax.html) page for more information.
+# Writing data
+## Writing integers
+Add a trailing `i` to the end of the field-value when writing an integer. If you do not provide the `i`, InfluxDB will treat the field-value as a float. 
 
-### Reserved Words in InfluxQL
+Integer: `response_time,host=server1 value=100i`  
+Float: `response_time,host=server1 value=100` 
 
-Use of any of the [InfluxQL Reserved Words](https://github.com/influxdb/influxdb/blob/master/influxql/INFLUXQL.md#keywords) as Identifiers or Strings will require quoting of the identifier or string in every use. It can lead to non-intuitive errors and is not recommended.
+## Writing data with negative timestamps
+InfluxDB has supported negative UNIX timestamps in the past, but there is currently a bug in the line protocol parser that treats negative timestamps as invalid syntax. For example, `insert waybackwhen past=1 -1` returns `ERR: unable to parse 'waybackwhen past=1 -1': bad timestamp`.
 
-### Querying Booleans
+<dt> [GitHub Issue #3367](https://github.com/influxdb/influxdb/issues/3367) </dt>
 
-Although the following are all valid syntax for writing boolean values: `t`, `T`, `true`, `True`, `TRUE`, `f`, `F`, `false`, `False`, and `FALSE`, only the full words are valid syntax when using booleans in the `WHERE` clause. When querying, you must use `true`, `True`, `TRUE`, `false`, `False`, or `FALSE`. 
+## Words and characters to avoid
+If you use any of the [InfluxQL Reserved Words](https://github.com/influxdb/influxdb/blob/master/influxql/INFLUXQL.md#keywords) as an identifier or string in your schema you will need to double quote that identifier or string in every query. This can lead to non-intuitive errors and is not recommended.
 
-For example, `SELECT ... WHERE tag1=True` will return all points with `tag1` set to TRUE, but `SELECT ... WHERE tag1=T` will return an empty set of points and no error.
+To keep regular expressions simple, avoid using the following characters in identifiers and strings: backslash: `\`; up-carat: `^`; dollar-sign: `$`.
 
-### Characters That Complicate Regular Expressions
+## Single quoting and double quoting when writing data
+Never use single quotes when writing data via the line protocol. Double quote field-values that are strings but do not double quote identifiers (database names, retention policy names, user names, measurement names, tag keys, and field keys). Special characters should be escaped with a backslash and not placed in quotes. 
 
-To keep regular expressions simple avoid using the following in identifiers and strings, if possible:
+Yes: `insert bikes,station_id=2 bikes_available=3`
 
-Backslash: `\`, up-carat: `^`, dollar-sign: `$`
+Yes: `insert bikes,station_id=2 happiness="level 2"`
 
-## Architectural Limits
+No: `insert "bikes","station_id"=2 "happiness"='level 2'`
 
-### 100000 Buckets For GROUP BY
+See the [Line Protocol Syntax](https://influxdb.com/docs/v0.9/write_protocols/write_syntax.html) page for more information.
 
-When performing a `GROUP BY time`, the maximum number of time intervals that can be returned is 99,999. If the explicit or implicit time range covered by the query is greater than 99,999 times the GROUP BY interval length the query will return no results. 
+# Authentication
+## Single quoting the password string 
+The `CREATE USER <user> WITH PASSWORD '<password>'` query requires single quotation marks around the password string. Do not include the single quotes when authenticating requests.
 
-To avoid this issue, always supply an explicit lower bound for your GROUP BY queries. Otherwise epoch 0 is used as the lower bound, and any GROUP BYinterval shorter than ~4 hours will exceed the maximum number of buckets. 
+## Escaping the single quote in a password
+For passwords that include a single quote, escape the single quote with a backslash both when creating the password and when authenticating requests.
 
-See GitHub Issue [#2702](https://github.com/influxdb/influxdb/issues/2702) for more information.
 
-### 10000 Point Batches 
 
-Query results will be returned in batches of 10,000 points each unless you explicitly control the return size with the `chunk_size` query string parameter. See GitHub Issue [#3242](https://github.com/influxdb/influxdb/issues/3242) for more information on the challenges this can cause, especially with Grafana visualization.
 
-See GitHub Documentation Issue [#121](https://github.com/influxdb/influxdb.com/issues/121) to track the progress of properly documenting the `chunk_size` query string parameter.
 
-### Signed 64-bit Integers
-
-InfluxDB stores all integers as signed `int64` data types. The minimum and maximum valid values for `int64` are -9023372036854775808 and 9023372036854775807. See [Go builtins](http://golang.org/pkg/builtin/#int64) for more information. 
-
-Values close to but within these limits may lead to unexpected results, as some functions and operators convert the `int64` data type to `float64` during calculation, causing overflow issues. See GitHub Issue [#3130](https://github.com/influxdb/influxdb/issues/3130) for more information.
-
-### 64-bit Floats
-
-InfluxDB stores all floating point values as signed `float64` data types. The largest valid value for `float64` is 1.797693134862315708145274237317043567981e+308. The smallest valid non-zero value for `float64` is 4.940656458412465441765687928682213723651e-324. See the [Go Math](http://golang.org/pkg/math/) description for more information.
-
-### 64 KB Strings
-
-The maximum length for a string in InfluxDB is 64 KB (65,536 bytes). 
 
