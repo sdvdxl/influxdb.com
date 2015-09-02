@@ -2,7 +2,7 @@
 title: Installation
 ---
 
-This page provides directions on downloading and starting InfluxDB Version 0.9.2.
+This page provides directions on downloading and starting InfluxDB Version 0.9.3.
 
 ## Requirements
 Installation of the pre-built InfluxDB package requires root privileges on the host machine.
@@ -11,12 +11,12 @@ Installation of the pre-built InfluxDB package requires root privileges on the h
 By default InfluxDB will use TCP ports `8083` and `8086` so these ports should be available on your system. Once installation is complete you can change those ports and other options in the configuration file, which is located by default in `/etc/opt/influxdb`.
 
 ## Ubuntu & Debian
-Debian users can install 0.9.2 by downloading the package and installing it like this:
+Debian users can install 0.9.3 by downloading the package and installing it like this:
 
 ```bash
 # 64-bit system install instructions
-wget http://influxdb.s3.amazonaws.com/influxdb_0.9.2_amd64.deb
-sudo dpkg -i influxdb_0.9.2_amd64.deb
+wget http://influxdb.s3.amazonaws.com/influxdb_0.9.3_amd64.deb
+sudo dpkg -i influxdb_0.9.3_amd64.deb
 ```
 
 Then start the daemon by running:
@@ -30,8 +30,8 @@ RedHat and CentOS users can install by downloading and installing the rpm like t
 
 ```bash
 # 64-bit system install instructions
-wget http://influxdb.s3.amazonaws.com/influxdb-0.9.2-1.x86_64.rpm
-sudo yum localinstall influxdb-0.9.2-1.x86_64.rpm
+wget http://influxdb.s3.amazonaws.com/influxdb-0.9.3-1.x86_64.rpm
+sudo yum localinstall influxdb-0.9.3-1.x86_64.rpm
 ```
 
 Then start the daemon by running:
@@ -54,7 +54,7 @@ brew install influxdb
 
 ## Hosted
 
-For users who don't want to install any software and are ready to use InfluxDB, you may want to check out our [managed hosted InfluxDB offering](http://customers.influxdb.com). 
+For users who don't want to install any software and are ready to use InfluxDB, you may want to check out our [managed hosted InfluxDB offering](http://customers.influxdb.com).
 
 ## Generate a configuration file
 
@@ -76,7 +76,7 @@ In addition, a valid configuration file can be displayed at any time using the c
 
 If no `-config` option is supplied, InfluxDB will use an internal default configuration equialent to the output of `influxd config`
 
-> Note: The `influxd` command has two similarly named flags. The `config` flag prints a generated default configuration file to STDOUT but does not launch the `influxd` process. The `-config` flag takes a single argument, which is the path to the InfluxDB configuration file to use when launching the process. 
+> Note: The `influxd` command has two similarly named flags. The `config` flag prints a generated default configuration file to STDOUT but does not launch the `influxd` process. The `-config` flag takes a single argument, which is the path to the InfluxDB configuration file to use when launching the process.
 
 The `config` and `-config` flags can be combined to output the union of the internal default configuration and the configuration file passed to `-config`. The options specificed in the configuration file will overwrite any internally generated configration.
 
@@ -84,7 +84,7 @@ The `config` and `-config` flags can be combined to output the union of the inte
 /opt/influxdb/influxd config -config /etc/influxdb/influxdb.partial.conf
 ```
 
-The output will show every option configured in the `influxdb.partial.conf` file and will substitute internal defaults for any configuration options not specified in that file. 
+The output will show every option configured in the `influxdb.partial.conf` file and will substitute internal defaults for any configuration options not specified in that file.
 
 The example configuration file shipped with the installer is for information only. It is an identical file to the internally generated configuration except that the example file has comments.
 
