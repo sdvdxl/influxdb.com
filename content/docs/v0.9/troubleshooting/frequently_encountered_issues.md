@@ -44,7 +44,7 @@ Those returns typically proceed from the combination of the following two featur
 
 If your `WHERE` time clause is simply `WHERE time < now()` InfluxDB queries the data back to epoch 0 - that behavior often causes the query to breach the 100,000 instances rule and InfluxDB returns a confusing error or result. Avoid perplexing `GROUP BY time()` returns by specifying a valid time interval in the `WHERE` clause.
 
-<dt> [GitHub Issue 2977](https://github.com/influxdb/influxdb/issues/2977) </dt>
+<dt> [GitHub Issue #2977](https://github.com/influxdb/influxdb/issues/2977) </dt>
 
 ## Querying after `now()`
 By default, InfluxDB uses `now()` (the current nanosecond timestamp of the node that is processing the query) as the upper bound in queries. You must provide explicit directions in the `WHERE` clause to query points that occur after `now()`. 
