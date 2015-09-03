@@ -215,12 +215,6 @@ You can drop individual series within a measurement that match given tags, or yo
 DROP MEASUREMENT response_times
 ```
 
-Dropping a series by ID:
-
-```sql
-DROP SERIES 1
-```
-
 Dropping all series that match given tags:
 
 ```sql
