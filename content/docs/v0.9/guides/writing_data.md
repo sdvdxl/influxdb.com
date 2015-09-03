@@ -40,7 +40,7 @@ cpu_load_short,direction=in,host=server01,region=us-west value=2.0 1422568543702
 
 ### Writing points from a file
 ---
-Write points from a file by including in the body of the POST `<@filename>`. The data in the file should follow InfluxDB's [line protocol syntax](../write_protocols/write_syntax.html).
+Write points from a file by passing `@filename` to `curl`. The data in the file should follow InfluxDB's [line protocol syntax](../write_protocols/write_syntax.html).
 
 Example of a properly-formatted file (`cpu_data.txt`):  
 <br>
