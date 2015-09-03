@@ -1,5 +1,5 @@
 ---
-title: Frequenly Encountered Issues
+title: Frequently Encountered Issues
 ---
 
 This page addresses frequent sources of confusion and places where InfluxDB behaves in an unexpected way relative to other database systems. Where applicable, it links to outstanding issues on GitHub.
@@ -118,7 +118,7 @@ In other cases, your query seems complete but you receive the same error:
 `SELECT * FROM why WHERE tag = '1'`  
 `SELECT * FROM grant WHERE why = 9`
 
-In the last three queries, and in most unexpected `expected identifer` errors, at least one of the identifiers in the query is an InfluxQL keyword. Identifiers are database names, retention policy names, user names, measurement names, tag keys, and field keys. To successfully query data that use a keyword as an identifier enclose that identifier in double quotes; in the examples above, `field` becomes `"field"`, `tag` becomes `"tag"`, and `grant` becomes `"grant"`.
+In the last three queries, and in most unexpected `expected identifier` errors, at least one of the identifiers in the query is an InfluxQL keyword. Identifiers are database names, retention policy names, user names, measurement names, tag keys, and field keys. To successfully query data that use a keyword as an identifier enclose that identifier in double quotes; in the examples above, `field` becomes `"field"`, `tag` becomes `"tag"`, and `grant` becomes `"grant"`.
 
 While using double quotes is an acceptable workaround, we recommend that you avoid using InfluxQL keywords as identifiers for simplicity's sake. You can find an updated list of all InfluxQL keywords on our [InfluxQL GitHub page](https://github.com/influxdb/influxdb/blob/master/influxql/INFLUXQL.md#keywords).
 
