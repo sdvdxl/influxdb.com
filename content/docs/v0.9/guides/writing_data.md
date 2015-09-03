@@ -37,6 +37,23 @@ curl -i -XPOST 'http://localhost:8086/write?db=mydb' --data-binary 'cpu_load_sho
 cpu_load_short,host=server02,region=us-west value=0.55 1422568543702900257
 cpu_load_short,direction=in,host=server01,region=us-west value=2.0 1422568543702900257'
 ```
+
+### Writing points from a file
+---
+Write points from a file by including in the body of the POST `<@filename>`. The data in the file should follow InfluxDB's [line protocol syntax](../write_protocols/write_syntax.html).
+
+Example of a properly-formatted file (`cpu_data.txt`):  
+<br>
+```txt
+cpu_load_short,host=server02 value=0.67
+cpu_load_short,host=server02,region=us-west value=0.55 1422568543702900257
+cpu_load_short,direction=in,host=server01,region=us-west value=2.0 1422568543702900257 
+```
+
+Write the data in `cpu_data.txt` to the `mydb` database with:  
+<br>
+`curl -i -XPOST 'http://localhost:8086/write?db=mydb' --data-binary @cpu_data.txt`
+
 ### Schemaless Design
 ---
 InfluxDB is a schemaless database. You can add new measurements, tags, and fields at any time. Note that if you attempt to write data with a different type than previously used (for example, writing a string to a field that previously accepted integers), InfluxDB will reject those data.
