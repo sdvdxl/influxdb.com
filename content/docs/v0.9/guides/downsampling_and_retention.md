@@ -11,3 +11,4 @@ mention this page on CQ page.
 mention this page on RP section.
 
 mention CQ logging (#180)
+other config options on CQ page (#127)
