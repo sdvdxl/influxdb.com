@@ -11,10 +11,9 @@ All current API Endpoints are listed below.
 
 The ping endpoint accepts both `GET` and `HEAD` HTTP requests. There are no query parameters that can be passed to the endpoint. The response body is empty. The version of the InfluxDB server you issued the request to can be extracted through the `X-Influxdb-Version` field of the header.
 
-For example:
+For example this is the `/ping` response from a server running `0.9.4-nightly-548b898` of InfluxDB:
 
 ```sh
-$ curl -I 'http://localhost:8086/ping'
 HTTP/1.1 204 No Content
 Request-Id: 78addfb1-5335-11e5-87f5-000000000000
 X-Influxdb-Version: 0.9.4-nightly-548b898
@@ -31,7 +30,7 @@ For more information on the `/write` endpoint see the [Writing Data](/docs/v0.9/
 
 ### HTTP API PORT
 
-By default the InfluxDB HTTP API listens on port `8086`.
+By default the InfluxDB HTTP API listens on port `8086`. The `/ping`, `/write`, and `/query` endpoints are all part of the HTTP API.
 
 ### Internal Communication port
 
