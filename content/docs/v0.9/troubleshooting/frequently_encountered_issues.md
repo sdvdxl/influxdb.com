@@ -6,45 +6,51 @@ This page addresses frequent sources of confusion and places where InfluxDB beha
 
 **Querying data**  
 
-* [Getting unexpected results with `GROUP BY time()`](../guides/troubleshooting.html#getting-unexpected-results-with-group-by-time)  
-* [Querying after `now()`](../guides/troubleshooting.html#querying-after-now)  
-* [Querying outside the min/max time range](../guides/troubleshooting.html#querying-outside-the-min-max-time-range)  
-* [Querying a time range that spans epoch 0](../guides/troubleshooting.html#querying-a-time-range-that-spans-epoch-0)  
-* [Querying with booleans](../guides/troubleshooting.html#querying-with-booleans)  
-* [Working with really big or really small integers](../guides/troubleshooting.html#working-with-really-big-or-really-small-integers) 
-* [Doing math on timestamps](../guides/troubleshooting.html#doing-math-on-timestamps)  
-* [Getting an unexpected epoch 0 timestamp in query returns](../guides/troubleshooting.html#getting-an-unexpected-epoch-0-timestamp-in-query-returns)  
-* [Getting large query returns in batches when using the HTTP API](../guides/troubleshooting.html#getting-large-query-returns-in-batches-when-using-the-http-api)  
-* [Getting the `expected identifier` error, unexpectedly](../guides/troubleshooting.html#getting-the-expected-identifier-error-unexpectedly) 
-* [Identifying write precision from returned timestamps](../guides/troubleshooting.html#identifying-write-precision-from-returned-timestamps)  
-* [Single quoting and double quoting in queries](../guides/troubleshooting.html#single-quoting-and-double-quoting-in-queries)  
+* [Getting unexpected results with `GROUP BY time()`](../troubleshooting/frequently_encountered_issues.html#getting-unexpected-results-with-group-by-time)  
+* [Querying after `now()`](../troubleshooting/frequently_encountered_issues.html#querying-after-now)  
+* [Querying outside the min/max time range](../troubleshooting/frequently_encountered_issues.html#querying-outside-the-min-max-time-range)  
+* [Querying a time range that spans epoch 0](../troubleshooting/frequently_encountered_issues.html#querying-a-time-range-that-spans-epoch-0)  
+* [Querying with booleans](../troubleshooting/frequently_encountered_issues.html#querying-with-booleans)  
+* [Working with really big or really small integers](../troubleshooting/frequently_encountered_issues.html#working-with-really-big-or-really-small-integers) 
+* [Doing math on timestamps](../troubleshooting/frequently_encountered_issues.html#doing-math-on-timestamps)  
+* [Getting an unexpected epoch 0 timestamp in query returns](../troubleshooting/frequently_encountered_issues.html#getting-an-unexpected-epoch-0-timestamp-in-query-returns)  
+* [Getting large query returns in batches when using the HTTP API](../troubleshooting/frequently_encountered_issues.html#getting-large-query-returns-in-batches-when-using-the-http-api)  
+* [Getting the `expected identifier` error, unexpectedly](../troubleshooting/frequently_encountered_issues.html#getting-the-expected-identifier-error-unexpectedly) 
+* [Identifying write precision from returned timestamps](../troubleshooting/frequently_encountered_issues.html#identifying-write-precision-from-returned-timestamps)  
+* [Single quoting and double quoting in queries](../troubleshooting/frequently_encountered_issues.html#single-quoting-and-double-quoting-in-queries)  
+* [Writing more than one continuous query to a single measurement and tag set](../troubleshooting/frequently_encountered_issues.html#writing-more-than-one-continuous-query-to-a-single-measurement-and-tag-set)
 
 **Writing data**  
 
-* [Writing integers](../guides/troubleshooting.html#writing-integers)  
-* [Writing data with negative timestamps](../guides/troubleshooting.html#writing-data-with-negative-timestamps)  
-* [Getting an unexpected error when sending files over the HTTP API](../guides/troubleshooting.html#getting-an-unexpected-error-when-sending-files-over-the-http-api) 
-* [Words and characters to avoid](../guides/troubleshooting.html#words-and-characters-to-avoid)  
-* [Single quoting and double quoting when writing data](../guides/troubleshooting.html#single-quoting-and-double-quoting-when-writing-data)  
+* [Writing integers](../troubleshooting/frequently_encountered_issues.html#writing-integers)  
+* [Writing data with negative timestamps](../troubleshooting/frequently_encountered_issues.html#writing-data-with-negative-timestamps)  
+* [Getting an unexpected error when sending files over the HTTP API](../troubleshooting/frequently_encountered_issues.html#getting-an-unexpected-error-when-sending-files-over-the-http-api) 
+* [Words and characters to avoid](../troubleshooting/frequently_encountered_issues.html#words-and-characters-to-avoid)  
+* [Single quoting and double quoting when writing data](../troubleshooting/frequently_encountered_issues.html#single-quoting-and-double-quoting-when-writing-data)  
 
 **Administration**  
 
-* [Single quoting the password string](../guides/troubleshooting.html#single-quoting-the-password-string) 
-* [Escaping the single quote in a password](../guides/troubleshooting.html#escaping-the-single-quote-in-a-password)  
+* [Single quoting the password string](../troubleshooting/frequently_encountered_issues.html#single-quoting-the-password-string) 
+* [Escaping the single quote in a password](../troubleshooting/frequently_encountered_issues.html#escaping-the-single-quote-in-a-password)  
+* [Identifying your version of InfluxDB](../troubleshooting/frequently_encountered_issues.html#identifying-your-version-of-influxdb)
 
 
 # Querying data
 ## Getting unexpected results with `GROUP BY time()`
-A query that includes a `GROUP BY time()` clause can yield unexpected results. In some cases, InfluxDB returns a single aggregated value with the timestamp `'1970-01-01T00:00:00Z'` even though the data include more than one instance of the time interval specified in `time()`. In other cases, InfluxDB returns `ERR: too many points in the group by interval. maybe you forgot to specify a where time clause?` even though the query includes a `WHERE` time clause.
+A query that includes a `GROUP BY time()` clause can yield unexpected results:
+
+* InfluxDB returns a single aggregated value with the timestamp `'1970-01-01T00:00:00Z'` even though the data include more than one instance of the time interval specified in `time()`
+* InfluxDB returns `ERR: too many points in the group by interval. maybe you forgot to specify a where time clause?` even though the query includes a `WHERE` time clause.
 
 Those returns typically proceed from the combination of the following two features of InfluxDB:
 
 * By default, InfluxDB uses epoch 0 (`1970-01-01T00:00:00Z`) as the lower bound and `now()` as the upper bound in queries. 
-* A query that includes `GROUP BY time()` must cover fewer than 100,000 instances of the supplied time interval. 
+* A query that includes `GROUP BY time()` must cover fewer than 100,000 instances of the supplied time interval
 
 If your `WHERE` time clause is simply `WHERE time < now()` InfluxDB queries the data back to epoch 0 - that behavior often causes the query to breach the 100,000 instances rule and InfluxDB returns a confusing error or result. Avoid perplexing `GROUP BY time()` returns by specifying a valid time interval in the `WHERE` clause.
 
-<dt> [GitHub Issue #2977](https://github.com/influxdb/influxdb/issues/2977) </dt>
+<dt> [GitHub Issue #2702](https://github.com/influxdb/influxdb/issues/2702)  and [GitHub Issue #4004](https://github.com/influxdb/influxdb/issues/4004)
+</dt>
 
 ## Querying after `now()`
 By default, InfluxDB uses `now()` (the current nanosecond timestamp of the node that is processing the query) as the upper bound in queries. You must provide explicit directions in the `WHERE` clause to query points that occur after `now()`. 
@@ -65,7 +71,7 @@ Largest valid timestamp: `9023372036854775807` (approximately `2255-12-09T23:13:
 ## Querying a time range that spans epoch 0
 Currently, InfluxDB can return results for queries that cover either the time range before epoch 0 or the time range after epoch 0, not both. A query with a time range that spans epoch 0 returns partial results.
 
-> **Note:** InfluxDB has supported negative timestamps (timestamps that occur before epoch 0) in the past, but users should be aware of a bug when attempting to [write data with negative timestamps](../guides/troubleshooting.html#writing-data-with-negative-timestamps).
+> **Note:** InfluxDB has supported negative timestamps (timestamps that occur before epoch 0) in the past, but users should be aware of a bug when attempting to [write data with negative timestamps](../troubleshooting/frequently_encountered_issues.html#writing-data-with-negative-timestamps).
 
 <dt> [GitHub Issue #2703](https://github.com/influxdb/influxdb/issues/2703)  </dt>
 
@@ -109,18 +115,22 @@ InfluxDB returns large query results in batches of 10,000 points unless you use 
 ## Getting the `expected identifier` error, unexpectedly
 Receiving the error `ERR: error parsing query: found [WORD], expected identifier[, string, number, bool]` is often a gentle reminder that you forgot to include something in your query, as is the case in the following examples:
 
-`SELECT FROM logic WHERE rational = 5`  
-`SELECT * FROM WHERE rational = 5`  
+* `SELECT FROM logic WHERE rational = 5` should be `SELECT something FROM logic WHERE rational = 5`  
+* `SELECT * FROM WHERE rational = 5` should be `SELECT * FROM logic WHERE rational = 5`
 
 In other cases, your query seems complete but you receive the same error:
 
-`SELECT field FROM why`  
-`SELECT * FROM why WHERE tag = '1'`  
-`SELECT * FROM grant WHERE why = 9`
+* `SELECT field FROM why`  
+* `SELECT * FROM why WHERE tag = '1'`  
+* `SELECT * FROM grant WHERE why = 9`
 
-In the last three queries, and in most unexpected `expected identifier` errors, at least one of the identifiers in the query is an InfluxQL keyword. Identifiers are database names, retention policy names, user names, measurement names, tag keys, and field keys. To successfully query data that use a keyword as an identifier enclose that identifier in double quotes; in the examples above, `field` becomes `"field"`, `tag` becomes `"tag"`, and `grant` becomes `"grant"`.
+In the last three queries, and in most unexpected `expected identifier` errors, at least one of the identifiers in the query is an InfluxQL keyword. Identifiers are database names, retention policy names, user names, measurement names, tag keys, and field keys. To successfully query data that use a keyword as an identifier enclose that identifier in double quotes, so the examples above become:
 
-While using double quotes is an acceptable workaround, we recommend that you avoid using InfluxQL keywords as identifiers for simplicity's sake. You can find an updated list of all InfluxQL keywords on our [InfluxQL GitHub page](https://github.com/influxdb/influxdb/blob/master/influxql/INFLUXQL.md#keywords).
+* `SELECT "field" FROM why`  
+* `SELECT * FROM why WHERE "tag" = '1'`  
+* `SELECT * FROM "grant" WHERE why = 9`
+
+While using double quotes is an acceptable workaround, we recommend that you avoid using InfluxQL keywords as identifiers for simplicity's sake. The InfluxQL documentation has a comprehensive list of all [InfluxQL keywords](https://github.com/influxdb/influxdb/blob/master/influxql/INFLUXQL.md#keywords).
 
 ## Identifying write precision from returned timestamps
 InfluxDB stores all timestamps as nanosecond values regardless of the write precision supplied. It is important to note that when returning query results, the database silently drops trailing zeros from timestamps which obscures the initial write precision. 
@@ -156,37 +166,75 @@ No: `SELECT * from cr@zy where p^e='2'`
 
 See the [Query Syntax](../query_language/query_syntax.html) page for more information.
 
+## Writing more than one continuous query to a single measurement and tag set
+Use a single continous query to write several statistics to the same measurement and tag set. For example, tell InfluxDB to write to the `aggregated_stats` measurement the `MEAN` and `MIN` of the `value` field grouped by five-minute intervals and grouped by the `cpu` tag with:
+
+`CREATE CONTINUOUS QUERY mean_min_value ON telegraf BEGIN SELECT MEAN(value) AS mean, MIN(value) AS min INTO aggregated_stats FROM cpu_idle GROUP BY time(5m),cpu END` 
+
+If you create two separate continous queries (one for calculating the `MEAN` and one for calculating the `MIN`), the `aggregated_stats` measurement will appear to be missing data. Separate continous queries run at slightly different times and InfluxDB defines a unique point by its measurement, tag set, and timestamp (notice that field is missing from that list). So if two continous queries write to different fields but also write to the same measurement and tag set, only one of the two fields will ever have data; the last continous query to run will overwrite the results that were written by the first continuous query with the same timestamp.
+
+For more on continuous queries, see the [continuous queries page](../query_language/continuous_queries.html).
+
 # Writing data
 ## Writing integers
 Add a trailing `i` to the end of the field value when writing an integer. If you do not provide the `i`, InfluxDB will treat the field value as a float. 
 
-Writes an integer: `insert response_time,host=server1 value=100i`  
-Writes a float: `insert response_time,host=server1 value=100` 
+Writes an integer: `value=100i`  
+Writes a float: `value=100` 
+
+> **Note:** This syntax for writing integers is for versions 0.9.3+. Versions prior to 0.9.3 had a different syntax, see [PR #3526](https://github.com/influxdb/influxdb/pull/3526).
 
 ## Writing data with negative timestamps
-InfluxDB has supported negative UNIX timestamps in the past, but there is currently a bug in the line protocol parser that treats negative timestamps as invalid syntax. For example, `insert waybackwhen past=1 -1` returns `ERR: unable to parse 'waybackwhen past=1 -1': bad timestamp`.
+InfluxDB has supported negative UNIX timestamps in the past, but there is currently a bug in the line protocol parser that treats negative timestamps as invalid syntax. For example, `INSERT waybackwhen past=1 -1` returns `ERR: unable to parse 'waybackwhen past=1 -1': bad timestamp`.
 
 <dt> [GitHub Issue #3367](https://github.com/influxdb/influxdb/issues/3367) </dt>
 
 ## Getting an unexpected error when sending files over the HTTP API
-First, double check the [line protocol](../write_protocols/line.html) syntax in your file. Second, if you continue to receive errors along the lines of `bad timestamp` or `unable to parse`, verify that the newline character in your file is line feed (`\n`). InfluxDB's line protocol relies on `\n` to indicate the end of a line and the beginning of a new line; a file that uses a newline character other than `\n` will encounter parsing issues. Convert the newline character and try sending the file again.
+First, double check the [line protocol](../write_protocols/line.html) syntax in your file. Second, if you continue to receive errors along the lines of `bad timestamp` or `unable to parse`, verify that the newline character in your file is line feed (`\n`, which is ASCII `0x0A`). InfluxDB's line protocol relies on `\n` to indicate the end of a line and the beginning of a new line; a file that uses a newline character other than `\n` will encounter parsing issues. Convert the newline character and try sending the file again.
 
 > **Note:** If you generated your file on a Windows machine, Windows uses carriage return and line feed (`\r\n`) as the newline character. 
 
 ## Words and characters to avoid
-If you use any of the [InfluxQL keywords](https://github.com/influxdb/influxdb/blob/master/influxql/INFLUXQL.md#keywords) as an identifier you will need to double quote that identifier in every query. This can lead to [non-intuitive errors](../guides/troubleshooting.html#getting-the-expected-identifier-error-unexpectedly). Identifiers are database names, retention policy names, user names, measurement names, tag keys, and field keys. 
+If you use any of the [InfluxQL keywords](https://github.com/influxdb/influxdb/blob/master/influxql/INFLUXQL.md#keywords) as an identifier you will need to double quote that identifier in every query. This can lead to [non-intuitive errors](../troubleshooting/frequently_encountered_issues.html#getting-the-expected-identifier-error-unexpectedly). Identifiers are database names, retention policy names, user names, measurement names, tag keys, and field keys. 
 
-To keep regular expressions and quoting simple, avoid using the following characters in identifiers: `\`; `^`; `$`; `'`;`"`;`,`.
+To keep regular expressions and quoting simple, avoid using the following characters in identifiers:  
+
+`\` backslash   
+ `^` circumflex accent  
+ `$` dollar sign  
+ `'` single quotation mark  
+ `"` double quotation mark  
+ `,` comma
 
 ## Single quoting and double quoting when writing data
-Never use single quotes when writing data via the line protocol. Double quote field values that are strings but do not double quote identifiers (database names, retention policy names, user names, measurement names, tag keys, and field keys). Special characters should be escaped with a backslash and not placed in quotes. 
-
-Yes: `insert bikes,station_id=2 bikes_available=3`
-
-Yes: `insert bikes,station_id=2 happiness="level 2"`
-
-No: `insert "bikes","station_id"=2 "happiness"='level 2'`
-
+* Avoid single quoting and double quoting identifiers when writing data via the line protocol; see the examples below for how writing identifiers with quotes can complicate queries. Identifiers are database names, retention policy names, user names, measurement names, tag keys, and field keys. 
+<br>
+<br>
+	Write with a double-quoted measurement: `INSERT "bikes" bikes_available=3`  
+	Applicable query: `SELECT * FROM "\"bikes\""`
+<br>
+<br>
+	Write with a single-quoted measurement: `INSERT 'bikes' bikes_available=3`  
+	Applicable query: `SELECT * FROM "\'bikes\'"`
+<br>
+<br>
+	Write with an unquoted measurement: `INSERT bikes bikes_available=3`  
+	Applicable query: `SELECT * FROM bikes`
+<br>
+<br>
+* Double quote field values that are strings.
+<br>
+<br>
+	Write: `INSERT bikes happiness="level 2"`  
+	Applicable query: `SELECT * FROM bikes WHERE happiness='level 2'`
+<br>
+<br>
+* Special characters should be escaped with a backslash and not placed in quotes. 
+<br>
+<br>
+	Write: `INSERT wacky va\"ue=4`  
+	Applicable query: `SELECT "va\"ue" FROM wacky`
+	
 See the [Line Protocol Syntax](https://influxdb.com/docs/v0.9/write_protocols/write_syntax.html) page for more information.
 
 # Administration
@@ -195,6 +243,28 @@ The `CREATE USER <user> WITH PASSWORD '<password>'` query requires single quotat
 
 ## Escaping the single quote in a password
 For passwords that include a single quote, escape the single quote with a backslash both when creating the password and when authenticating requests.
+
+## Identifying your version of InfluxDB
+There a number of ways to identify the version of InfluxDB that you're using:
+
+* Check the return when you `curl` the `/ping` endpoint. For example, if you're using 0.9.3 `curl -i 'http://localhost:8086/ping'` returns:  
+
+`HTTP/1.1 204 No Content`  
+`Request-Id: b7d7e0d6-5339-11e5-80bb-000000000000`  
+✨`X-Influxdb-Version: 0.9.3`✨
+`Date: Fri, 04 Sep 2015 19:18:26 GMT`
+
+* Check the text that appears when you [launch](../introduction/getting_started.html#logging-in-and-creating-your-first-database) the CLI:
+
+`Connected to http://localhost:8086` ✨`version 0.9.3`✨   
+`InfluxDB shell 0.9.3`
+
+* Check the HTTP response in your logs:  
+
+`[http] 2015/09/04 12:29:07 ::1 - - [04/Sep/2015:12:29:06 -0700] GET /query?db=&q=create+database+there_you_go HTTP/1.1 200 40 -` ✨`InfluxDBShell/0.9.3`✨ `357970a0-533b-11e5-8001-000000000000 6.07408ms`
+
+
+
 
 
 
