@@ -4,6 +4,8 @@ title: Service - UDP
 
 InfluxDB provides an easy way to use UDP as an input source.
 
+## Config File
+
 In your config file you specify the database for the point that will be written to, and the port that it will listen for it on.
 
 ```
@@ -40,6 +42,8 @@ You can listen for data on multiple ports and databases.
 
 ...
 ```
+
+## Writing Points
 
 To write, just send newline separated line protocol over UDP.  Can send one point at a time (not very performant) or send batches.
 
