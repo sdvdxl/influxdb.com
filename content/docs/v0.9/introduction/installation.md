@@ -92,7 +92,7 @@ The example configuration file shipped with the installer is for information onl
 
 ### Hardware
 
-We recommend using an 2 SSD volumes. One for `wal` and one `data`. Depending on your load each volume should have around 1k-3k provisioned IOPS. The `data` volume should have more disk space with lower IOPS and the `wal` volume should have less disk space with higher IOPS.
+We recommend using two SSD volumes. One for the `influxdb/wal` and one for the `influxdb/data`. Depending on your load each volume should have around 1k-3k provisioned IOPS. The `influxdb/data` volume should have more disk space with lower IOPS and the `influxdb/wal` volume should have less disk space with higher IOPS.
 
 Each machine should have a minimum of 8G RAM.
 
@@ -103,7 +103,7 @@ We’ve seen the best performance with the C3 class of machines.
 This example assumes that you are using two SSD volumes and that you have mounted them appropriately. This example also assumes that each of those volumes is mounted at `/mnt/influx` and `/mnt/db`. For more infomation on how to do that see the Amazon documentation on how to [Add a Volume to Your Instance](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-add-volume-to-instance.html).
 
 ### Config File
-You'll have to update teh config file appropriately for each InfluxDB instance you have.
+You'll have to update the config file appropriately for each InfluxDB instance you have.
 
 ```
 ...
