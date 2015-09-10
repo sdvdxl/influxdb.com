@@ -6,7 +6,23 @@ InfluxDB accepts writes over UDP. By default, no ports are open to UDP. To confi
 
 ## Config File
 
-In your config file you specify the database for the point that will be written to and the port that it will listen for it on.
+The target database and listening port for all UDP writes must be specified in the configuration file.
+
+```
+...
+
+[[udp]]
+  enabled = true
+  bind-address = ":8089" # the bind address
+  database = "foo" # Name of the database that will be written to
+  batch-size = 1000 # # will flush if this many points get buffered
+  batch-timeout = “1s” # will flush at least this often even if we haven't hit buffer limit
+  batch-pending = 5 # number of batches that may be pending in memory
+
+...
+```
+
+Multiple configurations can be specified to support multiple listening ports or multiple target databases. For example:
 
 ```
 ...
@@ -17,21 +33,7 @@ In your config file you specify the database for the point that will be written 
   database = "foo"
   batch-size = 1000
   batch-timeout = “1s”
-
-...
-```
-
-You can listen for data on multiple ports and databases.
-
-```
-...
-
-[[udp]]
-  enabled = true
-  bind-address = ":8089"
-  database = "foo"
-  batch-size = 1000
-  batch-timeout = “1s”
+  batch-pending = 5
 
 [[udp]]
   enabled = true
@@ -39,13 +41,14 @@ You can listen for data on multiple ports and databases.
   database = "bar"
   batch-size = 1000
   batch-timeout = “1s”
+  batch-pending = 5
 
 ...
 ```
 
 ## Writing Points
 
-To write, just send newline separated line protocol over UDP.  Can send one point at a time (not very performant) or send batches.
+To write, just send newline separated [line protocol](/docs/v0.9/write_protocols/line.html) over UDP. For better performance send batches of points rather than multiple single points.
 
 ```bash
 $ echo "cpu value=1"> /dev/udp/localhost/8089
