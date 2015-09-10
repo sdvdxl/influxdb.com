@@ -18,13 +18,13 @@ This page addresses frequent sources of confusion and places where InfluxDB beha
 * [Getting the `expected identifier` error, unexpectedly](../troubleshooting/frequently_encountered_issues.html#getting-the-expected-identifier-error-unexpectedly) 
 * [Identifying write precision from returned timestamps](../troubleshooting/frequently_encountered_issues.html#identifying-write-precision-from-returned-timestamps)  
 * [Single quoting and double quoting in queries](../troubleshooting/frequently_encountered_issues.html#single-quoting-and-double-quoting-in-queries)  
-* [Writing more than one continuous query to a single measurement and tag set](../troubleshooting/frequently_encountered_issues.html#writing-more-than-one-continuous-query-to-a-single-measurement-and-tag-set)
+* [Writing more than one continuous query to a single series](../troubleshooting/frequently_encountered_issues.html#writing-more-than-one-continuous-query-to-a-single-series)
 
 **Writing data**  
 
 * [Writing integers](../troubleshooting/frequently_encountered_issues.html#writing-integers)  
 * [Writing data with negative timestamps](../troubleshooting/frequently_encountered_issues.html#writing-data-with-negative-timestamps)  
-* [Getting an unexpected error when sending files over the HTTP API](../troubleshooting/frequently_encountered_issues.html#getting-an-unexpected-error-when-sending-files-over-the-http-api) 
+* [Getting an unexpected error when sending data over the HTTP API](../troubleshooting/frequently_encountered_issues.html#getting-an-unexpected-error-when-sending-data-over-the-http-api) 
 * [Words and characters to avoid](../troubleshooting/frequently_encountered_issues.html#words-and-characters-to-avoid)  
 * [Single quoting and double quoting when writing data](../troubleshooting/frequently_encountered_issues.html#single-quoting-and-double-quoting-when-writing-data)  
 
@@ -166,7 +166,7 @@ No: `SELECT * from cr@zy where p^e='2'`
 
 See the [Query Syntax](../query_language/query_syntax.html) page for more information.
 
-## Writing more than one continuous query to a single measurement and tag set
+## Writing more than one continuous query to a single series
 Use a single continuous query to write several statistics to the same measurement and tag set. For example, tell InfluxDB to write to the `aggregated_stats` measurement the `MEAN` and `MIN` of the `value` field grouped by five-minute intervals and grouped by the `cpu` tag with:
 
 `CREATE CONTINUOUS QUERY mean_min_value ON telegraf BEGIN SELECT MEAN(value) AS mean, MIN(value) AS min INTO aggregated_stats FROM cpu_idle GROUP BY time(5m),cpu END` 
@@ -189,10 +189,10 @@ InfluxDB has supported negative UNIX timestamps in the past, but there is curren
 
 <dt> [GitHub Issue #3367](https://github.com/influxdb/influxdb/issues/3367) </dt>
 
-## Getting an unexpected error when sending files over the HTTP API
-First, double check the [line protocol](../write_protocols/line.html) syntax in your file. Second, if you continue to receive errors along the lines of `bad timestamp` or `unable to parse`, verify that the newline character in your file is line feed (`\n`, which is ASCII `0x0A`). InfluxDB's line protocol relies on `\n` to indicate the end of a line and the beginning of a new line; a file that uses a newline character other than `\n` will encounter parsing issues. Convert the newline character and try sending the file again.
+## Getting an unexpected error when sending data over the HTTP API
+First, double check your [line protocol](../write_protocols/line.html) syntax. Second, if you continue to receive errors along the lines of `bad timestamp` or `unable to parse`, verify that your newline character is line feed (`\n`, which is ASCII `0x0A`). InfluxDB's line protocol relies on `\n` to indicate the end of a line and the beginning of a new line; files or data that use a newline character other than `\n` will encounter parsing issues. Convert the newline character and try sending the data again.
 
-> **Note:** If you generated your file on a Windows machine, Windows uses carriage return and line feed (`\r\n`) as the newline character. 
+> **Note:** If you generated your data file on a Windows machine, Windows uses carriage return and line feed (`\r\n`) as the newline character. 
 
 ## Words and characters to avoid
 If you use any of the [InfluxQL keywords](https://github.com/influxdb/influxdb/blob/master/influxql/INFLUXQL.md#keywords) as an identifier you will need to double quote that identifier in every query. This can lead to [non-intuitive errors](../troubleshooting/frequently_encountered_issues.html#getting-the-expected-identifier-error-unexpectedly). Identifiers are database names, retention policy names, user names, measurement names, tag keys, and field keys. 
