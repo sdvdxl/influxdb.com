@@ -2,11 +2,11 @@
 title: Service - UDP
 ---
 
-InfluxDB provides an easy way to use UDP as an input source.
+InfluxDB accepts writes over UDP. By default, no ports are open to UDP. To configure InfluxDB to support writes over UDP you must adjust your config file.
 
 ## Config File
 
-In your config file you specify the database for the point that will be written to, and the port that it will listen for it on.
+In your config file you specify the database for the point that will be written to and the port that it will listen for it on.
 
 ```
 ...
