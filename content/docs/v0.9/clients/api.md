@@ -37,3 +37,4 @@ This is a list of the client libraries which have some support for InfluxDB vers
 
 ## Ruby
 - [InfluxDB Ruby](https://github.com/influxdb/influxdb-ruby)
+- [Influxer](https://github.com/palkan/influxer) by [palkan](https://github.com/palkan)
