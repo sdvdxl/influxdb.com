@@ -23,7 +23,7 @@ curl -i -XPOST 'http://localhost:8086/write?db=mydb' --data-binary 'cpu_load_sho
 ```
 When writing points, you must specify an existing database in the `db` query parameter. See the [HTTP section](../write_protocols/write_syntax.html#http) on the Write Syntax page for a complete list of the available query parameters.
 
-The body of the POST contains the time-series data that you wish to store. They consist of a measurement, tags, fields, and a timestamp. InfluxDB requires a measurement name. Strictly speaking, tags are optional but most series include tags to differentiate data sources and to make querying both easy and efficient. Both tag keys and tag values are strings. Field keys are required and are always strings, and, [by default](../write_protocols/write_syntax.html#line-protocol), field values are floats. The timestamp - supplied at the end of the line in Unix time in nanoseconds since January 1, 1970 UTC - is optional. If you do not specify a timestamp InfluxDB uses the server's local nanosecond timestamp in Unix epoch. Anything that has to do with time in InfluxDB is always UTC. 
+The body of the POST - we call this the [Line Protocol](https://influxdb.com/docs/v0.9/write_protocols/line.html) - contains the time-series data that you wish to store. They consist of a measurement, tags, fields, and a timestamp. InfluxDB requires a measurement name. Strictly speaking, tags are optional but most series include tags to differentiate data sources and to make querying both easy and efficient. Both tag keys and tag values are strings. Field keys are required and are always strings, and, [by default](../write_protocols/write_syntax.html#line-protocol), field values are floats. The timestamp - supplied at the end of the line in Unix time in nanoseconds since January 1, 1970 UTC - is optional. If you do not specify a timestamp InfluxDB uses the server's local nanosecond timestamp in Unix epoch. Anything that has to do with time in InfluxDB is always UTC. 
 
 ### Writing multiple points
 ---
@@ -62,7 +62,7 @@ InfluxDB is a schemaless database. You can add new measurements, tags, and field
 ---
 * 2xx: If it's `HTTP 204 No Content`, success! If it's  `HTTP 200 OK`, InfluxDB understood the request but couldn't complete it. The body of the response will contain additional error information.
 * 4xx: InfluxDB could not understand the request.
-* 5xx: The `influxd` process is either down or significantly impaired.
+* 5xx: The system is overloaded or significantly impaired.
 
 **Examples of error responses:**
 
