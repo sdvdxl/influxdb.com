@@ -144,7 +144,7 @@ SELECT PERCENTILE(field_key, N) FROM measurement WHERE time > 1434059627s GROUP 
 
 ## Top
 
-TOP() is not yet functional in InfluxDB 0.9. See GitHub Issue [#1821](https://github.com/influxdb/influxdb/issues/1821) for more information.
+TOP() will be available as of InfluxDB 0.9.4. See GitHub Issue [#1821](https://github.com/influxdb/influxdb/issues/1821) for more information on how TOP is implemented.
 
 # Transformations
 
