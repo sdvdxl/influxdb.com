@@ -74,7 +74,7 @@ Edit the `influxdb.generated.conf` file to have the desired configuration settin
 
 In addition, a valid configuration file can be displayed at any time using the command `influxd config`. Redirect the output to a file to save a clean generated configuration file.
 
-If no `-config` option is supplied, InfluxDB will use an internal default configuration equialent to the output of `influxd config`
+If no `-config` option is supplied, InfluxDB will use an internal default configuration equivalent to the output of `influxd config`
 
 > Note: The `influxd` command has two similarly named flags. The `config` flag prints a generated default configuration file to STDOUT but does not launch the `influxd` process. The `-config` flag takes a single argument, which is the path to the InfluxDB configuration file to use when launching the process.
 
