@@ -36,7 +36,7 @@ SELECT DISTINCT(field_key) FROM measurement WHERE time > now() - 1d GROUP BY tim
 SELECT DISTINCT(field_key) FROM measurement WHERE time > 1434059627s GROUP BY tag_key
 ```
 
-You can nest distinct in count to get the counts of unique values over windows of time:
+You can nest DISTINCT() in COUNT() to get the counts of unique values over windows of time:
 
 ```sql
 SELECT COUNT(DISTINCT(field_key)) from measurement
@@ -144,7 +144,7 @@ SELECT PERCENTILE(field_key, N) FROM measurement WHERE time > 1434059627s GROUP 
 
 ## Top
 
-TOP() will be available as of InfluxDB 0.9.4. See GitHub Issue [#1821](https://github.com/influxdb/influxdb/issues/1821) for more information on how TOP is implemented.
+TOP() will be available as of InfluxDB 0.9.4. See GitHub Issue [#1821](https://github.com/influxdb/influxdb/issues/1821) for more information on how TOP() is implemented.
 
 # Transformations
 
