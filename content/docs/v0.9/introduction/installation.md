@@ -88,8 +88,81 @@ The output will show every option configured in the `influxdb.partial.conf` file
 
 The example configuration file shipped with the installer is for information only. It is an identical file to the internally generated configuration except that the example file has comments.
 
+## Hosting on AWS
 
+### Hardware
 
+We recommend using two SSD volumes. One for the `influxdb/wal` and one for the `influxdb/data`. Depending on your load each volume should have around 1k-3k provisioned IOPS. The `influxdb/data` volume should have more disk space with lower IOPS and the `influxdb/wal` volume should have less disk space with higher IOPS.
+
+Each machine should have a minimum of 8G RAM.
+
+We’ve seen the best performance with the C3 class of machines.
+
+## Configuring the Instance
+
+This example assumes that you are using two SSD volumes and that you have mounted them appropriately. This example also assumes that each of those volumes is mounted at `/mnt/influx` and `/mnt/db`. For more infomation on how to do that see the Amazon documentation on how to [Add a Volume to Your Instance](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-add-volume-to-instance.html).
+
+### Config File
+You'll have to update the config file appropriately for each InfluxDB instance you have.
+
+```
+...
+
+[meta]
+  dir = "/mnt/db/meta"
+  ...
+
+...
+
+[data]
+  dir = "/mnt/db/data"
+  ...
+  wal-dir = "/mnt/influx/wal"
+  ...
+
+...
+
+[hinted-handoff]
+    ...
+    dir = "/mnt/db/hh"
+    ...
+```
+
+### Init.d File
+
+You'll have to update the `init.d` scripts appropriately for each InfluxDB instance you have.
+
+```bash
+...
+
+USER=influxdb
+GROUP=influxdb
+
+chown $USER:$GROUP /mnt/influx
+chown $USER:$GROUP /mnt/db
+
+...
+```
+
+**Note:** If you're planning on using a cluster, you may also want to set `hostname` and `join` flags in `INFLUXD_OPTS`. For example 
+
+```
+...
+
+INFLUXD_OPTS='-hostname host[:port] [-join hostname_1:port_1[,hostname_2:port_2]]'
+
+...
+
+USER=influxdb
+GROUP=influxdb
+
+chown $USER:$GROUP /mnt/influx
+chown $USER:$GROUP /mnt/db
+
+...
+```
+
+For more detailed instructions on how to set up a cluster, see the documenation on [clustering](/docs/v0.9/guides/clustering.html)
 
 ## Development Versions
 
