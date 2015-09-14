@@ -75,7 +75,7 @@ To verify that the new node has successfully joined the cluster, issue a `SHOW S
 
 If you do not, then your node was not successfully added to the cluster. Please verify that your cluster is healthy and retry steps 1 through 3.
 
-<dt> Currently InfluxDB supports writes to any node in the cluster, however queries must be directed at one of the 3 raft peers. This is a bug. See issue [3574](https://github.com/influxdb/influxdb/issues/3574) for more information.</dt>
+<dt> Version 0.9.3 and earlier support writes to any node in the cluster, however queries must be directed at one of the 3 raft peers. This is a bug. See issue [3574](https://github.com/influxdb/influxdb/issues/3574) for more information.</dt>
 
 ## Unimplemented Features
 
