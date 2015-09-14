@@ -56,6 +56,20 @@
     </div>
     <script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script><script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='COMPANY';ftypes[2]='text';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
     <!--End mc_embed_signup-->
+
+    <script type="text/javascript">
+        var aoProtocol = location.protocol;
+        if ( aoProtocol.indexOf('http') < 0 ) aoProtocol = 'http:';
+        var aoCAP = {
+            aid: '16929',
+            fid: '0001',
+            did: 'd-ext-0001',
+            server: 'marketing.influxdb.com',
+            formName: 'mc-embedded-subscribe-form',
+            protocol: aoProtocol
+        };
+        document.write( '<script type="text/javascript" src="'+aoCAP.protocol+'//'+aoCAP.server+'/acton/js/formcap.min.js"><'+'/script>' );
+    </script>
 </article>
 
 {{ partial "nav.html" . }}
