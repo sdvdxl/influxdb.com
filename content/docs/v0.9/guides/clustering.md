@@ -44,6 +44,16 @@ At this point you'll want to verify that that your initial raft cluster is healt
 |  2 | "hostname_2:port_2" |  true |
 |  3 | "hostname_3:port_3" |  true |
 
+> **Note:** The CLI output of `SHOW SERVERS` looks like this
+>
+```
+> show servers
+id    cluster_addr            raft
+1     hostname_1:port_1       true
+2     hostname_2:port_2       true
+3     hostname_3:port_3       true
+```
+
 If you do not see all three raft nodes, your cluster is not healthy. If you believe that you did the following steps correctly, but are still experiencing problems, try restarting each node in your cluster. If your problems persist, uninstall InfluxDB on each machine and retry steps 1 through 8. Under no circumstance should you continue setting up your cluster if your initial raft cluster is not healthy.
 
 > **Note:** If you're having a hard time setting up your cluster, try setting the `/var/opt/influxdb/meta/peers.json` file manually to be `["<hostname 1>:<port 1>","<hostname 2>:<port 2>","<hostname 3>:<port 3>"]`.

@@ -4,7 +4,7 @@ layout = "sidebar"
 +++
 # InfluxDB Downloads
 
-## Version 0.9.4 (Stable)
+## Version 0.9.4.1 (Stable)
 
 #### OS X
 
@@ -17,18 +17,18 @@ layout = "sidebar"
 
 - 64-bit system install instructions
 
-		wget https://s3.amazonaws.com/influxdb/influxdb_0.9.4_amd64.deb
-		sudo dpkg -i influxdb_0.9.4_amd64.deb
+		wget https://s3.amazonaws.com/influxdb/influxdb_0.9.4.1_amd64.deb
+		sudo dpkg -i influxdb_0.9.4.1_amd64.deb
 
 #### RedHat & CentOS
 
 - 64-bit system install instructions
 
-		wget https://s3.amazonaws.com/influxdb/influxdb-0.9.4-1.x86_64.rpm
-		sudo yum localinstall influxdb-0.9.4-1.x86_64.rpm
+		wget https://s3.amazonaws.com/influxdb/influxdb-0.9.4.1-1.x86_64.rpm
+		sudo yum localinstall influxdb-0.9.4.1-1.x86_64.rpm
 
 ## Version 0.9.5 (Nightly)
-Nightly builds are created once-a-day, at midnight Los Angeles, CA time, using the top-of-tree of [master](https://github.com/influxdb/influxdb/tree/master) source code. These builds will include all the latest fixes, but also undergo only basic testing.
+Nightly builds are created once-a-day, at midnight San Francisco, CA time, using the top-of-tree of [master](https://github.com/influxdb/influxdb/tree/master) source code. These builds will include all the latest fixes, but also undergo only basic testing.
 
 #### Ubuntu & Debian
 
