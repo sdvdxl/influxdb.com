@@ -23,7 +23,7 @@ show stats
 show diagnostics
 ```
 
-We don't have statistics instrumentation for every part of the system yet, but we'll adding to it over time. Bt default, the server will write the stats information into a database called `_internal`. This data is only kept around for 7 days, but it'll be a first stop when we're helping people troubleshoot problems with InfluxDB.
+We don't have statistics instrumentation for every part of the system yet, but we'll adding to it over time. By default, the server will write the stats information into a database called `_internal`. This data is only kept around for 7 days, but it'll be the first stop when we're helping users troubleshoot problems with InfluxDB.
 
 ### What's next: write throughput and clustering
 
@@ -31,10 +31,10 @@ Our number one priority for the next release is to improve write throughput and 
 
 Preliminary tests have shown significant improvements in sustained write throughput and on-disk size of the data. We'll be making an announcment when it's available in a nightly build for testing. Or you can [track this issue to get notified when the new storage engine is available for testing](https://github.com/influxdb/influxdb/issues/4086).
 
-We're contining work on clustering with bug fixes for replication as we find them, performance improvements, and wiring up every query to work within a cluster.
+We're also continuing work on clustering with bug fixes for replication as we find them, performance improvements, and wiring up every query to work within a cluster.
 
-### Conclusion
+### Want to give it a try?
 
 You can <a href="https://influxdb.com/download/" target="_">download InfluxDB</a> or sign up for a <a href="https://customers.influxdb.com/" target="_">free trial of a manged InfluxDB server</a> in the cloud.
 
-We also offer expert professional services for InfluxDB help, feature requests, performance and advanced configurations. Contact us at support@influxdb.com to learn more about how we can help accelerate your project.
+We also offer expert professional services for help with InfluxDB, feature requests, performance tuning, and advanced configurations. Contact us at [support@influxdb.com](mailto:support@influxdb.com) to learn more about how we can help accelerate your project.
