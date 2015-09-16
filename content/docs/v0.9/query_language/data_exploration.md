@@ -444,12 +444,18 @@ InfluxQL supports two different clauses to limit the results returned. They are 
 
 ### Limiting results per series
 
-Adding a `LIMIT n` clause to the end of your query will return the first N points found for each series in the measurement queried. Because `ORDER BY` is not yet functional (see GitHub Issue [#2022](https://github.com/influxdb/influxdb/issues/2022) for more information) the first N points will always be the _oldest_ N points by timestamp.
+Adding a `LIMIT n` clause to the end of your query will return the first N points found for each series in the measurement queried. The default sort order is time ascending, so by default the first N points will be the _oldest_ N points by timestamp. If you wish to see the _newest_ N points by timestamp add `ORDER BY time DESC` to the query.
 
 The following query will return the 10 oldest points from each series in the `cpu` measurement, meaning there will be 10 points returned for each unique tag set in `cpu`:
 
 ```sql
 SELECT value FROM cpu LIMIT 10
+```
+
+The following query will return the 10 newest points from each series in the `cpu` measurement, meaning there will be 10 points returned for each unique tag set in `cpu`:
+
+```sql
+SELECT value FROM cpu ORDER BY time DESC LIMIT 10
 ```
 
 > **Note:** If N is greater than the number of points in the series, all points in the series will be returned.
@@ -458,12 +464,18 @@ If instead we want the first 10 points from _any_ series in the `cpu` measuremen
 
 ### Limiting results per measurement
 
-Adding an `SLIMIT n` clause to the end of your query will return the first N points found in the measurement queried. Because `ORDER BY` is not yet functional (see GitHub Issue [#2022](https://github.com/influxdb/influxdb/issues/2022) for more information) the first N points will always be the _oldest_ N points by timestamp.
+Adding an `SLIMIT n` clause to the end of your query will return the first N points found in the measurement queried, regardless of the tag set. The default sort order is time ascending, so by default the first N points will be the _oldest_ N points by timestamp. If you wish to see the _newest_ N points by timestamp add `ORDER BY time DESC` to the query.
 
 The following query will return the 10 oldest points less than an hour old in the `cpu` measurement, regardless of the tag set, meaning there will be at most 10 points returned:
 
 ```sql
 SELECT value FROM cpu WHERE time > now() - 1h SLIMIT 10
+```
+
+The following query will return the 10 newest points less than an hour old in the `cpu` measurement, regardless of the tag set, meaning there will be at most 10 points returned:
+
+```sql
+SELECT value FROM cpu WHERE time > now() - 1h ORDER BY time DESC SLIMIT 10
 ```
 
 > **Note:** If N is greater than the number of points in the measurement, all points in the measurement will be returned.
@@ -473,34 +485,14 @@ If instead we want the first 10 points from each series in the `cpu` measurement
 
 ## Querying with an OFFSET
 
-Get the second 10 series from the region:
+OFFSET is a way of paginating the results returned. For instance, to get the first 10 points written to a series
 
 ```sql
-SELECT mean(value) FROM cpu
-WHERE region = 'uswest'
-  AND time > 12345678s
-GROUP BY time(5m), *
-LIMIT 10
-OFFSET 10
+SELECT * FROM cpu WHERE host='server-a' LIMIT 10
 ```
 
-Get the second 10 series from the region:
+To get the second 10 points from that same series:
 
 ```sql
-SELECT mean(value) FROM cpu
-WHERE app =~ '.*someapp.*'
-  AND time > now() - 4h
-GROUP BY time(4m), *
-LIMIT 10
-OFFSET 10
-```
-
-## Getting series with special characters
-
-InfluxDB allows you to use any characters in your time series names. However, parsing queries for those series can be tricky. So it's best to wrap your queries for any series that has characters other than letters in double quotes like this:
-
-```sql
-SELECT * FROM "series with special characters!"
-
-SELECT * FROM "series with \"double quotes\""
+SELECT * FROM cpu WHERE host='server-a' LIMIT 10 OFFSET 10
 ```
