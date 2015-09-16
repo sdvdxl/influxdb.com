@@ -25,6 +25,8 @@ show diagnostics
 
 We don't have statistics instrumentation for every part of the system yet, but we'll adding to it over time. By default, the server will write the stats information into a database called `_internal`. This data is only kept around for 7 days, but it'll be the first stop when we're helping users troubleshoot problems with InfluxDB.
 
+One final note is that this is the first version of InfluxDB that's built with Go 1.5, so the performance characteristics may be slightly different.
+
 ### What's next: write throughput and clustering
 
 Our number one priority for the next release is to improve write throughput and the on disk size of data in the database. To that end, we're working on a new storage engine designed specifically for our needs. This won't require any sort of data migration and the next release will still be a drop in upgrade.
