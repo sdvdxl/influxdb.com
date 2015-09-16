@@ -124,7 +124,7 @@ $ telegraf -config ~/telegraf.toml -test
 > [cpu="cpu-total"] cpu_busy value=12.15
 ```
 
-We are now ready to run telegraf on our system, it will begin sending it's
+We are now ready to run telegraf on our system, it will begin sending its
 measurements to the configured InfluxDB server & Kafka brokers, using the
 automatic `host` tag and any tags configured in the toml file
 
