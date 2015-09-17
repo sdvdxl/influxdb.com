@@ -40,6 +40,16 @@ Then start the daemon by running:
 sudo /etc/init.d/influxdb start
 ```
 
+## SLES & openSUSE
+There are RPM packages provided by openSUSE Build Service for SUSE Linux users.
+
+```bash
+# add go repository
+zypper ar -f obs://devel:languages:go/ go
+# install latest influxdb 
+zypper in influxdb
+```
+
 ## OS X
 
 Users of OS X 10.8 and higher can install using the [Homebrew](http://brew.sh/) package manager.
