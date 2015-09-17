@@ -2,7 +2,7 @@
 title: Using Telegraf to send metrics to InfluxDB and Kafka
 author: Cameron Sparr
 date: 2015-09-17
-publishdate: 2015-09-16
+publishdate: 2015-09-17
 ---
 
 ### Introduction
