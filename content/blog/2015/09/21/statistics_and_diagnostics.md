@@ -38,7 +38,7 @@ query_req       query_resp_bytes        req
 
 This output shows the number of queries received, by this node, since the system started -- 2 in this example -- and the number of bytes returned to the client, 418 in this case (this system just started!).
 
-Most inputs, such as [Graphite](http://graphite.readthedocs.org/en/latest/) and [openTSDB](http://opentsdb.net/), also have detailed statistics available. This can be particularly useful when working with these systems. We get plenty of questions about performance of these inputs, so this statistical information can be really useful. Here is example statistics for the Graphite input:
+Most inputs, such as [Graphite](http://graphite.readthedocs.org/en/latest/) and [openTSDB](http://opentsdb.net/), also have detailed statistics available. This can be particularly useful when working with these systems. We get plenty of questions about performance of these inputs, so this statistical information can be really useful. Here are example statistics for the Graphite input:
 
 ```
 name: graphite
@@ -54,7 +54,7 @@ These are just a few quick examples of what `SHOW STATS` can do. Keep in mind th
 
 ### The _internal_ database
 
-All this statistical information is very useful, but is reset when the system restarts. What if we want to analyze the performance of our system over time? Of course, InfluxDB is a time-series database, built especially for storing this kind of data. So the system periodically writes all statistical data to a special database called `_internal`, which allows you to bring the full power of the [InfluxQL](https://influxdb.com/docs/v0.9/query_language/spec.html) to analyze the system itself.
+All this statistical information is very useful, but is reset when the system restarts. What if we want to analyze the performance of our system over time? Of course, InfluxDB is a time-series database, built especially for storing this kind of data. So the system periodically writes all statistical data to a special database called `_internal`, which allows you to use the full power of the [InfluxQL](https://influxdb.com/docs/v0.9/query_language/spec.html) to analyze the system itself.
 
 Some examples may help.
 
@@ -99,14 +99,14 @@ The final example shows Graphite statistical data. The first graph is also a der
 ![](/img/blog/stats_and_diags/graphite2.png)
 
 #### Cluster-level statistics
-Because every node in your cluster writes these statistics to the `_internal` database, queries against `_internal` return data for the whole cluster, which can be very useful. However, all data is tagged with the hostname and node ID, so analysis of a specific node is always possible. Shown below is `points_rx` for the Graphite service on just node 1.
+Because every node in your cluster writes these statistics to the `_internal` database, queries against `_internal` return data for the whole cluster, which can be very useful. However, all data is tagged with the hostname and node ID, so analysis of a specific node is always possible. Shown below is `points_rx` for the Graphite service on just the node with hostname `malthus`.
 ```
-> SHOW TAG VALUES WITH key=nodeID
-name: nodeIDTagValues
+> SHOW TAG VALUES WITH key=hostname
+name: hostnameTagValues
 ---------------------
-nodeID
-1
-> SELECT points_rx FROM graphite WHERE nodeID='1' LIMIT 5
+hostname
+malthus
+> SELECT points_rx FROM graphite WHERE hostname='malthus' LIMIT 5
 name: graphite
 --------------
 time                            points_rx
@@ -124,9 +124,11 @@ All statistics data is available in standard [expvar](https://golang.org/pkg/exp
 
 ## Diagnostics
 
-Diagnostic information is treated a little differently within the InfluxDB system. It's mostly information about the system that is not necessarily numerical in format. Important to note is that diagnostic information is not stored in the `_internal` database.
+Diagnostic information is treated a little differently within the InfluxDB system. It's mostly information about the system that is not necessarily numerical in format. It is important to note that diagnostic information is not stored in the `_internal` database.
 
-Example data is the build version of your InfluxDB and its uptime. This information is particularly useful to InfluxDB Support, so be sure to include the output of this query anytime you file a Support ticket or Github issue. Example output is shown below.
+Example data is the build version of your InfluxDB and its uptime. This information is particularly useful to InfluxDB Support, so be sure to include the output of this query anytime you file a Support ticket or Github issue.
+
+Example output is shown below.
 
 ```
 > SHOW DIAGNOSTICS
@@ -156,4 +158,4 @@ malthus
 
 ## More to come
 
-As development proceeds, we'll be adding more and more statistical and diagnostic information, and we encourage open-source developers to add statistics to any code they contribute, if it makes sense. We hope you find this information useful, as you work with InfluxDB.
+As development proceeds, we'll be adding more and more statistical and diagnostic information, and we encourage open-source developers to add statistics and diagnostics to any code they contribute, if it makes sense. We hope you find this information useful, as you work with InfluxDB.
