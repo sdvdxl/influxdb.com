@@ -38,7 +38,7 @@ query_req       query_resp_bytes        req
 
 This output shows the number of queries received, by this node, since the system started -- 2 in this example -- and the number of bytes returned to the client, 418 in this case (this system just started!).
 
-Most inputs, such as [Graphite](https://github.com/influxdb/influxdb/blob/master/services/graphite/README.md) and [openTSDB](http://opentsdb.net/), also have detailed statistics available. This can be particularly useful when working with these systems. We get plenty of questions about performance of these inputs, so this statistical information can be really useful. Here is example statistics for the Graphite input:
+Most inputs, such as [Graphite](http://graphite.readthedocs.org/en/latest/) and [openTSDB](http://opentsdb.net/), also have detailed statistics available. This can be particularly useful when working with these systems. We get plenty of questions about performance of these inputs, so this statistical information can be really useful. Here is example statistics for the Graphite input:
 
 ```
 name: graphite
