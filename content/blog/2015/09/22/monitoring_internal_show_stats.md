@@ -1,8 +1,8 @@
 ---
-title: InfluxDB statistics and diagnostics
+title: How to use the SHOW STATS command and the _internal database to monitor InfluxDB
 author: Philip O'Toole
-date: 2015-09-21
-publishdate: 2015-09-21
+date: 2015-09-22
+publishdate: 2015-09-22
 ---
 
 With the 0.9.4 release of InfluxDB comes new [statistics and diagnostics support](https://github.com/influxdb/influxdb/tree/master/monitor). This information allows developers and system adminstrators to make better use of their InfluxDB system, diagnose problems, and troubleshoot issues.
@@ -100,7 +100,7 @@ The final example shows Graphite statistical data. The first graph is also a der
 ![](/img/blog/stats_and_diags/graphite1.png)
 ![](/img/blog/stats_and_diags/graphite2.png)
 
-#### Cluster-level statistics
+### Cluster-level statistics
 Because every node in your cluster writes these statistics to the `_internal` database, queries against `_internal` return data for the whole cluster, which can be very useful. However, all data is tagged with the hostname and node ID, so analysis of a specific node is always possible. Shown below is `points_rx` for the Graphite service on just the node with hostname `malthus`.
 ```
 > SHOW TAG VALUES WITH key=hostname
@@ -121,7 +121,7 @@ time                            points_rx
 
 But remember, the commands `SHOW STATS` and `SHOW DIAGNOSTICS` only ever return data for the **node on which the query executes**.
 
-### expvar support
+### Expvar support
 All statistics data is available in standard [expvar](https://golang.org/pkg/expvar/) format, if you wish to use external tools to monitor InfluxDB. This information is available at the endpoint `/debug/vars`.
 
 ## Diagnostics
