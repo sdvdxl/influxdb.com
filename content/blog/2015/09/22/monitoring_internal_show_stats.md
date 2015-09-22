@@ -95,9 +95,12 @@ The next example of a query, also visualized using Chronograf, shows a `derivati
 
 ![](/img/blog/stats_and_diags/gc3.png)
 
-The final example shows Graphite statistical data. The first graph is also a derivative, this time of the number of bytes received by the Graphite input. As be clearly seen, the Graphite data is sent to InfluxDB in a very bursty manner. The last graph shows Graphite traffic lasted about 30 minutes, during which time the `connections_active` count was non-zero.
+The final example shows Graphite statistical data. The first graph is also a derivative, this time of the number of bytes received by the Graphite input. As can be clearly seen, the Graphite data is sent to InfluxDB in a very bursty manner. 
 
 ![](/img/blog/stats_and_diags/graphite1.png)
+
+This last graph shows Graphite traffic lasted about 30 minutes, during which time the `connections_active` count was non-zero.
+
 ![](/img/blog/stats_and_diags/graphite2.png)
 
 ### Cluster-level statistics
@@ -122,7 +125,7 @@ time                            points_rx
 But remember, the commands `SHOW STATS` and `SHOW DIAGNOSTICS` only ever return data for the **node on which the query executes**.
 
 ### Expvar support
-All statistics data is available in standard [expvar](https://golang.org/pkg/expvar/) format, if you wish to use external tools to monitor InfluxDB. This information is available at the endpoint `/debug/vars`.
+All statistics data are available in standard [expvar](https://golang.org/pkg/expvar/) format, if you wish to use external tools to monitor InfluxDB. This information is available at the endpoint `/debug/vars`.
 
 ## Diagnostics
 
