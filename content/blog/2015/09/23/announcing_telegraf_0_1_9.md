@@ -9,9 +9,9 @@ We are excited to announce that Telegraf 0.1.9, InfluxDB’s native, open source
 
 ## What’s new
 
-### InfluxDB clustering support
+### Support for InfluxDB Clusters
 
-[PR #143](https://github.com/influxdb/telegraf/issues/143): 0.9.x clustering is now supported in Telegraf by listing out your instances in the URL parameter of the Telegraf config file. Telegraf will randomly select cluster instances until it successfully makes a write.
+[PR #143](https://github.com/influxdb/telegraf/issues/143): Telegraf can now write data to InfluxDB clusters  by listing out your instances in the URL parameter of the Telegraf config file. Telegraf will randomly select servers until it successfully makes a write.
 
 ### Support for filtering telegraf outputs on the CLI
 
@@ -31,7 +31,7 @@ We are excited to announce that Telegraf 0.1.9, InfluxDB’s native, open source
 
 ### OpenTSDB output plugin
 
-[PR #182](https://github.com/influxdb/telegraf/pull/182): Telegraf now supports output to OpenTSDB using telnet mode, courtesy of @rplessl. 
+[PR #182](https://github.com/influxdb/telegraf/pull/182): Telegraf now supports output to OpenTSDB using telnet mode, courtesy of @rplessl.
 
 ### Retry failed server connections
 
