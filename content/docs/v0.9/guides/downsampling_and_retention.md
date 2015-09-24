@@ -2,6 +2,22 @@
 title: Downsampling and Data Retention
 ---
 
+InfluxDB is built to ingest tends or hundreds of thousands of data points per second. That much data can quickly add up, creating storage concerns. A natural solution is to downsample the data, keeping high precision raw data for only a limited time, and storing lower precision summarized data much longer or forever. This guide will show you how to combine two InfluxDB features -- retention policies and continuous queries -- to easily and automatically downsample and expire data. This will speed up common queries and keep storage needs from growing out of control.
+
+## Retention Policies
+
+First we will discuss the retention of data. In general, InfluxDB is poor at processing deletes. One of the fundamental assumptions in the architecture of the tool is that deletes are infrequent and need not be highly performant. However, InfluxDB also recognizes the necessity of purging data that has outlived its usefulness. 
+
+
+
+In InfluxDB all points are written to measurements. A measurement may contain many series, and each series may contain many points. Each measurement belongs to a particular retention policy. Therefore a particular data point in InfluxDB belongs to a series, the series belongs to a measurement, the measurement belongs to a retention policy, and the retention policy belongs to a database. When writing a point the database and retention policy are also part of the write. If you do not supply an explicit retention policy with a write the point is written to the default retention policy.
+
+
+
+Note: There is some confusing nomenclature regarding default retention policies. InfluxDB auto-generates a retention policy for each newly created database. That retention policy is called "default". However, using the 
+
+## Continuous Queries
+
 Setting up RPs, link to admin page
 Setting up CQs, from raw to others. From others to others if raw retention not long enough. (#159)
 CQ backreference (https://github.com/influxdb/influxdb/pull/3876)
