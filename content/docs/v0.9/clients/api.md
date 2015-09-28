@@ -40,3 +40,6 @@ This is a list of the client libraries which have some support for InfluxDB vers
 
 ## Rust
 - [Influent.rs](https://github.com/gobwas/influent.rs) by [gobwas](https://github.com/gobwas)
+
+## SNMP
+- [influxsnmp](https://github.com/paulstuart/influxsnmp) by [paulstuart](https://github.com/paulstuart)
