@@ -50,7 +50,7 @@ Configuration sections:
 * [[hinted-handoff]](../administration/config.html#hinted-handoff)  
 
 ## reporting
-Once every 24 hours InfluxDB reports anonymous data to m.influxdb.com. Those data include a unique, randomly-generated cluster identifier (an 8-byte Raft ID), OS, architecture, InfluxDB version, and metadata (???). InfluxDB doesn't request, track, or store the IP addresses of those servers that report. InfluxDB uses these data primarily to track the number of deployed clusters for each version. 
+Once every 24 hours InfluxDB reports anonymous data to m.influxdb.com. Those data include a unique, randomly-generated cluster identifier (an 8-byte Raft ID), OS, architecture, InfluxDB version, and metadata (🎁 help on clarifying metadata - users could interpret it to mean nearly anything). InfluxDB doesn't request, track, or store the IP addresses of those servers that report. InfluxDB uses these data primarily to track the number of deployed clusters for each version. 
 
 **reporting-disabled = false**  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Change this option to `true` to disable reporting.
@@ -263,7 +263,7 @@ This section controls the listener for Collectd data.
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🎁 No default?
 
 **# database = ""**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The name of the database that you want to write to. 🎁 Default to collectd.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The name of the database that you want to write to. 🎁 Default to collectd?
 
 **# typesdb = ""**  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🎁
