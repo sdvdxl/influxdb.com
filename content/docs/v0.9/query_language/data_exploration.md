@@ -629,7 +629,7 @@ Return all points that occur after  `2014-01-01 00:00:00`:
 
 Regular expressions are surrounded by `/` characters and use [Golang's regular expression syntax](http://golang.org/pkg/regexp/syntax/). Use regular expressions when selecting measurements and tags.
 
->**Note:** You cannot use regular expressions to specify multiple databases or retention policies.
+>**Note:** You cannot use regular expressions to specify multiple databases, retention policies, or fields.
 
 The [sample data](../query_language/data_exploration.html#sample-data) need to be more intricate for the following sections. Assume that the database `water` now holds several measurements: `h2o_feet`, `h2o_quality`, `h2o_pH`, `average_temperature`, and `h2o_temperature`. Please note that every measurement besides `h2o_feet` contains fictional data.
 
