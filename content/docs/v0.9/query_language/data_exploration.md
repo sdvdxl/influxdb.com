@@ -35,8 +35,8 @@ General tips on query syntax:
 &nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Relative time](../query_language/data_exploration.html#relative-time)  
 &nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Absolute time](../query_language/data_exploration.html#absolute-time)
 * [Regular expressions in queries](../query_language/data_exploration.html#regular-expressions-in-queries)  
-&nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Regular expressions and selecting measurements](http://127.0.0.1:1313/docs/v0.9/query_language/data_exploration.html#regular-expressions-and-selecting-measurements)  
-&nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Regular expressions and specifying tags](http://127.0.0.1:1313/docs/v0.9/query_language/data_exploration.html#regular-expressions-and-specifying-tags)
+&nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Regular expressions and selecting measurements](..query_language/data_exploration.html#regular-expressions-and-selecting-measurements)  
+&nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Regular expressions and specifying tags](../query_language/data_exploration.html#regular-expressions-and-specifying-tags)
 
 The examples below query data using [InfluxDB's Command Line Interface (CLI)](../introduction/getting_started.html). For how to directly query data with the HTTP API, see the [Querying Data](../guides/querying_data.html) guide.
 
