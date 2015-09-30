@@ -5,9 +5,9 @@ date: 2015-09-30
 publishdate: 2015-09-30
 ---
 
-If you’ve watched [Coda Hale's](https://github.com/codahale) popular [Metrics, Metrics Everywhere](https://www.youtube.com/watch?v=czes-oa0yik) video, you know that one of the main takeaways of his talk is that data helps you to make better decisions, and data must be measured, to be effectively managed. 
+If you’ve watched [Coda Hale's](https://github.com/codahale) popular [Metrics, Metrics Everywhere](https://www.youtube.com/watch?v=czes-oa0yik) video, you know that one of the main takeaways of his talk is that data helps you to make better decisions, and data must be measured, to be effectively managed.
 
-Data, or more specifically metrics about your systems can give you incredible insight into your entire stack, touching on many areas. If you’re going to add a metric for everything that moves, you better have the infrastructure to back you up. 
+Data, or more specifically metrics about your systems can give you incredible insight into your entire stack, touching on many areas. If you’re going to add a metric for everything that moves, you better have the infrastructure to back you up.
 
 In this post we’ll look at a few approaches for scaling a [graphite](http://graphite.wikidot.com/) installation using Go specific technologies including [graphite-ng](https://github.com/graphite-ng/graphite-ng) and InfluxDB.
 
@@ -30,7 +30,7 @@ This configuration generally works pretty well on a small-scale, where the carbo
 
 ### Introducing graphite-ng - Graphite on steroids  
 
-To address some of the scalability problems with the basic graphite infrastructure, [Dieter Plaetinck](https://github.com/Dieterbe) rewrote the graphite server in [Go](https://golang.org/), a language that makes writing concurrent programs easier and more efficient. 
+To address some of the scalability problems with the basic graphite infrastructure, [Dieter Plaetinck](https://github.com/Dieterbe) rewrote the graphite server in [Go](https://golang.org/), a language that makes writing concurrent programs easier and more efficient.
 
 Graphite-ng outperforms a vanilla graphite installation and can easily handle millions of metrics per second. As metrics flow into a graphite-ng powered system, it can perform validation of all the incoming data metrics up-front, so you don’t have to worry about cleaning up metrics later on the backend. It can also combine multiple metric series, on-the-fly, into a new series, and his functionality allows for faster metrics aggregation as needed.
 
@@ -39,18 +39,18 @@ Graphite-ng outperforms a vanilla graphite installation and can easily handle mi
 
 *High-level architecture diagram of go written Graphite-ng, and Carbon-relay-ng, with Whisper backend.*
 
-It also is worth noting that graphite-ng can be configured to replicate data to multiple backends such as [ceres](https://github.com/graphite-project/ceres), and [elasticsearch](https://github.com/graphite-ng/graphite-ng/tree/master/carbon-es), provide redundancy, or partition the data, to balance load. 
+It also is worth noting that graphite-ng can be configured to replicate data to multiple backends such as [ceres](https://github.com/graphite-project/ceres), and [elasticsearch](https://github.com/graphite-ng/graphite-ng/tree/master/carbon-es), provide redundancy, or partition the data, to balance load.
 
 ### InfluxDB is working on a more scalable solution
 
-To optimize your entire graphite stack, it helps to choose the right backend database to store the metrics. When considering what backend infrastructure to use, here are couple of high-level characteristics your database needs to have: 
+To optimize your entire graphite stack, it helps to choose the right backend database to store the metrics. When considering what backend infrastructure to use, here are couple of high-level characteristics your database needs to have:
 
 
 1. Scalable - Look for the backend to support millions of concurrent write operations
 2. Highly available - A backend that is down, doesn’t allow you to store or visualize data
 3. Time Series Support - Make sure that the backend can handle time series data natively and be able to to store and serve it efficiently
 
-Whisper, the default graphite storage engine, unfortunately does not meet all these requirements. It is written in python and cannot scale in heavy-write scenarios. It is also memory heavy and keeps multiple file descriptors open at a time, one for each metric. 
+Whisper, the default graphite storage engine, unfortunately does not meet all these requirements. It is written in python and cannot scale in heavy-write scenarios. It is also memory heavy and keeps multiple file descriptors open at a time, one for each metric.
 
 InfluxDB is aiming to solve these problems in the upcoming releases. The 0.8.8 release of InfluxDB used LevelDB as the underlying storage engine, which had better performance than Whisper. Upcoming releases of the 0.9 line are taking lessons from LevelDB and will aim to exceed 0.8's performance on the storage engine side, while bringing in clustering for HA and horizontal scalability.
 
@@ -58,7 +58,7 @@ InfluxDB is aiming to solve these problems in the upcoming releases. The 0.8.8 r
 
 *High-level architecture of go based carbon-relay-ng feeding information to InfluxDB*
 
-InfluxDB is designed to be [simple to install and configure](https://influxdb.com/docs/v0.9/introduction/getting_started.html). When [clustering](https://influxdb.com/docs/v0.9/guides/clustering.html) support becomes generally available you'll be able to run a multi-node cluster and replicate your data fully across the nodes for high-availability. Of coursee, you can get started with testing clustering now, but it's not yet ready for production use. InfluxDB also provides many ways to write data into it including the l[ine protocol](https://influxdb.com/docs/v0.9/write_protocols/line.html), several [client libraries](https://influxdb.com/docs/v0.9/clients/api.html) and plugins for common formats like [graphite](https://influxdb.com/docs/v0.9/write_protocols/graphite.html).
+InfluxDB is designed to be [simple to install and configure](https://influxdb.com/docs/v0.9/introduction/getting_started.html). When [clustering](https://influxdb.com/docs/v0.9/guides/clustering.html) support becomes generally available you'll be able to run a multi-node cluster and replicate your data fully across the nodes for high-availability. Of course, you can get started with testing clustering now, but it's not yet ready for production use. InfluxDB also provides many ways to write data into it including the l[ine protocol](https://influxdb.com/docs/v0.9/write_protocols/line.html), several [client libraries](https://influxdb.com/docs/v0.9/clients/api.html) and plugins for common formats like [graphite](https://influxdb.com/docs/v0.9/write_protocols/graphite.html).
 
 Besides the graphite-ng project, Dieter has a cool repo that uses Docker to simplify the process of installing and configuring a graphite system with an InfluxDB backend. Check it out here.
 
