@@ -41,7 +41,7 @@ Graphite-ng outperforms a vanilla graphite installation and can easily handle mi
 
 It also is worth noting that graphite-ng can be configured to replicate data to multiple backends such as [ceres](https://github.com/graphite-project/ceres), and [elasticsearch](https://github.com/graphite-ng/graphite-ng/tree/master/carbon-es), provide redundancy, or partition the data, to balance load. 
 
-### Still not enough? Let’s take it to the next level...
+### InfluxDB is working on a more scalable solution
 
 To optimize your entire graphite stack, it helps to choose the right backend database to store the metrics. When considering what backend infrastructure to use, here are couple of high-level characteristics your database needs to have: 
 
@@ -52,7 +52,7 @@ To optimize your entire graphite stack, it helps to choose the right backend dat
 
 Whisper, the default graphite storage engine, unfortunately does not meet all these requirements. It is written in python and cannot scale in heavy-write scenarios. It is also memory heavy and keeps multiple file descriptors open at a time, one for each metric. 
 
-InfluxDB is aiming to solve these problems in the upcoming releases. The 0.8.8 release of InfluxDB used LevelDB as the underlying storage engine and had better performance than Whisper. Upcoming releases of the 0.9 line aim to exceed 0.8's performance on the storage engine side, while bringing in clustering for HA and horizontal scalability.
+InfluxDB is aiming to solve these problems in the upcoming releases. The 0.8.8 release of InfluxDB used LevelDB as the underlying storage engine, which had better performance than Whisper. Upcoming releases of the 0.9 line are taking lessons from LevelDB and will aim to exceed 0.8's performance on the storage engine side, while bringing in clustering for HA and horizontal scalability.
 
 ![High-level architecture of go based carbon-relay-ng feeding information to InfluxDB](/img/blog/graphite3.jpg)
 
