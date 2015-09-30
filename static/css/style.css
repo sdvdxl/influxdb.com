@@ -19,10 +19,10 @@ a:hover {color: #00435d;}
 
 /* Custom text-selection colors (remove any text shadows: http://twitter.com/miketaylr/status/12228805301) */
 ::-moz-selection{background: #008fb8; color: #fff; text-shadow: none;}
-::selection {background: #008fb8; color: #fff; text-shadow: none;} 
+::selection {background: #008fb8; color: #fff; text-shadow: none;}
 
 /*	j.mp/webkit-tap-highlight-color */
-a:link {-webkit-tap-highlight-color: #008fb8;} 
+a:link {-webkit-tap-highlight-color: #008fb8;}
 
 ins {background-color: #fcd700; color: #000; text-decoration: none;}
 mark {background-color: #fcd700; color: #000; font-style: italic; font-weight: bold;}
@@ -262,19 +262,19 @@ footer a:hover {
 }
 
 .footer-social .link-github:before {
-	background-image: url(../img/logo_github.svg);	
+	background-image: url(../img/logo_github.svg);
 }
 
 .footer-social .link-twitter:before {
-	background-image: url(../img/logo_twitter.svg);	
+	background-image: url(../img/logo_twitter.svg);
 }
 
 .no-svg .footer-social .link-github:before {
-	background-image: url(../img/logo_github.png);	
+	background-image: url(../img/logo_github.png);
 }
 
 .no-svg .footer-social .link-twitter:before {
-	background-image: url(../img/logo_twitter.png);	
+	background-image: url(../img/logo_twitter.png);
 }
 
 footer p {
@@ -286,7 +286,7 @@ footer p {
 	background-color: #fff;
 	margin: 1px auto 0;
 	max-width: 90em;
-	position: relative;	
+	position: relative;
 }
 
 .article-docs {
@@ -444,7 +444,7 @@ aside {
 .home-follow .subscribe input::-webkit-input-placeholder {
 	color: #ffaa00;
 }
-	
+
 .feature-module {
 	margin: 0 1em 2em;
 }
@@ -632,11 +632,11 @@ aside {
 	margin: 2em 1em;
 }
 
-.support-plans, .support-plans thead, .support-plans tbody, .support-plans th, .support-plans td, .support-plans tr { 
-	display: block; 
+.support-plans, .support-plans thead, .support-plans tbody, .support-plans th, .support-plans td, .support-plans tr {
+	display: block;
 }
 
-.support-plans thead tr { 
+.support-plans thead tr {
 	position: absolute;
 	top: -9999px;
 	left: -9999px;
@@ -678,7 +678,7 @@ aside {
 	left: 1.5em;
 	text-align: right;
 	top: 1.125em;
-	width: 32%; 
+	width: 32%;
 	white-space: nowrap;
 }
 
@@ -1039,7 +1039,7 @@ aside {
 
 
 .article-docs ul.blog-archive p:first-of-type {
-	font-size: 1em;	
+	font-size: 1em;
 }
 
 .article-docs .docs-traverse {
@@ -1272,33 +1272,33 @@ div.page-content article.chronograf h2 {
 
 /* Breadcrumbs */
 
-ul.breadcrumbs { 
-	list-style: none; 
-	overflow: hidden; 
+ul.breadcrumbs {
+	list-style: none;
+	overflow: hidden;
 	font: 18px Helvetica, Arial, Sans-Serif;
 	display: inline-block;
 	margin: 0;
 	padding: 0;
 }
-ul.breadcrumbs li { 
+ul.breadcrumbs li {
 	float: left;
 	height: 40px;
 	line-height: 40px;
 }
 ul.breadcrumbs li a {
 	color: white;
-	text-decoration: none; 
+	text-decoration: none;
 	padding-left: 5px;
 	background: brown;                   /* fallback color */
-	background: hsla(34,85%,35%,1); 
-	position: relative; 
+	background: hsla(34,85%,35%,1);
+	position: relative;
 	display: block;
 	float: left;
 }
-ul.breadcrumbs li a:after { 
-	content: " "; 
-	display: block; 
-	width: 0; 
+ul.breadcrumbs li a:after {
+	content: " ";
+	display: block;
+	width: 0;
 	height: 0;
 	border-top: 20px solid transparent;           /* Go big on the size, and let overflow hide */
 	border-bottom: 20px solid transparent;
@@ -1306,14 +1306,14 @@ ul.breadcrumbs li a:after {
 	border-right-width: 20px;
 	position: absolute;
 	top: 50%;
-	margin-top: -20px; 
+	margin-top: -20px;
 	left: 100%;
-	z-index: 2; 
-}	
-ul.breadcrumbs li a:before { 
-	content: " "; 
-	display: block; 
-	width: 0; 
+	z-index: 2;
+}
+ul.breadcrumbs li a:before {
+	content: " ";
+	display: block;
+	width: 0;
 	height: 0;
 	border-top: 20px solid transparent;           /* Go big on the size, and let overflow hide */
 	border-bottom: 20px solid transparent;
@@ -1321,11 +1321,11 @@ ul.breadcrumbs li a:before {
 	border-right-width: 20px;
 	position: absolute;
 	top: 50%;
-	margin-top: -20px; 
+	margin-top: -20px;
 	margin-left: 1px;
 	left: 100%;
-	z-index: 1; 
-}	
+	z-index: 1;
+}
 ul.breadcrumbs li:first-child a {
 	padding-left: 10px;
 }
@@ -1367,11 +1367,11 @@ ul.breadcrumbs li a:hover:after { border-left-color: hsla(34,85%,25%,1) !importa
 	.skip-to-nav {
 		width: 6.25em;
 	}
-	
+
 	.skip-to-nav:before {
 		left: 3.25em;
 	}
-	
+
 	.skip-to-nav:after {
 		left: 3.25em;
 	}
@@ -1392,29 +1392,29 @@ ul.breadcrumbs li a:hover:after { border-left-color: hsla(34,85%,25%,1) !importa
 		height: 3em;
 		width: 13.125em;
 	}
-	
+
 	.hide-all-docs {
 		margin-bottom: 0;
 		position: absolute;
 		right: 1em;
 	}
-	
+
 	.article-home section, .article-support section {
 		margin-bottom: 4em;
 	}
-	
+
 	.article-home .home-top {
 		margin-bottom: 1em;
 	}
-	
+
 	.article-home section.home-follow {
 		margin-bottom: 1em;
 	}
-	
+
 	.article-home h2 {
 		font-size: 2em;
 	}
-	
+
 	.home-top {
 		padding: 3em 2em;
 	}
@@ -1422,11 +1422,11 @@ ul.breadcrumbs li a:hover:after { border-left-color: hsla(34,85%,25%,1) !importa
 }
 
 @media screen and (min-width: 31.25em) {
-	
+
 	.team-listing {
 		font-family: AdobeBlank;
 	}
-	
+
 	.team-listing li {
 		display: inline-block;
 		font-family: "Open Sans", sans-serif;
@@ -1434,67 +1434,67 @@ ul.breadcrumbs li a:hover:after { border-left-color: hsla(34,85%,25%,1) !importa
 		vertical-align: top;
 		width: 46%;
 	}
-	
+
 	.investor-listing li {
 		vertical-align: middle;
 	}
-	
+
 	.team-listing li:nth-child(even) {
 		margin-right: 0;
 	}
-	
+
 }
 
 @media screen and (min-width: 37.5em) {
-	
+
 	.home-top {
 		min-height: 24em;
 		padding: 6em 1em;
 	}
-	
+
 	.article-home h1, .article-support h1 {
 		font-size: 2.5em;
 	}
-	
+
 	.article-support h1 {
 		padding: 1em 0.375em 0;
 	}
-	
+
 	.article-home .home-follow h2, .home-follow .subscribe input[type="text"] {
 		font-size: 1.875em;
 	}
-	
+
 	.article-home h2, .article-support h2 {
 		font-weight: 300;
 	}
-	
+
 	.home-top p {
 		font-weight: 300;
 	}
-	
+
 	.home-follow .subscribe input[type="text"] {
 		font-weight: 300;
 	}
-	
+
 	.home-follow .subscribe input[type="submit"] {
 		height: 3em;
 		width: 3em;
 	}
-	
+
 	.use-cases .feature-module h3 {
 		font-size: 1.875em;
 		line-height: 1.25em;
 		margin-bottom: 0.5em;
 	}
-	
+
 	.use-cases .feature-module p {
 		font-size: 1.125em;
 	}
-	
+
 	.use-cases .call-to-action a {
 		font-weight: 300;
-	}	
-	
+	}
+
 	.features li {
 		display: inline-block;
 		margin: 0 2% 2em;
@@ -1502,11 +1502,11 @@ ul.breadcrumbs li a:hover:after { border-left-color: hsla(34,85%,25%,1) !importa
 		vertical-align: top;
 		width: 44%;
 	}
-	
+
 	.feature-module h3 {
 		font-weight: 300;
 	}
-	
+
 	.features .feature-module figure {
 		display: block;
 		float: left;
@@ -1515,15 +1515,15 @@ ul.breadcrumbs li a:hover:after { border-left-color: hsla(34,85%,25%,1) !importa
 		margin-right: 1em;
 		width: 5em;
 	}
-	
+
 	.features li h3 {
 		margin-left: 4.8em;
-	} 
-	
+	}
+
 	.features li p {
 		margin-left: 6em;
 	}
-	
+
 	.support-subscriptions h3 {
 		font-size:  1.875em;
 		line-height: 1.25em;
@@ -1532,16 +1532,16 @@ ul.breadcrumbs li a:hover:after { border-left-color: hsla(34,85%,25%,1) !importa
 		margin-right: 0.5333333333em;
 		max-width: 40em;
 	}
-	
+
 	/*.article-docs:first-of-type {
 		padding-top: 4em;
 	}*/
-	
+
 	.show-all-docs {
 		right: 6em;
 	}
-	
-	
+
+
 }
 
 @media screen and (min-width: 55em) {
@@ -1550,11 +1550,11 @@ ul.breadcrumbs li a:hover:after { border-left-color: hsla(34,85%,25%,1) !importa
 		position: relative;
 		z-index: auto;
 	}
-	
+
 	.skip-to-nav {
 		display: none;
 	}
-	
+
 	.nav-main, .nav-deluxe .nav-main {
 		background: none;
 		display: block;
@@ -1566,11 +1566,11 @@ ul.breadcrumbs li a:hover:after { border-left-color: hsla(34,85%,25%,1) !importa
 		width: 100%;
 		z-index: 10;
 	}
-	
+
 	 .nav-deluxe.nav-revealed .nav-main {
 	 	top: 0;
 	 }
-	
+
 	.nav-main a {
 		border: none;
 		display: inline-block;
@@ -1583,12 +1583,12 @@ ul.breadcrumbs li a:hover:after { border-left-color: hsla(34,85%,25%,1) !importa
 		width: 8.3333333333%;
 		width: 6.25em;
 	}
-	
+
 	.nav-main a:hover {
 		background-color: transparent;
 		color: #fff;
 	}
-	
+
 	.nav-main a:after {
 		background-color: #008fb8;
 		bottom: -0.3333333333em;
@@ -1599,20 +1599,20 @@ ul.breadcrumbs li a:hover:after { border-left-color: hsla(34,85%,25%,1) !importa
 		transition: all 0.15s;
 		width: 100%;
 	}
-	
+
 	.nav-main a:hover:after {
 		height: 2.25em;
 	}
-	
+
 	.nav-main .nav-active-item a {
 		color: #fff;
 	}
-	
+
 	.nav-main .nav-active-item a:after {
 		background-color: #fa0;
 		height: 2em;
 	}
-		
+
 	.search-site {
 		justify-content: flex-end;
 		padding: 0;
@@ -1622,7 +1622,7 @@ ul.breadcrumbs li a:hover:after { border-left-color: hsla(34,85%,25%,1) !importa
 		transition: width 0.25s;
 		width: 3em;
 	}
-	
+
 	.search-site .search-toggle {
 		font-family: AdobeBlank;
 		display: inline-block;
@@ -1633,120 +1633,120 @@ ul.breadcrumbs li a:hover:after { border-left-color: hsla(34,85%,25%,1) !importa
 		top: 0;
 		width: 3.25em;
 	}
-	
+
 	.search-site .search-toggle:after {
 		display: none;
 	}
-	
+
 	.search-site input[type="text"] {
 		display: none;
 	}
-	
+
 	.search-site.search-reveal {
 		width: 12em;
 	}
-	
+
 	.search-site.search-reveal input[type="text"] {
 		display: inline;
 		font-size: 0.75em;
 	}
-	
+
 	.article-home h1, .article-support h1 {
 		font-size: 2.5em;
 	}
-	
+
 	.article-home h2, .article-support h2 {
 		font-size: 2.625em;
 		line-height: 3.25em;
 		margin-bottom: 1.5	em;
 	}
-	
+
 	.home-top p {
 		font-size: 1.25em;
 	}
-	
+
 	.home-follow .subscribe {
 		margin: 0 auto;
 		max-width: 50em;
 	}
-	
+
 	.use-cases ul {
 		margin: 0 auto;
 		max-width: 75em;
 	}
-	
+
 	.use-cases li {
-		display: inline-block;		
+		display: inline-block;
 		margin: 0 2%;
 		vertical-align: top;
 		width: 28%;
 	}
-	
+
 	.call-to-action a {
 		font-size: 1.875em;
 		margin: 1.5em auto;
 		max-width: 26.666666667em;
 		padding: 0.6125em 0.5em;
 	}
-	
+
 	.features ul, .support-features ul {
 		margin: auto;
 		max-width: 80em;
 	}
-	
+
 	.feature-module figure {
 		max-width: none;
 	}
-	
+
 	.use-cases .feature-module figure {
 		margin-bottom: 2em;
 		min-height: 8.125em;
 	}
-	
+
 	.use-cases .feature-module figure img {
 		max-height: 8.125em;
 		max-width: 12.5em;
 		vertical-align: middle;
 		width: 100%;
 	}
-	
+
 	.support-subscriptions table {
 		margin: 2em auto 4em;
 		max-width: 75em;
 	}
-	
+
 	.support-plans {
 		border-top: 1px solid #004375;
 		display: table;
 		width: 100%;
 	}
-	
-	.support-plans tbody,  { 
-		display: table-row-group; 
+
+	.support-plans tbody,  {
+		display: table-row-group;
 	}
-	
+
 	.support-plans tr {
 		display: table-row;
 	}
-	
+
 	.support-plans thead {
 		display: none;
 	}
-	
+
 	.support-plans tbody {
 		display: table-row-group;
 	}
-	
+
 	.support-plans th, .support-plans td {
 		display: table-cell;
 	}
-	
-	.support-plans thead tr { 
+
+	.support-plans thead tr {
 		position: static;
 		top: 0;
 		left: 0;
 	}
-	
+
 	.support-plans td {
 		border: none;
 		line-height: 1.5em;
@@ -1755,20 +1755,20 @@ ul.breadcrumbs li a:hover:after { border-left-color: hsla(34,85%,25%,1) !importa
 		text-align: center;
 		vertical-align: middle;
 	}
-	
+
 	.support-plans td:before {
 		display: none;
 	}
-	
+
 	.support-plans td:nth-child(1) {
 		font-size: 1.5em;
 		text-align: left;
 	}
-	
+
 	.support-plans .support-tier-development {
 		background-color: #f2fff2;
 	}
-	
+
 	.support-plans .support-plans-class td {
 		color: #fff;
 		font-size: 1em;
@@ -1785,7 +1785,7 @@ ul.breadcrumbs li a:hover:after { border-left-color: hsla(34,85%,25%,1) !importa
 }
 
 @media screen and (min-width: 60em) {
-	
+
 	.search-site {
 		padding: 0;
 		position: absolute;
@@ -1793,78 +1793,78 @@ ul.breadcrumbs li a:hover:after { border-left-color: hsla(34,85%,25%,1) !importa
 		top: 2.125em;
 		width: 10em;
 	}
-	
+
 	.search-site .search-toggle {
 		display: none;
 	}
-	
+
 	.search-site input[type="text"] {
 		display: inline;
 		font-size: 0.75em;
 	}
-	
+
 	.page-content {
 		font-family: AdobeBlank;
 	}
-	
+
 	.article-home h1, .article-support h1 {
 		font-size: 3em;
 		margin: 0 auto 0.5em;
 		max-width: 24em;
 	}
-	
+
 	.article-support h1 {
 		text-align: center;
 	}
-	
+
 	.home-top {
 		min-height: 24em;
 		padding: 6em 1em;
 	}
-	
+
 	.home-top p {
 		font-size: 1.5em;
 	}
-	
+
 	.article-docs, .article-sidebar {
 		font-family: "Open Sans", sans-serif;
 	}
-	
+
 	.article-docs {
 		font-size: 1.125em;
 		margin-left: auto;
 		margin-right: auto;
 	}
-	
+
 	.article-main-column {
 		display: inline-block;
 		width: 77%;
 	}
-	
+
 	.article-sidebar {
 		display: inline-block;
 		padding: 7em 6em 0 0;
 		vertical-align: top;
 		width: 23%;
 	}
-	
+
 	.article-docs:after {
 		display: none;
 	}
-	
+
 	.show-all-docs, .hide-all-docs {
 		display: none;
 	}
-	
+
 	aside {
 		padding: 11em 1em 0 0;
 		width: 25%;
 	}
-	
+
 	aside h3, aside p {
 		margin-bottom: 1em;
 	}
-	
+
 	.nav-docs {
 		display: inline-block;
 		left: auto;
@@ -1877,48 +1877,48 @@ ul.breadcrumbs li a:hover:after { border-left-color: hsla(34,85%,25%,1) !importa
 		visibility: visible;
 		width: 23%;
 	}
-	
+
 	.support-subscriptions h3 {
 		margin-left: auto;
 		margin-right: auto;
 		max-width: 32em;
 	}
-	
+
 	.support-subscriptions p {
 		font-size: 1.125em;
 		margin: 1em auto 3em;
 		max-width: 53.333333333em;
 		text-align: left;
 	}
-	
+
 	.team-listing li {
 		margin-right: 5%;
 		width: 30%;
 	}
-	
+
 	.team-listing li:nth-child(even) {
 		margin-right: 5%;
 	}
-	
+
 	.team-listing li:nth-child(3n) {
 		margin-right: 0;
 	}
-	
+
 }
 
 @media screen and (min-width: 64em) {
-	
+
 	.nav-main, .nav-deluxe .nav-main {
 		padding-right: 0;
 		text-align: center;
 	}
-	
+
 	.nav-main .download {
 		position: absolute;
 		right: 0;
 		top: 0;
 	}
-	
+
 	.nav-main .download a {
 		background-color: #008fb8;
 		color: #fff;
@@ -1927,54 +1927,54 @@ ul.breadcrumbs li a:hover:after { border-left-color: hsla(34,85%,25%,1) !importa
 		transition: background-color 0.25s;
 		width: auto;
 	}
-	
+
 	.nav-main .download a:hover {
 		background-color: #fa0;
 	}
-	
+
 	.nav-main .download a:after {
 		display: none;
 	}
-	
+
 }
 
 @media screen and (min-width: 75em) {
-	
+
 	.nav-main a {
 		font-size: 0.875em;
 		line-height: 7.1428571429em;
 	}
-	
+
 	.nav-main a:after {
 		bottom: -0.25em;
 		height: 0.25em;
 	}
-	
+
 	.nav-main .download a {
 		line-height: 7.125em;
 	}
-	
+
 	.search-site {
 		width: 12em;
 	}
-	
+
 	.search-site input[type="text"] {
 		font-size: 0.875em;
 	}
-	
+
 	.team-listing li {
 		margin-right: 4%;
 		width: 22%;
 	}
-	
+
 	.team-listing li:nth-child(even), .team-listing li:nth-child(3n) {
 		margin-right: 4%;
 	}
-	
+
 	.team-listing li:nth-child(4n) {
 		margin-right: 0;
 	}
-	
+
 }
 
 @media screen and (min-width: 90em) {
