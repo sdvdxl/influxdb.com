@@ -52,13 +52,13 @@ To optimize your entire graphite stack, it helps to choose the right backend dat
 
 Whisper, the default graphite storage engine, unfortunately does not meet all these requirements. It is written in python and cannot scale in heavy-write scenarios. It is also memory heavy and keeps multiple file descriptors open at a time, one for each metric. 
 
-InfluxDB is a time series, metrics, and analytics database written in Go that is built from the ground-up to address the problem of storing time series metrics data over a period of time. Due to these characteristics, it has been the database of choice for many who need to store metrics using graphite.
+InfluxDB is aiming to solve these problems in the upcoming releases. The 0.8.8 release of InfluxDB used LevelDB as the underlying storage engine and had better performance than Whisper. Upcoming releases of the 0.9 line aim to exceed 0.8's performance on the storage engine side, while bringing in clustering for HA and horizontal scalability.
 
 ![High-level architecture of go based carbon-relay-ng feeding information to InfluxDB](/img/blog/graphite3.jpg)
 
 *High-level architecture of go based carbon-relay-ng feeding information to InfluxDB*
 
-InfluxDB is designed to be [simple to install and configure](https://influxdb.com/docs/v0.9/introduction/getting_started.html). It’s scalable and can run on your laptop collecting just a few metrics to millions of metrics on a highly loaded cluster. With [clustering](https://influxdb.com/docs/v0.9/guides/clustering.html) support now available in the latest InfluxDB release, you can run a multi-node cluster and replicate your data fully across the nodes for high-availability. InfluxDB also provides many ways to write data into it including the l[ine protocol](https://influxdb.com/docs/v0.9/write_protocols/line.html), several [client libraries](https://influxdb.com/docs/v0.9/clients/api.html) and plugins for common formats like [graphite](https://influxdb.com/docs/v0.9/write_protocols/graphite.html).
+InfluxDB is designed to be [simple to install and configure](https://influxdb.com/docs/v0.9/introduction/getting_started.html). When [clustering](https://influxdb.com/docs/v0.9/guides/clustering.html) support becomes generally available you'll be able to run a multi-node cluster and replicate your data fully across the nodes for high-availability. Of coursee, you can get started with testing clustering now, but it's not yet ready for production use. InfluxDB also provides many ways to write data into it including the l[ine protocol](https://influxdb.com/docs/v0.9/write_protocols/line.html), several [client libraries](https://influxdb.com/docs/v0.9/clients/api.html) and plugins for common formats like [graphite](https://influxdb.com/docs/v0.9/write_protocols/graphite.html).
 
 Besides the graphite-ng project, Dieter has a cool repo that uses Docker to simplify the process of installing and configuring a graphite system with an InfluxDB backend. Check it out here.
 
