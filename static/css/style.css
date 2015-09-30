@@ -290,9 +290,10 @@ footer p {
 }
 
 .article-docs {
-	padding: 5em;
+	padding: 1em;
 	color: #666;
 }
+
 .article-docs a:link,
 .article-docs a:active,
 .article-docs a:visited {
@@ -1450,6 +1451,10 @@ ul.breadcrumbs li a:hover:after { border-left-color: hsla(34,85%,25%,1) !importa
 	.home-top {
 		min-height: 24em;
 		padding: 6em 1em;
+	}
+
+	.article-docs {
+		padding: 5em;
 	}
 
 	.article-home h1, .article-support h1 {
