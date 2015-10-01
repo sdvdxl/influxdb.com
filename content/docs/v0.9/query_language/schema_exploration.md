@@ -14,7 +14,7 @@ The examples below query data using [InfluxDB's Command Line Interface (CLI)](..
 
 **Sample data**  
 
-This document uses the same sample data as the [Data Exploration](../query_language/data_exploration.html) page. Note that some of the measurements in the data are fictional - they're meant to make the next sections more explanatory and (hopefully) more interesting. The next sections will get you acquainted with the schema of the sample data in the database `water`.
+This document uses the same sample data as the [Data Exploration](../query_language/data_exploration.html) page. Note that some of the measurements and data in the database are fictional - they're meant to make the next sections more explanatory and (hopefully) more interesting. The next sections will get you acquainted with the schema of the sample data in the `NOAA_water_database` database.
 
 ## See all databases with `SHOW DATABASES`
 Get a list of all the databases in your system by entering:
@@ -28,7 +28,7 @@ CLI example:
 name: databases
 ---------------
 name
-water
+NOAA_water_database
 ```
 
 ## Explore series with `SHOW SERIES`
@@ -38,12 +38,12 @@ The `SHOW SERIES` query returns the distinct [series](../concepts/glossary.html#
 SHOW SERIES FROM <measurement_name> WHERE <tag_key>=<'tag_value'>
 ```
 
-Return all series in the database `water`:
+Return all series in the database `NOAA_water_database`:
 ```sql
 > SHOW SERIES
 ```
 
-CLI return:  
+CLI response:  
 ```sh
 name: average_temperature
 -------------------------
@@ -84,7 +84,7 @@ h2o_temperature,location=coyote_creek	   coyote_creek
 h2o_temperature,location=santa_monica	   santa_monica
 ```
 
-`SHOW SERIES` organizes its output by measurement name. From the return you can see that the data in the database `water` have five different measurements and 14 different series. The measurements are `average_temperature`, `h2o_feet`, `h2o_pH`, `h2o_quality`, and `h2o_temperature`. Every measurement 
+`SHOW SERIES` organizes its output by [measurement](../concepts/glossary.html#measurement) name. From the return you can see that the data in the database `NOAA_water_database` have five different measurements and 14 different series. The measurements are `average_temperature`, `h2o_feet`, `h2o_pH`, `h2o_quality`, and `h2o_temperature`. Every measurement 
 has the [tag key](../concepts/glossary.html#tag-key) `location` with the [tag values](../concepts/glossary.html#tag-value) `coyote_creek` and `santa_monica` - that makes 10 series. The measurement `h2o_quality` has the additional tag key `randtag` with the tag values `1`,`2`, and `3` - that makes 14 series.
 
 Return series for a specific measurement:
@@ -92,7 +92,7 @@ Return series for a specific measurement:
 > SHOW SERIES FROM h2o_quality
 ```
 
-CLI return:
+CLI response:
 ```sh
 name: h2o_quality
 -----------------
@@ -110,7 +110,7 @@ Return series for a specific measurement and tag set:
 > SHOW SERIES FROM h2o_quality WHERE location = 'coyote_creek'
 ```
 
-CLI return:
+CLI response:
 ```sh
 name: h2o_quality
 -----------------
@@ -121,17 +121,17 @@ h2o_quality,location=coyote_creek,randtag=3	   coyote_creek	   3
 ```
 
 ## Explore measurements with `SHOW MEASUREMENTS`
-The `SHOW MEASUREMENTS` query returns all measurements in your database and it takes the following form, where the `WHERE` clause is optional:
+The `SHOW MEASUREMENTS` query returns all [measurements](../concepts/glossary.html#measurement) in your database and it takes the following form, where the `WHERE` clause is optional:
 ```sql
-> SHOW MEASUREMENTS WHERE <tag_key>=<'tag_value'>
+SHOW MEASUREMENTS WHERE <tag_key>=<'tag_value'>
 ```
 
-Return all measurements in the `water` database:
+Return all measurements in the `NOAA_water_database` database:
 ```sql
-SHOW MEASUREMENTS
+> SHOW MEASUREMENTS
 ```
 
-CLI return:
+CLI response:
 ```sh
 name: measurements
 ------------------
@@ -143,14 +143,14 @@ h2o_quality
 h2o_temperature
 ```
 
-From the output you can see that the database `water` has five measurements: `average_temperature`, `h2o_feet`, `h2o_pH`, `h2o_quality`, and `h2o_temperature`.
+From the output you can see that the database `NOAA_water_database` has five measurements: `average_temperature`, `h2o_feet`, `h2o_pH`, `h2o_quality`, and `h2o_temperature`.
 
 Return measurements where the tag key `randtag` equals `1`:
 ```sql
 > SHOW MEASUREMENTS WHERE randtag = '1'
 ```
 
-CLI return:
+CLI response:
 ```sh
 name: measurements
 ------------------
@@ -161,17 +161,17 @@ h2o_quality
 Only the measurement `h2o_quality` contains the tag set `randtag = 1`.
 
 ## Explore tag keys with SHOW TAG KEYS
-`SHOW TAG KEYS` returns the tag keys associated with each measurement and takes the following form, where the `FROM` clause is optional:
+`SHOW TAG KEYS` returns the [tag keys](../concepts/glossary.html#tag-key) associated with each measurement and takes the following form, where the `FROM` clause is optional:
 ```sql
 SHOW TAG KEYS FROM <measurement_name>
 ```
 
-Return all tag keys that are in the database `water`:
+Return all tag keys that are in the database `NOAA_water_database`:
 ```sql
 > SHOW TAG KEYS
 ```
 
-CLI return:
+CLI response:
 ```sh
 name: average_temperature
 -------------------------
@@ -204,14 +204,14 @@ tagKey
 location
 ```
 
-InfluxDB organizes the output by measurement. Notice that each of the five measurements has the tag key `location` and the measurement `h2o_quality` also has the tag key `randtag`.
+InfluxDB organizes the output by measurement. Notice that each of the five measurements has the tag key `location` and that the measurement `h2o_quality` also has the tag key `randtag`.
 
 Return the tag keys for a specific measurement:
 ```sql
 > SHOW TAG KEYS FROM h2o_temperature
 ```
 
-CLI return:
+CLI response:
 ```sh
 name: h2o_temperature
 ---------------------
@@ -220,18 +220,18 @@ location
 ```
 
 ## Explore tag values with SHOW TAG VALUES
-The `SHOW TAG VALUES` query returns the set of tag values for a specific tag key across all measurements in the database. It takes the following form, where the `FROM` clause is optional:
+The `SHOW TAG VALUES` query returns the set of [tag values](../concepts/glossary.html#tag-value) for a specific tag key across all measurements in the database. It takes the following form, where the `FROM` clause is optional:
 ```sql
 SHOW TAG VALUES FROM <measurement_name> WITH KEY = tag_key
 ```
 > **Note:** The tag_key is **not** quoted.
 
-Return the tag values for the tag key `randtag` across all measurements in the database `water`:
+Return the tag values for the tag key `randtag` across all measurements in the database `NOAA_water_database`:
 ```sql
-SHOW TAG VALUES WITH KEY = randtag
+> SHOW TAG VALUES WITH KEY = randtag
 ```
 
-CLI return:
+CLI response:
 ```sh
 name: randtagTagValues
 ----------------------
@@ -241,12 +241,12 @@ randtag
 3
 ```
 
-Return the tag values for the tag key `randtag` for a specific measurement in the `water` database:
+Return the tag values for the tag key `randtag` for a specific measurement in the `NOAA_water_database` database:
 ```sql
-SHOW TAG VALUES FROM average_temperature WITH KEY = randtag
+> SHOW TAG VALUES FROM average_temperature WITH KEY = randtag
 ```
 
-CLI return:
+CLI response:
 ```sh
 ```
 
