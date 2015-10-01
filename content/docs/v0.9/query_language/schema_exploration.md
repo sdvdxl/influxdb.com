@@ -160,6 +160,19 @@ h2o_quality
 
 Only the measurement `h2o_quality` contains the tag set `randtag = 1`.
 
+Use a regular expression to return measurements where the tag key `randtag` is a digit:
+```sql
+SHOW MEASUREMENTS WHERE randtag =~ /\d/
+```
+
+CLI response:
+```sh
+name: measurements
+------------------
+name
+h2o_quality
+```
+
 ## Explore tag keys with SHOW TAG KEYS
 `SHOW TAG KEYS` returns the [tag keys](../concepts/glossary.html#tag-key) associated with each measurement and takes the following form, where the `FROM` clause is optional:
 ```sql
@@ -224,7 +237,6 @@ The `SHOW TAG VALUES` query returns the set of [tag values](../concepts/glossary
 ```sql
 SHOW TAG VALUES FROM <measurement_name> WITH KEY = tag_key
 ```
-> **Note:** The tag_key is **not** quoted.
 
 Return the tag values for the tag key `randtag` across all measurements in the database `NOAA_water_database`:
 ```sql
