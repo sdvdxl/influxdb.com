@@ -35,7 +35,7 @@ With this release you can now define custom time ranges for your graphs.
 
 ## Persistence and configuration
 
-Chronograf now has a persistence layer built in, which will use either a local database format or a configurable MySQL database. This is configurable through a [new TOML file](https://github.com/influxdb/chronograf/blob/master/main.go#L135) that will be expanded in the future.
+Chronograf now has a persistence layer built in, which will use either a local database format or a configurable MySQL database. This is configurable through a new TOML file that will be expanded in the future. You can generate a config file by using the command `chronograf -sample-config`
 
 ## Native build for OSX
 
