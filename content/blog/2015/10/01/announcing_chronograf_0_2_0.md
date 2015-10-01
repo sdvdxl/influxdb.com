@@ -9,13 +9,13 @@ The first release of Chronograf happened just under 3 months ago, and we're prou
 
 ![Chronograf v0.2.0](/img/blog/chronograf_0.2.0/1.png)
 
-The Chronograf team has done a ton of work since that first release, all in order to make a great visualization experience for InfluxDB. Below, I'll outline some of the most significant changes.
+The Chronograf team has done a ton of work since that first release, with the goal of making a great visualization experience for InfluxDB. Below, I'll outline some of the most significant changes.
 
 ## Embedding graphs in iframes
 
 ![Share and Embed](/img/blog/chronograf_0.2.0/2.png)
 
-Through Chronograf's sharing interface, you can now grab a code snippet to embed a graph using an iframe. This was a heavily requested feature, and makes it easy to quickly design a graph and insert it into an existing web page.
+Through Chronograf's sharing interface, you can now grab a code snippet to embed a graph using an iframe. This was a heavily requested feature, and makes it easy to quickly design a graph and insert it into an existing web page. Now you can put Chronograf graphs directly into your admin panels in your application.
 
 ## Support multiple InfluxDB instances
 
@@ -23,7 +23,7 @@ Through Chronograf's sharing interface, you can now grab a code snippet to embed
 
 In this release, Chronograf has gained a servers pane, where you can add multiple InfluxDB servers, manage their settings, and control authentication settings on a per-server basis.
 
-Additionally, you can now specify a server, database, and retention policy on each query, allowing you to build a single graph with data from disparate sources.
+Additionally, you can now specify a server, database, and retention policy on each query, allowing you to build a single graph with data from multiple InfluxDB instances or with different levels of precision in your retention policies.
 
 ![Share and Embed](/img/blog/chronograf_0.2.0/4.png)
 
@@ -31,7 +31,7 @@ Additionally, you can now specify a server, database, and retention policy on ea
 
 ![Custom Time Ranges](/img/blog/chronograf_0.2.0/5.png)
 
-Another powerful data exploration feature is the ability to define custom time ranges for your graphs. The previous version of Chronograf only allowed you to view data for fixed intervals, which obviously doesn't cover all use cases.
+With this release you can now define custom time ranges for your graphs.
 
 ## Persistence and configuration
 
@@ -45,12 +45,12 @@ We'll explore other distribution methods in the future, but for now we'll be usi
 
 ## Cloud-based registration
 
-The first thing you'll notice when setting up Chronograf is that it requires registration with InfluxData Enterprise. We'll be talking about this more soon, but for now just know that it's a free registration that will allow us to offer better release management and functionality for Chronograf going forward.
+The first thing you'll notice when setting up Chronograf is that it requires registration with InfluxData Enterprise. We'll be talking about this more soon, but for now it's a free registration that will allow us to offer better release management and functionality for Chronograf going forward.
 
 ## Give it a try!
 
-We hope that this quick recap of the latest Chronograf features have made it a more powerful tool for working with InfluxDB. We look forward to hearing from everyone in the community on what you'd love to see next.
+This release of Chronograf is just the beginning, but we hope you'll give it a try. We look forward to hearing from everyone in the community on what you'd love to see next.
 
-That's all we've got for now - head on over to the [download](https://influxdb.com/chronograf/index.html) page and grab Chronograf v0.2.0 and keep an eye out here for more posts about how to get the most out of Chronograf!
+Head on over to the [download](https://influxdb.com/chronograf/index.html) page and grab Chronograf v0.2.0 and keep an eye out here for more posts about how to get the most out of Chronograf and InfluxDB.
 
 **Note: Chronograf v0.2.0 should work with most v0.9.x versions of InfluxDB, but we recommend using v0.9.4.2 or higher to take advantage of the latest measurement exploration updates.**
