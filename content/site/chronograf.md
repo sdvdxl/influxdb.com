@@ -1,6 +1,9 @@
 +++
-title = "Chronograf - Download"
+title = "Chronograf"
 layout = "chronograf"
+aliases = [
+	"/chronograf-download/index.html"
+]
 +++
 
 ##  Installing Chronograf
