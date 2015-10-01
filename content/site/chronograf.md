@@ -29,7 +29,7 @@ The Chronograf startup script needs root permission to ensure that it can write 
 If you did not install Chronograf via a package, you can just directly run the executable, e.g.
 
 ```
-/opt/chronograf/chronograf -config=/opt/etc/chronograf.toml`
+/opt/chronograf/chronograf -config=/opt/etc/chronograf.toml
 ```
 
 ## Contact Us
