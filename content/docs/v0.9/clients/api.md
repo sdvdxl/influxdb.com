@@ -19,6 +19,9 @@ This is a list of the client libraries which have some support for InfluxDB vers
 ## JavaScript/Node.js
 - [Influent](https://github.com/gobwas/influent) by [gobwas](https://github.com/gobwas)
 
+## Lisp
+- [cl-influxdb](https://github.com/mmaul/cl-influxdb) by [mmaul](https://github.com/mmaul)
+
 ## Perl
 - [AnyEvent::InfluxDB](https://github.com/ajgb/anyevent-influxdb) by [ajgb](https://github.com/ajgb)
 - [InfluxDB::LineProtocol](http://search.cpan.org/~domm/InfluxDB-LineProtocol-1.001/) by [domm](http://search.cpan.org/~domm/)
