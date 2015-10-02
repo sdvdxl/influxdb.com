@@ -752,7 +752,7 @@ or
 <br>
 <br>
 ```sql
-> SELECT * FROM h2o_feet WHERE location =~ /[y,m]/ AND water_level > 0 LIMIT 4
+> SELECT * FROM h2o_feet WHERE location =~ /[ym]/ AND water_level > 0 LIMIT 4
 ```
 
 CLI response:
