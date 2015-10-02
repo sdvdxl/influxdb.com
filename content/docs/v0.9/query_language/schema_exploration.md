@@ -2,251 +2,266 @@
 title: Schema Exploration
 ---
 
-There are various ways to learn about the data contained within an InfluxDB system.
+InfluxQL is an SQL-like query language for interacting with data in InfluxDB. The following sections cover useful query syntax for exploring your schema (that is, how you set up your time series data): 
 
-The primary mechanism for issuing any of the commands listed below is through the HTTP API. For example, the command `SHOW MEASUREMENTS` can be executed using `curl` as follows:
+* [See all databases with `SHOW DATABASES`](../query_language/schema_exploration.html#see-all-databases-with-show-databases)
+* [Explore series with `SHOW SERIES`](../query_language/schema_exploration.html#explore-series-with-show-series)
+* [Explore measurements with `SHOW MEASUREMENTS`](../query_language/schema_exploration.html#explore-measurements-with-show-measurements)
+* [Explore tag keys with `SHOW TAG KEYS`](../query_language/schema_exploration.html#explore-tag-keys-with-show-tag-keys)
+* [Explore tag values with `SHOW TAG VALUES`](../query_language/schema_exploration.html#explore-tag-values-with-show-tag-values)
 
+The examples below query data using [InfluxDB's Command Line Interface (CLI)](../introduction/getting_started.html). See the [Querying Data](../guides/querying_data.html) guide for how to directly query data with the HTTP API.
+
+**Sample data**  
+
+This document uses the same sample data as the [Data Exploration](../query_language/data_exploration.html) page. Note that some of the measurements and data in the database are fictional - they're meant to make the next sections more explanatory and (hopefully) more interesting. The next sections will get you acquainted with the schema of the sample data in the `NOAA_water_database` database.
+
+## See all databases with `SHOW DATABASES`
+Get a list of all the databases in your system by entering:
+```sql
+SHOW DATABASES
+```
+
+CLI example:
 ```sh
-curl -G 'http://localhost:8086/query?db=mydb' --data-urlencode "q=SHOW MEASUREMENTS"
+> SHOW DATABASES
+name: databases
+---------------
+name
+NOAA_water_database
 ```
 
-## Show Measurements
-`SHOW MEASUREMENTS` shows all Measurements in the system.
-
-_Example_
+## Explore series with `SHOW SERIES`
+The `SHOW SERIES` query returns the distinct [series](../concepts/glossary.html#series) in your database and takes the following form, where the `FROM` and `WHERE` clauses are optional:
 
 ```sql
-SHOW MEASUREMENTS
+SHOW SERIES FROM <measurement_name> WHERE <tag_key>=<'tag_value'>
 ```
 
-In the example response shown below, the system contains two measurements -- `cpu` and `network`. The first has a tag key `host`, and the second has two tags keys, `host` and `region`.
-
-```json
-{
-    "results": [
-        {
-            "series": [
-                {
-                    "name": "measurements",
-                    "columns": [
-                        "name"
-                    ],
-                    "values": [
-                        [
-                            "cpu"
-                        ],
-                        [
-                            "network"
-                        ]
-                    ]
-                }
-            ]
-        }
-    ]
-}
-```
-
-You can also filter by tag key values with a `WHERE` clause. The following example shows all measurements that have a tag key/value pair of `service` and `redis`:
-
+Return all series in the database `NOAA_water_database`:
 ```sql
-SHOW MEASUREMENTS
-WHERE service = 'redis'
+> SHOW SERIES
 ```
 
-## Show Series
-`SHOW SERIES` is somewhat similar to `SHOW MEASUREMENTS`, but also shows the distinct key-value pairs each tag key has within the system.
+CLI response:  
+```sh
+name: average_temperature
+-------------------------
+_key						                                   location
+average_temperature,location=coyote_creek	   coyote_creek
+average_temperature,location=santa_monica	   santa_monica
 
-_Example_
 
+name: h2o_feet
+--------------
+_key						                        location
+h2o_feet,location=coyote_creek	   coyote_creek
+h2o_feet,location=santa_monica	   santa_monica
+
+
+name: h2o_pH
+------------
+_key						                      location
+h2o_pH,location=coyote_creek	   coyote_creek
+h2o_pH,location=santa_monica	   santa_monica
+
+
+name: h2o_quality
+-----------------
+_key						                                     location	       randtag
+h2o_quality,location=coyote_creek,randtag=1	   coyote_creek	   1
+h2o_quality,location=coyote_creek,randtag=2	   coyote_creek	   2
+h2o_quality,location=coyote_creek,randtag=3	   coyote_creek	   3
+h2o_quality,location=santa_monica,randtag=3	   santa_monica	   3
+h2o_quality,location=santa_monica,randtag=2	   santa_monica	   2
+h2o_quality,location=santa_monica,randtag=1	   santa_monica	   1
+
+
+name: h2o_temperature
+---------------------
+_key					                                location
+h2o_temperature,location=coyote_creek	   coyote_creek
+h2o_temperature,location=santa_monica	   santa_monica
+```
+
+`SHOW SERIES` organizes its output by [measurement](../concepts/glossary.html#measurement) name. From the return you can see that the data in the database `NOAA_water_database` have five different measurements and 14 different series. The measurements are `average_temperature`, `h2o_feet`, `h2o_pH`, `h2o_quality`, and `h2o_temperature`. Every measurement 
+has the [tag key](../concepts/glossary.html#tag-key) `location` with the [tag values](../concepts/glossary.html#tag-value) `coyote_creek` and `santa_monica` - that makes 10 series. The measurement `h2o_quality` has the additional tag key `randtag` with the tag values `1`,`2`, and `3` - that makes 14 series.
+
+Return series for a specific measurement:
 ```sql
-SHOW SERIES
+> SHOW SERIES FROM h2o_quality
 ```
 
-In the example response shown below, the system also contains two measurements, but note how the unique tag-key pairs are now shown.
-
-```json
-{
-    "results": [
-        {
-            "series": [
-                {
-                    "name": "cpu",
-                    "columns": [
-                        "host"
-                    ],
-                    "values": [
-                        [
-                            "server01"
-                        ]
-                    ]
-                },
-                {
-                    "name": "network",
-                    "columns": [
-                        "host",
-                        "region"
-                    ],
-                    "values": [
-                        [
-                            "server01",
-                            "us-west"
-                        ],
-                        [
-                            "server01",
-                            "us-east"
-                        ]
-                    ]
-                }
-            ]
-        }
-    ]
-}
+CLI response:
+```sh
+name: h2o_quality
+-----------------
+_key						                                     location	       randtag
+h2o_quality,location=coyote_creek,randtag=1	   coyote_creek	   1
+h2o_quality,location=coyote_creek,randtag=2	   coyote_creek	   2
+h2o_quality,location=coyote_creek,randtag=3	   coyote_creek	   3
+h2o_quality,location=santa_monica,randtag=3	   santa_monica	   3
+h2o_quality,location=santa_monica,randtag=2	   santa_monica	   2
+h2o_quality,location=santa_monica,randtag=1	   santa_monica	   1
 ```
 
-Or you can show the series for a specific measurement:
-
+Return series for a specific measurement and tag set:
 ```sql
-SHOW SERIES
-FROM cpu_load
+> SHOW SERIES FROM h2o_quality WHERE location = 'coyote_creek'
 ```
 
-And you can further filter `SHOW SERIES` with a `WHERE` clause like you can with `SHOW MEASUREMENTS`
+CLI response:
+```sh
+name: h2o_quality
+-----------------
+_key						                                     location	       randtag
+h2o_quality,location=coyote_creek,randtag=1	   coyote_creek	   1
+h2o_quality,location=coyote_creek,randtag=2	   coyote_creek	   2
+h2o_quality,location=coyote_creek,randtag=3	   coyote_creek	   3
+```
 
+## Explore measurements with `SHOW MEASUREMENTS`
+The `SHOW MEASUREMENTS` query returns all [measurements](../concepts/glossary.html#measurement) in your database and it takes the following form, where the `WHERE` clause is optional:
 ```sql
-SHOW SERIES
-FROM cpu_load
-WHERE region = 'uswest'
+SHOW MEASUREMENTS WHERE <tag_key>=<'tag_value'>
 ```
 
-## Show Tag Keys
-`SHOW TAG KEYS` shows the unique tag keys associated with each measurement.
-
-_Example_
-
+Return all measurements in the `NOAA_water_database` database:
 ```sql
-SHOW TAG KEYS
+> SHOW MEASUREMENTS
 ```
 
-An example response is shown below.
-
-```json
-{
-    "results": [
-        {
-            "series": [
-                {
-                    "name": "cpu",
-                    "columns": [
-                        "tagKey"
-                    ],
-                    "values": [
-                        [
-                            "host"
-                        ]
-                    ]
-                },
-                {
-                    "name": "network",
-                    "columns": [
-                        "tagKey"
-                    ],
-                    "values": [
-                        [
-                            "host"
-                        ],
-                        [
-                            "region"
-                        ]
-                    ]
-                }
-            ]
-        }
-    ]
-}
+CLI response:
+```sh
+name: measurements
+------------------
+name
+average_temperature
+h2o_feet
+h2o_pH
+h2o_quality
+h2o_temperature
 ```
 
-The query can include a condition, so only certain tag keys are shown.
+From the output you can see that the database `NOAA_water_database` has five measurements: `average_temperature`, `h2o_feet`, `h2o_pH`, `h2o_quality`, and `h2o_temperature`.
 
+Return measurements where the tag key `randtag` equals `1`:
 ```sql
-SHOW TAG KEYS FROM network
+> SHOW MEASUREMENTS WHERE randtag = '1'
 ```
 
-In this case the response is:
-
-```json
-{
-    "results": [
-        {
-            "series": [
-                {
-                    "name": "network",
-                    "columns": [
-                        "tagKey"
-                    ],
-                    "values": [
-                        [
-                            "host"
-                        ],
-                        [
-                            "region"
-                        ]
-                    ]
-                }
-            ]
-        }
-    ]
-}
+CLI response:
+```sh
+name: measurements
+------------------
+name
+h2o_quality
 ```
-## Show Tag Values
-`SHOW TAG VALUES` shows the unique set of tag values for each measurement, for a given tag key.
 
-_Example_
+Only the measurement `h2o_quality` contains the tag set `randtag = 1`.
 
+Use a regular expression to return measurements where the tag key `randtag` is a digit:
 ```sql
-SHOW TAG VALUES WITH KEY=host
+SHOW MEASUREMENTS WHERE randtag =~ /\d/
 ```
 
-> **Note:** `host` is **not** quoted.
-
-which results in the following response:
-
-```json
-{
-    "results": [
-        {
-            "series": [
-                {
-                    "name": "cpu",
-                    "columns": [
-                        "tagValue"
-                    ],
-                    "values": [
-                        [
-                            "server01"
-                        ]
-                    ]
-                },
-                {
-                    "name": "network",
-                    "columns": [
-                        "tagValue"
-                    ],
-                    "values": [
-                        [
-                            "server01"
-                        ]
-                    ]
-                }
-            ]
-        }
-    ]
-}
+CLI response:
+```sh
+name: measurements
+------------------
+name
+h2o_quality
 ```
 
-And you can filter the tag values shown to only those associated with a specific measurement:
-
+## Explore tag keys with SHOW TAG KEYS
+`SHOW TAG KEYS` returns the [tag keys](../concepts/glossary.html#tag-key) associated with each measurement and takes the following form, where the `FROM` clause is optional:
 ```sql
-SHOW TAG VALUES
-FROM cpu_load
-WITH KEY=host
+SHOW TAG KEYS FROM <measurement_name>
 ```
+
+Return all tag keys that are in the database `NOAA_water_database`:
+```sql
+> SHOW TAG KEYS
+```
+
+CLI response:
+```sh
+name: average_temperature
+-------------------------
+tagKey
+location
+
+
+name: h2o_feet
+--------------
+tagKey
+location
+
+
+name: h2o_pH
+------------
+tagKey
+location
+
+
+name: h2o_quality
+-----------------
+tagKey
+location
+randtag
+
+
+name: h2o_temperature
+---------------------
+tagKey
+location
+```
+
+InfluxDB organizes the output by measurement. Notice that each of the five measurements has the tag key `location` and that the measurement `h2o_quality` also has the tag key `randtag`.
+
+Return the tag keys for a specific measurement:
+```sql
+> SHOW TAG KEYS FROM h2o_temperature
+```
+
+CLI response:
+```sh
+name: h2o_temperature
+---------------------
+tagKey
+location
+```
+
+## Explore tag values with SHOW TAG VALUES
+The `SHOW TAG VALUES` query returns the set of [tag values](../concepts/glossary.html#tag-value) for a specific tag key across all measurements in the database. It takes the following form, where the `FROM` clause is optional:
+```sql
+SHOW TAG VALUES FROM <measurement_name> WITH KEY = tag_key
+```
+
+Return the tag values for the tag key `randtag` across all measurements in the database `NOAA_water_database`:
+```sql
+> SHOW TAG VALUES WITH KEY = randtag
+```
+
+CLI response:
+```sh
+name: randtagTagValues
+----------------------
+randtag
+1
+2
+3
+```
+
+Return the tag values for the tag key `randtag` for a specific measurement in the `NOAA_water_database` database:
+```sql
+> SHOW TAG VALUES FROM average_temperature WITH KEY = randtag
+```
+
+CLI response:
+```sh
+```
+
+The measurement `average_temperature` doesn't have the tag key `randtag` so InfluxDB returns nothing.
+
+
