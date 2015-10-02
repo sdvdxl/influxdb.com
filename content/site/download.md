@@ -127,7 +127,7 @@ Deprecated versions are no longer actively developed.
 		wget https://s3.amazonaws.com/get.influxdb.org/chronograf/chronograf-0.2.0-1.x86_64.rpm
 		sudo yum localinstall chronograf-0.2.0-1.x86_64.rpm
 
-#### Standalone Binary
+#### Standalone OS X Binary
 
 - 64-bit system download & decompress instructions
 
