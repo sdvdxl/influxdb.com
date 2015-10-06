@@ -62,9 +62,9 @@ InfluxDB is a schemaless database. You can add new measurements, tags, and field
 ---
 InfluxDB uses HTTP solely as a convenient and widely supported data transfer language.  
 
-Why are modern web API’s constructed in a REST style?  Because as the number of endpoints grows the need for an organizing system becomes pressing.  REST is the industry agreed style for organizing large numbers of endpoints.  This consistency is good for programmers who are both developing and consuming the API: everyone involved knows what to expect.  
+Modern web APIs have settled on REST because it addresses a common need. As the number of endpoints grows the need for an organizing system becomes pressing. REST is the industry agreed style for organizing large numbers of endpoints. This consistency is good for those developing and consuming the API: everyone involved knows what to expect.
 
-REST, however, is just a convention.  InfluxDB makes due with 3 API endpoints.  This simple, easy to understand system just uses HTTP as a transfer system for [InfluxQL](https://github.com/influxdb/influxdb/blob/master/influxql/INFLUXQL.md).  
+REST, however, is just a convention. InfluxDB makes due with 3 API endpoints. This simple, easy to understand system just uses HTTP as a transfer system for [InfluxQL](https://github.com/influxdb/influxdb/blob/master/influxql/INFLUXQL.md).  
 
 
 ### HTTP response summary
