@@ -60,11 +60,11 @@ InfluxDB is a schemaless database. You can add new measurements, tags, and field
 
 ### A note on REST...
 ---
-InfluxDB uses HTTP solely as a convenient and widely supported data transfer language.  
+InfluxDB uses HTTP solely as a convenient and widely supported data transfer protocol.  
 
 Modern web APIs have settled on REST because it addresses a common need. As the number of endpoints grows the need for an organizing system becomes pressing. REST is the industry agreed style for organizing large numbers of endpoints. This consistency is good for those developing and consuming the API: everyone involved knows what to expect.
 
-REST, however, is just a convention. InfluxDB makes due with 3 API endpoints. This simple, easy to understand system just uses HTTP as a transfer system for [InfluxQL](https://github.com/influxdb/influxdb/blob/master/influxql/INFLUXQL.md).  
+REST, however, is a convention. InfluxDB makes due with three API endpoints. This simple, easy to understand system uses HTTP as a transfer system for [InfluxQL](https://github.com/influxdb/influxdb/blob/master/influxql/INFLUXQL.md).  The InfluxDB API makes no attempt to be RESTful.
 
 
 ### HTTP response summary
