@@ -36,6 +36,8 @@ Ask us questions at [support@influxdb.com](mailto:support@influxdb.com)</p>
 
 Log issues on [GitHub](https://github.com/influxdb/influxdb/issues).
 
+Help us out with [RFCs](https://github.com/influxdb/influxdb/labels/RFC).
+
 <icon class="fa fa-github fa-border fa-2x fa-lg pull-right fa-align-center"></icon>
 
 Check out the [source code](https://github.com/influxdb).
