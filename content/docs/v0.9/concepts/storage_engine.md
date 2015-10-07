@@ -6,7 +6,7 @@ aliases:
 
 Versions 0.9.0-0.9.4 used BoltDB as the underlying storage engine. This writeup is about the new storage engine that will be released in 0.9.5, the Time Structured Merge Tree.
 
-<dt>The new storage engine is for testing purposes only at this point. Until the 0.9.5 release is made, assume that any data could be corruped or lost and that you may have to blow away your data when upgrading from one nightly build to another.</dt>
+<dt>The new storage engine is for testing purposes only at this point. Until the 0.9.5 release is made, assume that any data could be corrupted or lost and that you may have to blow away your data when upgrading from one nightly build to another.</dt>
 
 ## The new InfluxDB storage engine: from LSM Tree to B+Tree and back again to create the Time Structured Merge Tree
 
