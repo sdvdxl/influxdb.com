@@ -150,7 +150,7 @@ If there are any new keys, we marshall, compress and write a new names file. The
 
 This name decoding scheme is fairly inefficient since we’re marshaling this entire map on every WAL flush. The alternative is to keep it in memory, but that is also expensive as there are many indexes (one per shard) in a running InfluxDB process. We could also just keep the map in memory while a given shard is hot for writes (i.e. its time range is current for now).
 
-In testing the cost of decoding and rewriting the names file hasn’t been a big problem and the simplicity of the scheme makes it a bit easier to work with. We’ve testing up to 500k unique keys at this point.
+In testing the cost of decoding and rewriting the names file hasn’t been a big problem and the simplicity of the scheme makes it a bit easier to work with. We’ve been testing up to 500k unique keys at this point.
 
 After the ID resolution is done the write will be broken up by the time of the individual data points. If no data file exists for any of the time ranges, a new one will be created and written. If a data file already exists for the given time range and it is less than a configurable size (5MB by default), then the data file will be read in and the new values merged with it and a new data file will be created.
 
