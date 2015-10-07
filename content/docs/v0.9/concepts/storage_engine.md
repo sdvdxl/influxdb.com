@@ -8,7 +8,7 @@ Versions 0.9.0-0.9.4 used BoltDB as the underlying storage engine. This writeup 
 
 <dt>The new storage engine is for testing purposes only at this point. Until the 0.9.5 release is made, assume that any data could be corruped or lost and that you may have to blow away your data when upgrading from one nightly build to another.</dt>
 
-## The new InfluxDB storage engine: from LSM Tree to B+Tree and back again to create the Time Strucutred Merge Tree
+## The new InfluxDB storage engine: from LSM Tree to B+Tree and back again to create the Time Structured Merge Tree
 
 The properties of the time series data use case make it challenging for many existing storage engines. Over the course of InfluxDB’s development we’ve tried a few of the more popular options. We started with LevelDB, an engine based on LSM Trees, which are optimized for write throughput. After that we tried BoltDB, an engine based on a memory mapped B+Tree, which is optimized for reads. Finally, we ended up building our own storage engine that is similar in many ways to LSM Trees.
 
