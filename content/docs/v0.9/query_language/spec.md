@@ -189,6 +189,7 @@ statement           = alter_retention_policy_stmt |
                       show_measurements_stmt |
                       show_retention_policies |
                       show_series_stmt |
+                      show_shards_stmt |
                       show_tag_keys_stmt |
                       show_tag_values_stmt |
                       show_users_stmt |
@@ -490,6 +491,17 @@ SHOW SERIES
 SHOW SERIES FROM cpu_user WHERE cpu='cpu6'
 ```
 
+### SHOW show_shards_stmt
+
+```
+show_shards_stmt = "SHOW SHARDS"
+```
+
+#### Example:
+```sql
+SHOW SHARDS
+```
+
 ### SHOW TAG KEYS
 
 ```
@@ -549,7 +561,7 @@ SHOW USERS
 ### REVOKE
 
 ```
-revoke_stmt = privilege [ "ON" db_name ] "FROM" user_name
+revoke_stmt = "REVOKE" privilege [ "ON" db_name ] "FROM" user_name
 ```
 
 #### Examples:
@@ -565,7 +577,7 @@ REVOKE READ ON mydb FROM jdoe
 ### SELECT
 
 ```
-select_stmt = SELECT fields from_clause [ into_clause ] [ where_clause ]
+select_stmt = "SELECT" fields from_clause [ into_clause ] [ where_clause ]
               [ group_by_clause ] [ order_by_clause ] [ limit_clause ]
               [ offset_clause ] [ slimit_clause ] [ soffset_clause ].
 ```
