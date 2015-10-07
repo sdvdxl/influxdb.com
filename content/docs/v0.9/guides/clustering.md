@@ -7,19 +7,17 @@ aliases:
 
 ---
 
-> **Note:** Clustering is still in a beta state right now. There are still a good number of rough edges. If you notice any issues please [report them](https://github.com/influxdb/influxdb/issues/new).
-
-In 0.9.1 and 0.9.2 clusters are restricted to three nodes and must be fully replicated, meaning all data are copied to all nodes and retention policies must have replication set to three for all three nodes in the cluster.
+> **Note:** Clustering is in a beta state right now. There are still a good number of rough edges. If you notice any issues please [report them](https://github.com/influxdb/influxdb/issues/new).
 
 Starting with version 0.9.3, InfluxDB supports arbitrarily sized clusters that need not be fully replicated. Additionally new data nodes can be added to a cluster. The first three nodes to join a cluster are raft peers. All subsequent nodes are data nodes and do not participate in consensus.
 
-<dt> Although version 0.9.3 need not be fully replicated, there are still some missing features. Distributed meta-queries, for example, are not fully functional. See issues [3295](https://github.com/influxdb/influxdb/issues/3295) and [3296](https://github.com/influxdb/influxdb/issues/3296) for more information.</dt>
+<dt> Distributed meta-queries are not fully functional. See issues [3295](https://github.com/influxdb/influxdb/issues/3295) and [3296](https://github.com/influxdb/influxdb/issues/3296) for more information.</dt>
 
 
 ## Configuration
 The following is the current recommended procedure for configuring a cluster.
 
-> **Note:** In versions 0.9.1 and 0.9.2, a cluster needs to be configured by specifying peers. If you plan on using clustering it is highly recommended that you upgrade to version 0.9.3+.
+> **Note:** You should always use the most recent release for clustering as there are significant improvements with each release. Do not attempt a cluster with InfluxDB versions prior to 0.9.3. 
 
 ### Start the Initial Raft Cluster
 
@@ -87,9 +85,8 @@ To verify that the new node has successfully joined the cluster, issue a `SHOW S
 
 If you do not, then your node was not successfully added to the cluster. Please verify that your cluster is healthy and retry steps 1 through 3.
 
-<dt> Version 0.9.3 and earlier support writes to any node in the cluster, however queries must be directed at one of the 3 raft peers. This is a bug. See issue [3574](https://github.com/influxdb/influxdb/issues/3574) for more information.</dt>
 
 ## Unimplemented Features
 
 * Configuring which nodes participate in raft consensus after the first three nodes form a cluster is not currently possible. For now, all new nodes are data-only nodes.
-* Removing nodes (raft or data-only).  
+* Removing raft nodes.  
