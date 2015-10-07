@@ -31,9 +31,9 @@ Compression of the data improves as the index files are compacted. Once a shard 
 
 ### Testing and more resources
 
-We're announcing the new storage engine early because we want to put both the design and the code out for review and testing in the community. It's not for production use at this point. In fact, it's not enabled by default on the nightly builds and you should plan to blow away all your data between nightly build installs. You can <a href="https://influxdb.com/docs/v0.9/introduction/tsm_installation.html" target="_">follow these instructions</a> for how to enable the new storage engine and get started testing it.
+We're announcing the new storage engine early because we want to put both the design and the code out for review and testing in the community. It's not for production use at this point. In fact, it's not enabled by default on the nightly builds and you should plan to blow away all your data between nightly build installs. You can <a href="/docs/v0.9/introduction/tsm_installation.html" target="_">follow these instructions</a> for how to enable the new storage engine and get started testing it.
 
-We've also put up a detailed writeup about what storage engines we tried before, why they didn't work for us and all the in depth specifics about the new <a href="https://influxdb.com/docs/v0.9/concepts/storage_engine.html" target="_">time structured merge tree engine</a>.
+We've also put up a detailed writeup about what storage engines we tried before, why they didn't work for us and all the in depth specifics about the new <a href="/docs/v0.9/concepts/storage_engine.html" target="_">time structured merge tree engine</a>.
 
 We hope that you'll test it out and let us know how it's working. We're doing extensive testing internally on both raw hardware and in various cloud providers. Once we feel it's ready for more serious use we'll make an announcement here. The 0.9.5 release will ship with this new storage engine along with the ability to do hot backups against it. The release date for 0.9.5 will be "when it's ready." That is, after we've done extensive testing and bug fixing against the new engine.
 
