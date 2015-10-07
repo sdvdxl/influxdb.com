@@ -35,6 +35,10 @@ layout = "sidebar"
 		wget https://s3.amazonaws.com/influxdb/influxdb_0.9.4.2_x86_64.tar.gz
 		tar xvfz influxdb_0.9.4.2_x86_64.tar.gz
 
+#### Windows
+
+- <p>64-bit system install via the [InfluxDB Windows Installer](https://s3.amazonaws.com/influxdb/influxdb_0.9.4.2_amd64.msi)</p>
+
 ## Version 0.9.5 (Nightly)
 Nightly builds are created once-a-day, at midnight San Francisco, CA time, using the top-of-tree of [master](https://github.com/influxdb/influxdb/tree/master) source code. These builds will include all the latest fixes, but also undergo only basic testing.
 
