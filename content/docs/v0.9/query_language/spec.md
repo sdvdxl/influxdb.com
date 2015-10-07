@@ -90,8 +90,8 @@ INNER        INSERT       INTO         KEY          KEYS         LIMIT
 SHOW         MEASUREMENT  MEASUREMENTS NOT          OFFSET       ON           
 ORDER        PASSWORD     POLICY       POLICIES     PRIVILEGES   QUERIES      
 QUERY        READ         REPLICATION  RETENTION    REVOKE       SELECT       
-SERIES       SLIMIT       SOFFSET      TAG          TO           USER         
-USERS        VALUES       WHERE        WITH         WRITE
+SERIES       SERVER       SLIMIT       SOFFSET      TAG          TO         
+USER         USERS        VALUES       WHERE        WITH         WRITE
 ```
 
 ## Literals
