@@ -46,7 +46,7 @@ There are RPM packages provided by openSUSE Build Service for SUSE Linux users.
 ```bash
 # add go repository
 zypper ar -f obs://devel:languages:go/ go
-# install latest influxdb 
+# install latest influxdb
 zypper in influxdb
 ```
 
@@ -57,6 +57,21 @@ Users of OS X 10.8 and higher can install using the [Homebrew](http://brew.sh/) 
 ```sh
 brew update
 brew install influxdb
+```
+
+To have launchd start influxdb at login:
+```sh
+ln -sfv /usr/local/opt/influxdb/*.plist ~/Library/LaunchAgents
+```
+
+Then to load influxdb now:
+```
+launchctl load ~/Library/LaunchAgents/homebrew.mxcl.influxdb.plist
+```
+
+Or, if you don't want/need launchctl, in a separate terminal window you can just run:
+```
+influxd -config /usr/local/etc/influxdb.conf
 ```
 
 <a href="getting_started.html"><font size="6"><b>⇒ Now get started!</b></font></a>
@@ -154,7 +169,7 @@ chown $USER:$GROUP /mnt/db
 ...
 ```
 
-**Note:** If you're planning on using a cluster, you may also want to set `hostname` and `join` flags in `INFLUXD_OPTS`. For example 
+**Note:** If you're planning on using a cluster, you may also want to set `hostname` and `join` flags in `INFLUXD_OPTS`. For example
 
 ```
 ...
