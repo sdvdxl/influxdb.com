@@ -105,6 +105,9 @@ Deprecated versions are no longer actively developed.
 		wget https://s3.amazonaws.com/get.influxdb.org/telegraf/telegraf_linux_amd64_0.1.9.tar.gz
 		tar xvfz telegraf_linux_amd64_0.1.9.tar.gz
 
+#### Windows
+
+- <p>64-bit system install via the [Telegraf Windows Installer](https://s3.amazonaws.com/get.influxdb.org/telegraf/telegraf_0.1.9_amd64.msi)</p>
 
 # <a id="chronograf"></a>Chronograf Downloads
 
@@ -138,9 +141,13 @@ Deprecated versions are no longer actively developed.
 		wget https://s3.amazonaws.com/get.influxdb.org/chronograf/chronograf-0.2.0-darwin_amd64.tar.gz
 		tar xvfz chronograf-0.2.0-darwin_amd64.tar.gz
 
+#### Windows
+
+- <p>64-bit system install via the [Chronograf Windows Installer](https://s3.amazonaws.com/get.influxdb.org/chronograf/chronograf_0.2.0_amd64.msi)</p>
+
 ## Usage
 
-If you installed Chronograf via a .deb or .rpm package, you should be able to simply run `sudo service chronograf start`.
+If you installed Chronograf via a Debian or RPM package, you should be able to simply run `sudo service chronograf start`.
 The Chronograf startup script needs root permission to ensure that it can write to /var/log, but the actual executable runs as a normal user.
 
 If you did not install Chronograf via a package, you can just directly run the executable, e.g.
