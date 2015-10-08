@@ -4,7 +4,7 @@ aliases:
   - /docs/v0.9/query_language/math_operators.html
 ---
 
-**Note:** Currently all mathematical operators work solely on `floats`. Any operation performed on an `int` will return a `null` value. See issue [3000](https://github.com/influxdb/influxdb/issues/3000).
+**Note:** Currently all mathematical operators work solely on `floats`.  For the moment being any `int` involved will be converted to a `float` as any operation performed on an `int` would return a `null` value. This fixes the problem for all integer values up to 2^53. Issue [3614](https://github.com/influxdb/influxdb/issues/3614) tracks implementing true integer math, which will support values up to 2^63.
 
 Mathematical operators follow the standard order of operations. That is, *parentheses* take precedence to *division* and *multiplication*, which takes precedence to *addition* and *substraction*. For example `5 / 2 + 3 * 2 =  (5 / 2) + (3 * 2)` and `5 + 2 * 3 - 2 = 5 + (2 * 3) - 2`.
 
