@@ -22,7 +22,7 @@ An explanation of how an InfluxDB cluster works.
 
 ## [Storage Engine](/docs/v0.9/concepts/storage_engine.html)
 
-A overview of how BoltDB and the write ahead log (WAL) are used by InfluxDB to store data on disk.
+A overview of how InfluxDB to stores data on disk.
 
 ## [Glossary of Terms](/docs/v0.9/concepts/glossary.html)
 
