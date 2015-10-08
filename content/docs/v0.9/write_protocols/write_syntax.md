@@ -18,8 +18,8 @@ measurement,tkey1=tval1,tkey2=tval2 fkey=fval,fkey2=fval2 1234567890000000000
 
 ### Whitespace
 
-A space must exist between the measurement and the field(s), or between the tag(s) and the field(s) if tags are 
-provided. The measurement and tags must be separated by a single comma `,` with no whitespace. 
+A space must exist between the measurement and the field(s), or between the tag(s) and the field(s) if tags are
+provided. The measurement and tags must be separated by a single comma `,` with no whitespace.
 
 There must also be whitespace between the field(s) and the timestamp, if one is provided.
 
@@ -27,7 +27,7 @@ Valid (`value` and `otherval` are fields, `foo` and `bat` are tags)
 ```sh
 measurement value=12
 measurement value=12 1439587925
-measurement,foo=bar value=12 
+measurement,foo=bar value=12
 measurement,foo=bar value=12 1439587925
 measurement,foo=bar,bat=baz value=12,otherval=21 1439587925
 ```
@@ -36,7 +36,7 @@ Invalid
 ```sh
 measurement,value=12
 measurement value=12,1439587925
-measurement foo=bar value=12 
+measurement foo=bar value=12
 measurement,foo=bar,value=12 1439587925
 measurement,foo=bar
 measurement,foo=bar 1439587925
@@ -44,27 +44,31 @@ measurement,foo=bar 1439587925
 
 ### Timestamps
 
-Timestamps are not required. When no timestamp is provided the server will insert the point with the local server 
-timestamp. If a timestamp is provided it must be separated from the field(s) by a space. Timestamps must be in Unix 
+Timestamps are not required. When no timestamp is provided the server will insert the point with the local server
+timestamp. If a timestamp is provided it must be separated from the field(s) by a space. Timestamps must be in Unix
 time and are assumed to be in nanoseconds. A different precision can be provided, see the HTTP syntax for details.
 
 ### Key-value Separator
 
-Tag keys and values, and field keys and values must be separated by the equals sign `=` without spaces. 
+Tag keys and values, and field keys and values must be separated by the equals sign `=` without spaces.
 
 ### Escaping Characters
 
 If a measurement, tag key, tag value, or field key contains a space ` `, comma `,`, or an equals sign `=` it must be escaped using the backslash character `\`. Backslash characters do not need to be escaped.
 
+### Comments
+
+`#` at the beginning of the line is a valid comment character for the line protocol. All subsequent characters are ignored.
+
 ### Data Types
 
-Measurements, tag keys, tag values, and field keys are always stored as strings in the database. 
+Measurements, tag keys, tag values, and field keys are always stored as strings in the database.
 
-`string` values have a length limit of 64 KB. All Unicode characters should be valid, although commas and spaces 
+`string` values have a length limit of 64 KB. All Unicode characters should be valid, although commas and spaces
 require escaping. Backslash characters do not require escaping, but may not be used directly preceding a comma or space. (Note that `string` field values have different quoting and escaping rules than the measurement, tag, and field name `string` syntax.) The field `location="us-west"` stores a string value.
 
-Field values may be stored as `float64`, `int64`, `boolean`, or `string`. All subsequent field values must match 
-the type of the first point written to given measurement. 
+Field values may be stored as `float64`, `int64`, `boolean`, or `string`. All subsequent field values must match
+the type of the first point written to given measurement.
 
 `float64` values are the default numerical type. `1` is a float, `1i` is an integer.
 
@@ -111,7 +115,7 @@ In the above example, the measurement is written as `total disk free` and the ta
 
 #### Escaping Equals Signs
 ```
-disk_free,a\=b=y\=z value=442221834240i 
+disk_free,a\=b=y\=z value=442221834240i
 ```
 
 In the above example, the tag key `a=b` has a tag value of `y=z`
@@ -136,27 +140,27 @@ In the above example, the second field key is `working directories` and the corr
 "measurement\ with\ quotes",tag\ key\ with\ spaces=tag\,value\,with"commas" field_key\\\\="string field value, only \" need be quoted"
 ```
 
-In the above example, the measurement is `"measurement with quotes"`, the tag key is `tag key with spaces`, the 
-tag value is `tag,value,with"commas"`, the field key is `field_key\\\\` and the field value is `string field value, only " need be quoted`. 
+In the above example, the measurement is `"measurement with quotes"`, the tag key is `tag key with spaces`, the
+tag value is `tag,value,with"commas"`, the field key is `field_key\\\\` and the field value is `string field value, only " need be quoted`.
 
 ### Caveats
 
 > **Note:** Prior to version 0.9.3, integers were numeric values that did not include a decimal (e.g. 1, 345, 2015, -10) and were not followed by a trailing `i`. Including a trailing `i` when writing integers will cause an error in versions 0.9.2 and prior. See [issue](https://github.com/influxdb/influxdb/issues/3519) for more information.
 
-If you write points in a batch all points without explicit timestamps will receive the same timestamp when inserted. Since a point is defined only by its measurement, tag set, and timestamp, that can lead to duplicate points. When InfluxDB encounters a duplicate point it silently overwrites the previous point. It is a best practice to provide explicit timestamps with all points. 
+If you write points in a batch all points without explicit timestamps will receive the same timestamp when inserted. Since a point is defined only by its measurement, tag set, and timestamp, that can lead to duplicate points. When InfluxDB encounters a duplicate point it silently overwrites the previous point. It is a best practice to provide explicit timestamps with all points.
 
-Measurements, tag keys, tag values, and field keys are never quoted. Spaces and commas must be escaped. Field keys 
+Measurements, tag keys, tag values, and field keys are never quoted. Spaces and commas must be escaped. Field keys
 that are stored as strings must always be double-quoted. Only double-quotes should be escaped.
 
 Querying measurements or tags that contain double-quotes `"` can be difficult, since double-quotes are also the syntax for an identifier. It's possible to work around the limitations with regular expressions but it's not easy.
 
-Avoid using Keywords as identifiers (database names, retention policy names, measurement names, tag keys, or field keys) whenever possible. Keywords in InfluxDB are referenced on the [InfluxQL Syntax](../query_language/spec.md) page. There is no need to quote or escape keywords in the write syntax. 
+Avoid using Keywords as identifiers (database names, retention policy names, measurement names, tag keys, or field keys) whenever possible. Keywords in InfluxDB are referenced on the [InfluxQL Syntax](../query_language/spec.md) page. There is no need to quote or escape keywords in the write syntax.
 
 All values in InfluxDB are case-sensitive: `MyDB` != `mydb` != `MYDB`. The exception is Keywords, which are case-insensitive.
 
 ## CLI
 
-To write points using the command line interface, use the `insert` command. 
+To write points using the command line interface, use the `insert` command.
 
 #### Write a Point with the CLI
 
@@ -169,9 +173,9 @@ The CLI will return nothing on success and should give an informative parser err
 
 ## HTTP
 
-To write points using HTTP, POST to the `/write` endpoint at port `8086`. You must specify the target database in the query string using `db=<target_database>`. 
+To write points using HTTP, POST to the `/write` endpoint at port `8086`. You must specify the target database in the query string using `db=<target_database>`.
 
-You may optionally provide a target retention policy, specify the precision of any supplied timestamps, and pass any required authentication in the query string. 
+You may optionally provide a target retention policy, specify the precision of any supplied timestamps, and pass any required authentication in the query string.
 
 Successful writes will return a `204` HTTP Status Code. Writes will return a `400` for invalid syntax.
 
@@ -188,7 +192,7 @@ The following query string parameters can be passed as part of the GET string wh
  - `quorum` - the data must be written to disk by (N/2 + 1) valid nodes (N is the replication factor for the target retention policy)
  - `all` - the data must be written to disk by all valid nodes
  - `any` - a write is confirmed if hinted-handoff is successful, even if all target nodes report a write failure
-In this context, "valid node" means a node that hosts a copy of the shard containing the series being written to. In a clustered system, the replication factor should equal the number of valid nodes. 
+In this context, "valid node" means a node that hosts a copy of the shard containing the series being written to. In a clustered system, the replication factor should equal the number of valid nodes.
 
 #### Write a Point with `curl`
 
@@ -216,7 +220,7 @@ curl -X POST 'http://localhost:8086/write' --data-urlencode 'db=mydb' --data-url
 
 #### Write a Point Using Authentication
 
-Use the `u=<user>` and `p=<password>` to pass the authentication details, if required. 
+Use the `u=<user>` and `p=<password>` to pass the authentication details, if required.
 
 ```bash
 curl -X POST 'http://localhost:8086/write?db=mydb&u=root&p=123456' --data-binary 'disk_free,hostname=server01 value=442221834240i 1435362189575692182'
@@ -230,7 +234,7 @@ curl -X POST 'http://localhost:8086/write' --data-urlencode 'db=mydb' --data-url
 
 Use the `precision=[n,u,ms,s,m,h]` query string parameter to supply a precision for the timestamps.
 
-All timestamps are assumed to be Unix nanoseconds unless otherwise specified. If you provide timestamps in any unit other than nanoseconds, you must supply the appropriate precision in the URL query string. Use `n`, `u`, `ms`, `s`, `m`, and `h` for nanoseconds, microseconds, milliseconds, seconds, minutes, and hours, respectively. 
+All timestamps are assumed to be Unix nanoseconds unless otherwise specified. If you provide timestamps in any unit other than nanoseconds, you must supply the appropriate precision in the URL query string. Use `n`, `u`, `ms`, `s`, `m`, and `h` for nanoseconds, microseconds, milliseconds, seconds, minutes, and hours, respectively.
 
 ```bash
 curl -X POST 'http://localhost:8086/write?db=mydb&precision=ms' --data-binary 'disk_free value=442221834240i 1435362189575'
