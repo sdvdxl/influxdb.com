@@ -26,6 +26,7 @@ This page addresses frequent sources of confusion and places where InfluxDB beha
 
 * [Writing integers](../troubleshooting/frequently_encountered_issues.html#writing-integers)  
 * [Writing data with negative timestamps](../troubleshooting/frequently_encountered_issues.html#writing-data-with-negative-timestamps)  
+* [Writing duplicate points](../troubleshooting/frequently_encountered_issues.html#writing-duplicate-points)  
 * [Getting an unexpected error when sending data over the HTTP API](../troubleshooting/frequently_encountered_issues.html#getting-an-unexpected-error-when-sending-data-over-the-http-api) 
 * [Words and characters to avoid](../troubleshooting/frequently_encountered_issues.html#words-and-characters-to-avoid)  
 * [Single quoting and double quoting when writing data](../troubleshooting/frequently_encountered_issues.html#single-quoting-and-double-quoting-when-writing-data)  
@@ -190,6 +191,25 @@ Writes a float: `value=100`
 InfluxDB has supported negative UNIX timestamps in the past, but there is currently a bug in the line protocol parser that treats negative timestamps as invalid syntax. For example, `INSERT waybackwhen past=1 -1` returns `ERR: unable to parse 'waybackwhen past=1 -1': bad timestamp`.
 
 <dt> [GitHub Issue #3367](https://github.com/influxdb/influxdb/issues/3367) </dt>
+
+## Writing duplicate points
+In InfluxDB 0.9 a point is uniquely identified by the measurement name, full [tag set]()(../concepts/glossary.html#tag-set), and the nanosecond timestamp. If a point is submitted with an identical measurement, tag set, and timestamp it will silently overwrite the previous point. This is the intended behavior.
+
+For example, 
+<br>`cpu_load,hostname=server02,az=us_west value=24.5 1234567890000000` and
+<br>`cpu_load,hostname=server02,az=us_west value=5.24 1234567890000000` are identical points. The last one written will overwrite the other.
+
+In order to store both points, simply introduce an arbitrary new tag to enfore uniqueness. <br>`cpu_load,hostname=server02,az=us_west,uniq=1 value=24.5 1234567890000000` and
+<br>`cpu_load,hostname=server02,az=us_west,uniq=2 value=5.24 1234567890000000` are now unique points, and each will persist in the database. 
+
+You can also increment the timestamp by a nanosecond:
+<br>`cpu_load,hostname=server02,az=us_west,uniq=1 value=24.5 1234567890000000` and
+<br>`cpu_load,hostname=server02,az=us_west,uniq=2 value=5.24 1234567890000001` are now unique points, and each will persist in the database. 
+
+
+> **Note:**  The field set has nothing to do with the uniqueness of a point. These are still identical points and the last one written would be the only one to persist:<br>`cpu_load,hostname=server02,az=us_west value=24.5 1234567890000000` and
+<br>`cpu_load,hostname=server02,az=us_west loadavg=12.2 1234567890000000` are still identical points. The last one written will overwrite the other.
+
 
 ## Getting an unexpected error when sending data over the HTTP API
 First, double check your [line protocol](../write_protocols/line.html) syntax. Second, if you continue to receive errors along the lines of `bad timestamp` or `unable to parse`, verify that your newline character is line feed (`\n`, which is ASCII `0x0A`). InfluxDB's line protocol relies on `\n` to indicate the end of a line and the beginning of a new line; files or data that use a newline character other than `\n` will encounter parsing issues. Convert the newline character and try sending the data again.
