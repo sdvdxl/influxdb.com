@@ -199,8 +199,13 @@ For example,
 <br>`cpu_load,hostname=server02,az=us_west value=24.5 1234567890000000` and
 <br>`cpu_load,hostname=server02,az=us_west value=5.24 1234567890000000` are identical points. The last one written will overwrite the other.
 
-In order to store both points, simply introduce a uniqueness tag. <br>`cpu_load,hostname=server02,az=us_west,uniq=1 value=24.5 1234567890000000` and
+In order to store both points, simply introduce an arbitrary new tag to enfore uniqueness. <br>`cpu_load,hostname=server02,az=us_west,uniq=1 value=24.5 1234567890000000` and
 <br>`cpu_load,hostname=server02,az=us_west,uniq=2 value=5.24 1234567890000000` are now unique points, and each will persist in the database. 
+
+You can also increment the timestamp by a nanosecond:
+<br>`cpu_load,hostname=server02,az=us_west,uniq=1 value=24.5 1234567890000000` and
+<br>`cpu_load,hostname=server02,az=us_west,uniq=2 value=5.24 1234567890000001` are now unique points, and each will persist in the database. 
+
 
 > **Note:**  The field set has nothing to do with the uniqueness of a point. These are still identical points and the last one written would be the only one to persist:<br>`cpu_load,hostname=server02,az=us_west value=24.5 1234567890000000` and
 <br>`cpu_load,hostname=server02,az=us_west loadavg=12.2 1234567890000000` are still identical points. The last one written will overwrite the other.
