@@ -7,35 +7,35 @@ aliases:
 
 This document covers setting up and managing authentication and authorization in InfluxDB.
 
-[Authentication](../administration/authentication.html#authentication)
+[Authentication](../administration/authentication_and_authorization.html#authentication)
 
-* [Set up authentication](../administration/authentication.html#set-up-authentication)
-* [Authenticating requests](../administration/authentication.html#authenticating-requests)  
-&nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Authenticate using the HTTP API](../administration/authentication.html#authenticate-using-the-http-api)  
-&nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Authenticate using the CLI](../administration/authentication.html#authenticate-using-the-cli)  
+* [Set up authentication](../administration/authentication_and_authorization.html#set-up-authentication)
+* [Authenticating requests](../administration/authentication_and_authorization.html#authenticating-requests)  
+&nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Authenticate using the HTTP API](../administration/authentication_and_authorization.html#authenticate-using-the-http-api)  
+&nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Authenticate using the CLI](../administration/authentication_and_authorization.html#authenticate-using-the-cli)  
 	
-[Authorization](../administration/authentication.html#authorization)
+[Authorization](../administration/authentication_and_authorization.html#authorization)
 
-* [User types and their privileges](../administration/authentication.html#user-types-and-their-privileges)  
-&nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Admin users](../administration/authentication.html#admin-users)  
-&nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Non-admin users](../administration/authentication.html#non-admin-users)  
-* [User management commands](../administration/authentication.html#user-management-commands)  
-&nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Admin user management](../administration/authentication.html#admin-user-management)  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;□&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[`CREATE` a new admin user](../administration/authentication.html#create-a-new-admin-user)  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;□&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[`GRANT` administrative privileges to an existing user](../administration/authentication.html#grant-administrative-privileges-to-an-existing-user)   
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;□&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[`REVOKE` administrative privileges from an admin user](../administration/authentication.html#revoke-administrative-privileges-from-an-admin-user)  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;□&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[`SHOW` all existing users and their admin status](../administration/authentication.html#show-all-existing-users-and-their-admin-status)    
-&nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Non-admin user management](../administration/authentication.html#non-admin-user-management)  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;□&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[`CREATE` a new non-admin user](../administration/authentication.html#create-a-new-non-admin-user)  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;□&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[`GRANT` `READ`,`WRITE`, or `ALL` database privileges to an existing user](../administration/authentication.html#grant-read-write-or-all-database-privileges-to-an-existing-user)   
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;□&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[`REVOKE` `READ`,`WRITE`, or `ALL` database privileges from an existing user](../administration/authentication.html#revoke-read-write-or-all-database-privileges-from-an-existing-user)  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;□&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[`SHOW` a user's database privileges](../administration/authentication.html#show-a-user-s-database-privileges)  
-&nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[General admin and non-admin user management](../administration/authentication.html#show-a-user-s-database-privileges)  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;□&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Re`SET` a user's password](../administration/authentication.html#re-set-a-user-s-password)  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;□&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[`DROP` a user](../administration/authentication.html#drop-a-user)  
+* [User types and their privileges](../administration/authentication_and_authorization.html#user-types-and-their-privileges)  
+&nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Admin users](../administration/authentication_and_authorization.html#admin-users)  
+&nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Non-admin users](../administration/authentication_and_authorization.html#non-admin-users)  
+* [User management commands](../administration/authentication_and_authorization.html#user-management-commands)  
+&nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Admin user management](../administration/authentication_and_authorization.html#admin-user-management)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;□&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[`CREATE` a new admin user](../administration/authentication_and_authorization.html#create-a-new-admin-user)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;□&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[`GRANT` administrative privileges to an existing user](../administration/authentication_and_authorization.html#grant-administrative-privileges-to-an-existing-user)   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;□&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[`REVOKE` administrative privileges from an admin user](../administration/authentication_and_authorization.html#revoke-administrative-privileges-from-an-admin-user)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;□&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[`SHOW` all existing users and their admin status](../administration/authentication_and_authorization.html#show-all-existing-users-and-their-admin-status)    
+&nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Non-admin user management](../administration/authentication_and_authorization.html#non-admin-user-management)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;□&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[`CREATE` a new non-admin user](../administration/authentication_and_authorization.html#create-a-new-non-admin-user)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;□&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[`GRANT` `READ`,`WRITE`, or `ALL` database privileges to an existing user](../administration/authentication_and_authorization.html#grant-read-write-or-all-database-privileges-to-an-existing-user)   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;□&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[`REVOKE` `READ`,`WRITE`, or `ALL` database privileges from an existing user](../administration/authentication_and_authorization.html#revoke-read-write-or-all-database-privileges-from-an-existing-user)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;□&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[`SHOW` a user's database privileges](../administration/authentication_and_authorization.html#show-a-user-s-database-privileges)  
+&nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[General admin and non-admin user management](../administration/authentication_and_authorization.html#show-a-user-s-database-privileges)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;□&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Re`SET` a user's password](../administration/authentication_and_authorization.html#re-set-a-user-s-password)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;□&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[`DROP` a user](../administration/authentication_and_authorization.html#drop-a-user)  
 
 	
-[Authentication and authorization HTTP errors](../administration/authentication.html#authentication-and-authorization-http-errors)
+[Authentication and authorization HTTP errors](../administration/authentication_and_authorization.html#authentication-and-authorization-http-errors)
 
 
 > **Note:** Authentication and authorization should not be relied upon to prevent access and protect data from malicious actors.  If additional security or compliance features are desired, InfluxDB should be run behind a third-party service.
@@ -74,7 +74,7 @@ InfluxDB's HTTP API and the command line interface (CLI), which connects to the 
     CREATE USER <user_name> WITH PASSWORD <password> WITH ALL PRIVILEGES
     ```
 	
-	Note that the first user must be an [admin user](../administration/authentication.html#admin-users). See the section on [authorization](../administration/authentication.html#authorization) for the different user types, their privileges, and more on user management. 
+	Note that the first user must be an [admin user](../administration/authentication_and_authorization.html#admin-users). See the section on [authorization](../administration/authentication_and_authorization.html#authorization) for the different user types, their privileges, and more on user management. 
 	
 Now InfluxDB will check user credentials on every request and will only process requests that have valid credentials for an existing user.
 
@@ -101,7 +101,7 @@ curl -G http://localhost:8086/query --data-urlencode "u=todd" --data-urlencode "
 
     Note that when authentication is disabled, InfluxDB never checks credentials and the password query parameter `p` is not redacted in the InfluxDB logs.
     
-The queries in both examples assume that the user is an [admin user](../administration/authentication.html#admin-users). See the section on [authorization](../administration/authentication.html#authorization) for the different user types, their privileges, and more on user management. 
+The queries in both examples assume that the user is an [admin user](../administration/authentication_and_authorization.html#admin-users). See the section on [authorization](../administration/authentication_and_authorization.html#authorization) for the different user types, their privileges, and more on user management. 
 
 I don't think this is true, but someone else should check:
 
@@ -115,7 +115,7 @@ influx -username todd -password influxdbforever
 ```
 
 ## Authorization
-Authorization is only enforced once you've [enabled authentication](../administration/authentication.html#set-up-authentication). By default, authentication is disabled, all credentials are silently ignored, and all users have all privileges.
+Authorization is only enforced once you've [enabled authentication](../administration/authentication_and_authorization.html#set-up-authentication). By default, authentication is disabled, all credentials are silently ignored, and all users have all privileges.
 
 ### User types and their privileges
 ---
@@ -128,7 +128,7 @@ Database management:
 &nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`CREATE`, `ALTER`, and `DROP` retention policies  
 &nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`CREATE` and `DROP` continuous queries  
 
-See the [database management](link!) page for a complete discussion of the commands listed above.
+See the [database management](../query_language/database_management.html) and [continuous queries](../query_language/continuous_queries.html) page for a complete discussion of the commands listed above.
 
 User management:  
 &nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`CREATE` admin users and `GRANT`, `REVOKE`, and `SHOW` admin privileges  
@@ -136,7 +136,7 @@ User management:
 &nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Re`SET` user passwords  
 &nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`DROP` users 
 
-See [below](../administration/authentication.html#user-management-commands) for a complete discussion of the user management commands.
+See [below](../administration/authentication_and_authorization.html#user-management-commands) for a complete discussion of the user management commands.
 
 #### Non-admin users
 Non-admin users can have one of the following three privileges per database:  
