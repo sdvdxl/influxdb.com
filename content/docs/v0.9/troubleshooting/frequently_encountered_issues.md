@@ -193,23 +193,21 @@ InfluxDB has supported negative UNIX timestamps in the past, but there is curren
 <dt> [GitHub Issue #3367](https://github.com/influxdb/influxdb/issues/3367) </dt>
 
 ## Writing duplicate points
-In InfluxDB 0.9 a point is uniquely identified by the measurement name, full tag set (e.g. all tag keys and their values), and the nanosecond timestamp. If a point is submitted with an identical measurement, tag set, and timestamp it will silently overwrite the previous point. This is not a bug, it is the intended behavior.
+In InfluxDB 0.9 a point is uniquely identified by the measurement name, full [tag set]()(../concepts/glossary.html#tag-set), and the nanosecond timestamp. If a point is submitted with an identical measurement, tag set, and timestamp it will silently overwrite the previous point. This is the intended behavior.
 
 For example, 
-`cpu_load,hostname=server02,az=us_west value=24.5 1234567890000000` and
-`cpu_load,hostname=server02,az=us_west value=5.24 1234567890000000` are identical points. The last one written will overwrite the other.
+<br>`cpu_load,hostname=server02,az=us_west value=24.5 1234567890000000` and
+<br>`cpu_load,hostname=server02,az=us_west value=5.24 1234567890000000` are identical points. The last one written will overwrite the other.
 
 In order to store both points, simply introduce a uniqueness tag. 
 
-`cpu_load,hostname=server02,az=us_west,uniq=1 value=24.5 1234567890000000` and
-`cpu_load,hostname=server02,az=us_west,uniq=2 value=5.24 1234567890000000` are now unique points, and each will persist in the database. 
+<br>`cpu_load,hostname=server02,az=us_west,uniq=1 value=24.5 1234567890000000` and
+<br>`cpu_load,hostname=server02,az=us_west,uniq=2 value=5.24 1234567890000000` are now unique points, and each will persist in the database. 
 
-Note that the field set has nothing to do with the uniqueness of a point. These are still identical points and the last one written would be the only one to persist:
+> **Note:**  The field set has nothing to do with the uniqueness of a point. These are still identical points and the last one written would be the only one to persist:
 
-`cpu_load,hostname=server02,az=us_west value=24.5 1234567890000000` and
-`cpu_load,hostname=server02,az=us_west loadavg=12.2 1234567890000000` are still identical points. The last one written will overwrite the other.
-
-
+<br>`cpu_load,hostname=server02,az=us_west value=24.5 1234567890000000` and
+<br>`cpu_load,hostname=server02,az=us_west loadavg=12.2 1234567890000000` are still identical points. The last one written will overwrite the other.
 
 
 ## Getting an unexpected error when sending data over the HTTP API
