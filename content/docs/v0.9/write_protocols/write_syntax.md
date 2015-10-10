@@ -149,7 +149,7 @@ tag value is `tag,value,with"commas"`, the field key is `field_key\\\\` and the 
 
 If you write points in a batch all points without explicit timestamps will receive the same timestamp when inserted. Since a point is defined only by its measurement, tag set, and timestamp, that can lead to duplicate points. When InfluxDB encounters a duplicate point it silently overwrites the previous point. It is a best practice to provide explicit timestamps with all points.
 
-Measurements, tag keys, tag values, and field keys are never quoted. Spaces and commas must be escaped. Field keys
+Measurements, tag keys, tag values, and field keys are never quoted. Spaces and commas must be escaped. Field values
 that are stored as strings must always be double-quoted. Only double-quotes should be escaped.
 
 Querying measurements or tags that contain double-quotes `"` can be difficult, since double-quotes are also the syntax for an identifier. It's possible to work around the limitations with regular expressions but it's not easy.
