@@ -5,7 +5,7 @@ date = "2015-10-09"
 publishdate = "2015-10-09"
 +++
 
-Today we are releasing our initial Windows install packages for [InfluxDB](https://influxdb.com/), [Telegraf](https://github.com/influxdb/telegraf),  and [Chronograf](https://influxdb.com/chronograf/).  These packages represent a minimal installation designed get developers up and running quickly with local instances. Future releases will likely include the ability to:
+Today we are releasing our initial Windows install packages for [InfluxDB](https://influxdb.com/), [Telegraf](https://github.com/influxdb/telegraf),  and [Chronograf](https://influxdb.com/chronograf/).  These packages represent a minimal installation designed to get developers up and running quickly with local instances. Future releases will likely include the ability to:
 
 * Install executables as a service
 * Log to the Event Log instead of to stderr
@@ -33,7 +33,7 @@ After the installation you will see a new folder in your Startup Menu called “
 
 * InfluxDB Server - Launches the InfluxDB database service.
 * InfluxDB CLI - Launches the command line interface used to query and communicate with the InfluxDB server.
-* Admin Dashboard - Opens your local dashboard used to communicate with your InfluxDB database.
+* Admin Dashboard - Opens the dashboard used to communicate with your InfluxDB database.
 * Documentation - Links to the online documentation for InfluxDB.
 
 ![](/img/blog/windows/image15.png)
@@ -46,9 +46,9 @@ Launching the InfluxDB CLI should result in the following screen:
 
 ![](/img/blog/windows/image17.png)
 
-The InfluxDB CLI will automatically connect to your local InfluxDB instance if it is running.  The above example shows the command output for `show databases`.
+The InfluxDB CLI will automatically connect to your local InfluxDB instance if it is running.  The above example shows the command output for `SHOW DATABASES`.
 
-You can also launch the Admin Dashboard for a GUI experience using the Admin Dashboard shortcut.  This will open your browser to the local Admin Dashboard and automatically connect to your local InfluxDB instance if it is running.
+You can also launch the Admin Dashboard for a GUI experience using the Admin Dashboard shortcut.  This will open your browser pointing at the local Admin Dashboard and automatically connect to your local InfluxDB instance if it is running.
 
 ![](/img/blog/windows/image18.png)
 
@@ -73,7 +73,7 @@ Launching the Telegraf Server will bring up the following screen:
 
 ![](/img/blog/windows/image02.png)
 
-If your local instance of InfluxDB is already running, it will begin sending metrics it is collecting to your InfluxDB server.
+If InfluxDB is already running on your computer, it will begin sending metrics it is collecting to your InfluxDB server.
 
 ### Installing Chronograf
 
@@ -97,11 +97,11 @@ Launching the Chronograf Server will result in the following screen:
 
 ![](/img/blog/windows/image05.png)
 
-Launching the Chronograf Dashboard will open a browser.  If you have not registered with Influxdata yet, you will be promoted to sign up before you can use Chronograf.
+Launching the Chronograf Dashboard will open a browser.  If you have not registered with [Influxdata](https://enterprise.influxdata.com/) yet, you will be promoted to sign up before you can use Chronograf.
 
 ![](/img/blog/windows/image16.png)
 
-After completing the singup, you will be redirected to your local dashboard.  You will first be prompted to add your local server.  You can accept all the default options.
+After completing the signup, you will be redirected to your local dashboard.  You will first be prompted to add your local server.  You can accept all the default options.
 
 After adding a server, click on the graph icon on the left and begin building out your queries.  You can auto refresh the screen by selecting the refresh interval from the top right corner.
 
