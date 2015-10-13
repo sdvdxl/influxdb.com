@@ -48,13 +48,15 @@ InfluxDB's HTTP API and the command line interface (CLI), which connects to the 
 
 ### Set up authentication
 ---
-1. Enable authentication by setting the `auth-enabled` option to `true` in the `[http]` section of the configuration file:
+1. Create your users. See the [authorization section](../administration/authentication_and_authorization.html#authorization) for how to create [admin users](../administration/authentication_and_authorization.html#admin-users) and [non-admin users](../administration/authentication_and_authorization.html#non-admin-users).
+ 
+2. By default, authentication is disabled in the configuration file. Enable authentication by setting the `auth-enabled` option to `true` in the `[http]` section of the configuration file:
 
     ```
 [http]  
   enabled = true  
   bind-address = ":8086"  
- ✨auth-enabled = true ✨  
+ auth-enabled = true # ✨
   log-enabled = true  
   write-tracing = false  
   pprof-enabled = false  
@@ -62,21 +64,11 @@ InfluxDB's HTTP API and the command line interface (CLI), which connects to the 
   https-certificate = "/etc/ssl/influxdb.pem"  
     ```
     
-2. Restart the `influxd` process and direct it to the newly edited configuration file, for example direct the process to the file `/etc/influxdb/influxdb.conf`:  
+3. Restart the process.
 
-    ```
-    influxd -config '/etc/influxdb/influxdb.conf'
-    ```
-    
-3. If you haven't created any users, create your first user. If no users exist, InfluxDB will **not** enforce authentication until you've created the first user, and InfluxDB will only accept the following query:
-
-    ```sql
-    CREATE USER <user_name> WITH PASSWORD <password> WITH ALL PRIVILEGES
-    ```
-	
-	Note that the first user must be an [admin user](../administration/authentication_and_authorization.html#admin-users). See the section on [authorization](../administration/authentication_and_authorization.html#authorization) for the different user types, their privileges, and more on user management. 
-	
 Now InfluxDB will check user credentials on every request and will only process requests that have valid credentials for an existing user.
+    
+> **Note:** If you enable authentication and have no users, InfluxDB will **not** enforce authentication until you create the first admin user, and InfluxDB will only accept the [query](../administration/authentication_and_authorization.html#create-a-new-admin-user) that creates an admin user.
 
 ### Authenticating requests
 ---
@@ -88,7 +80,7 @@ There are two options for authenticating with the HTTP API.
     Example:
 
     ```sh
-curl -G http://localhost:8086/query -u todd:influxdbforever --data-urlencode "q=SHOW DATABASES"
+curl -G http://localhost:8086/query -u todd:influxdb4ever --data-urlencode "q=SHOW DATABASES"
     ```
 
 * Authenticate by providing query parameters in the URL. Set `u` as the username and `p` as the password. 
@@ -96,23 +88,37 @@ curl -G http://localhost:8086/query -u todd:influxdbforever --data-urlencode "q=
     Example:
 
     ```sh
-curl -G http://localhost:8086/query --data-urlencode "u=todd" --data-urlencode "p=influxdbforever" --data-urlencode "q=SHOW DATABASES"
+curl -G http://localhost:8086/query --data-urlencode "u=todd" --data-urlencode "p=influxdb4ever" --data-urlencode "q=SHOW DATABASES"
     ```
-
-    Note that when authentication is disabled, InfluxDB never checks credentials and the password query parameter `p` is not redacted in the InfluxDB logs.
     
 The queries in both examples assume that the user is an [admin user](../administration/authentication_and_authorization.html#admin-users). See the section on [authorization](../administration/authentication_and_authorization.html#authorization) for the different user types, their privileges, and more on user management. 
 
-I don't think this is true, but someone else should check:
+Note about redacted passwords when disabled and enabled?
 
-> **Note:** If you authenticate with both Basic Authentication **and** the URL query parameters, the user credentials specified in the query parameters take precedence.
+> **Notes:** If you authenticate with both Basic Authentication **and** the URL query parameters, the user credentials specified in the query parameters take precedence.
 
 #### Authenticate using the CLI
-Set the `username` and `password` flags when you start the CLI:
+There are two options for authenticating with the CLI.
 
-```sh
-influx -username todd -password influxdbforever
-```
+* Authenticate with `auth <username> <password>` after starting the CLI.
+
+    Example:
+    
+    ```sh
+$ influx
+Connected to http://localhost:8086 version 0.9.4.1
+InfluxDB shell 0.9.4.1
+> auth todd influxdb4ever
+>
+    ```
+
+* Authenticate by setting the `username` and `password` flags when you start the CLI.
+
+    Example:
+
+    ```sh
+influx -username todd -password influxdb4ever
+    ```
 
 ## Authorization
 Authorization is only enforced once you've [enabled authentication](../administration/authentication_and_authorization.html#set-up-authentication). By default, authentication is disabled, all credentials are silently ignored, and all users have all privileges.
@@ -123,18 +129,20 @@ Authorization is only enforced once you've [enabled authentication](../administr
 Admin users have `READ` and `WRITE` access to all databases and full access to the following administrative queries:
 
 Database management:  
-&nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`CREATE` and `DROP` databases  
-&nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`DROP` series and measurements  
-&nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`CREATE`, `ALTER`, and `DROP` retention policies  
-&nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`CREATE` and `DROP` continuous queries  
+&nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`CREATE DATABASE`, `ALTER DATABASE` and `DROP DATABASE`  
+&nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`DROP SERIES` and `DROP MEASUREMENT`  
+&nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`CREATE RETENTION POLICY`, `ALTER RETENTION POLICY`, and `DROP RETENTION POLICY`  
+&nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`CREATE CONTINUOUS QUERY` and `DROP CONTINUOUS QUERY`  
 
 See the [database management](../query_language/database_management.html) and [continuous queries](../query_language/continuous_queries.html) page for a complete discussion of the commands listed above.
 
 User management:  
-&nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`CREATE` admin users and `GRANT`, `REVOKE`, and `SHOW` admin privileges  
-&nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`CREATE` non-admin users and `GRANT`, `REVOKE`, and `SHOW` database privileges  
-&nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Re`SET` user passwords  
-&nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`DROP` users 
+&nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Admin user management:  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[`CREATE USER`](../administration/authentication_and_authorization.html#create-a-new-admin-user), [`GRANT ALL PRIVILEGES`](../administration/authentication_and_authorization.html#grant-administrative-privileges-to-an-existing-user), [`REVOKE ALL PRIVILEGES`](../administration/authentication_and_authorization.html#revoke-administrative-privileges-from-an-admin-user), and [`SHOW USERS`](../administration/authentication_and_authorization.html#show-all-existing-users-and-their-admin-status)  
+&nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Non-admin user management:  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[`CREATE USER`](../administration/authentication_and_authorization.html#create-a-new-non-admin-user), [`GRANT [READ,WRITE,ALL]`](../administration/authentication_and_authorization.html#grant-read-write-or-all-database-privileges-to-an-existing-user), [`REVOKE [READ,WRITE,ALL]`](../administration/authentication_and_authorization.html#revoke-read-write-or-all-database-privileges-from-an-existing-user), and [`SHOW GRANTS`](../administration/authentication_and_authorization.html#show-a-user-s-database-privileges)  
+&nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;General user management:  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[`SET PASSWORD`](../administration/authentication_and_authorization.html#re-set-a-user-s-password) and [`DROP USER`](../administration/authentication_and_authorization.html#drop-a-user)  
 
 See [below](../administration/authentication_and_authorization.html#user-management-commands) for a complete discussion of the user management commands.
 
@@ -144,7 +152,7 @@ Non-admin users can have one of the following three privileges per database:
 &nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`WRITE`  
 &nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`ALL` (both `READ` and `WRITE` access)
 
-`READ`, `WRITE`, and `ALL` privileges are controlled per user per database. A new non-admin user has no access to a given database until an admin user `GRANT`s them privileges on that database.
+`READ`, `WRITE`, and `ALL` privileges are controlled per user per database. A new non-admin user has no access to any database until they are specifically [granted privileges to a database](../administration/authentication_and_authorization.html#grant-read-write-or-all-database-privileges-to-an-existing-user) by an admin user.
 
 ### User management commands
 ---
@@ -158,7 +166,7 @@ CREATE USER <username> WITH PASSWORD '<password>' WITH ALL PRIVILEGES
     CLI example:
     
     ```sh
-> CREATE USER paul WITH PASSWORD 'timeseriesfordays' WITH ALL PRIVILEGES
+> CREATE USER paul WITH PASSWORD 'timeseries4days' WITH ALL PRIVILEGES
 >
     ```
 
@@ -215,12 +223,12 @@ CREATE USER <username> WITH PASSWORD '<password>'
     CLI example:
     
     ```sh
-> CREATE USER todd WITH PASSWORD 'influxdbforlife'
+> CREATE USER todd WITH PASSWORD 'influxdb41yf3'
 >
     ```
-    > **Note:** The password string must be wrapped in single quotes. Do not include the single quotes when authenticating requests.
+    > **Note:** The password [string](../query_language/query_syntax.html#string-literals-single-quoted) must be wrapped in single quotes. Do not include the single quotes when authenticating requests.
     
-    > For passwords that include a single quote or a newline character, escape the single quote or newline character with a backslash both when creating the password and when authentication requests.
+    > For passwords that include a single quote or a newline character, escape the single quote or newline character with a backslash both when creating the password and when submitting authentication requests.
 
 * ##### `GRANT` `READ`, `WRITE` or `ALL` database privileges to an existing user:
 
@@ -228,7 +236,7 @@ CREATE USER <username> WITH PASSWORD '<password>'
 GRANT [READ,WRITE,ALL] ON <database_name> TO <username>
     ```
 
-   CLI examples:
+    CLI examples:
     
     `GRANT` `READ` access to `todd` on the `NOAA_water_database` database:
     
@@ -295,13 +303,13 @@ SET PASSWORD FOR <username> = '<password>'
     CLI example:
     
     ```sh
-> SET PASSWORD FOR todd = 'influxdbforever'
+> SET PASSWORD FOR todd = 'influxdb4ever'
 >
     ```
     
-    > **Note:** The password string must be wrapped in single quotes. Do not include the single quotes when authenticating requests.
+    > **Note:** The password [string](../query_language/query_syntax.html#string-literals-single-quoted) must be wrapped in single quotes. Do not include the single quotes when authenticating requests.
     
-    > For passwords that include a single quote or a newline character, escape the single quote or newline character with a backslash both when creating the password and when authentication requests.
+    > For passwords that include a single quote or a newline character, escape the single quote or newline character with a backslash both when creating the password and when submitting authentication requests.
 
 * ##### `DROP` a user:
 
