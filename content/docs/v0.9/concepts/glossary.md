@@ -22,7 +22,7 @@ The **measurement** is what appears in the SELECT clause of query statements, an
 
 #### Example:
 
-The metrics `cpu_load`, `peak_generation`, and `bikes_present` would be reasonable **measurements** for a server, a photovoltaic array, and a bike-sharing station, respectively.
+The metrics `cpu_load`, `energy_generated`, and `bikes_present` would be reasonable **measurements** for a server, a photovoltaic array, and a bike-sharing station, respectively.
 
 The `cpu_load` measurement would likely have tags for hostname, server region, server function, and OS. The `energy_generated` measurement might have tags for pv_installation_id, outside_temperature, and weather. The `bikes_present` measurement might only have a tag for station_id.
 
