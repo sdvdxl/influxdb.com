@@ -5,10 +5,12 @@ title: Schema Exploration
 InfluxQL is an SQL-like query language for interacting with data in InfluxDB. The following sections cover useful query syntax for exploring your schema (that is, how you set up your time series data): 
 
 * [See all databases with `SHOW DATABASES`](../query_language/schema_exploration.html#see-all-databases-with-show-databases)
+* [Explore retention policies with `SHOW RETENTION POLICIES`](../query_language/schema_exploration.html#explore-retention-policies-with-show-retention-policies)
 * [Explore series with `SHOW SERIES`](../query_language/schema_exploration.html#explore-series-with-show-series)
 * [Explore measurements with `SHOW MEASUREMENTS`](../query_language/schema_exploration.html#explore-measurements-with-show-measurements)
 * [Explore tag keys with `SHOW TAG KEYS`](../query_language/schema_exploration.html#explore-tag-keys-with-show-tag-keys)
 * [Explore tag values with `SHOW TAG VALUES`](../query_language/schema_exploration.html#explore-tag-values-with-show-tag-values)
+* [Explore field keys with `SHOW FIELD KEYS`](../query_language/schema_exploration.html#explore-field-keys-with-show-field-keys)
 
 The examples below query data using [InfluxDB's Command Line Interface (CLI)](../introduction/getting_started.html). See the [Querying Data](../guides/querying_data.html) guide for how to directly query data with the HTTP API.
 
@@ -29,6 +31,35 @@ name: databases
 ---------------
 name
 NOAA_water_database
+```
+
+## Explore retention policies with `SHOW RETENTION POLICIES`
+The `SHOW RETENTION POLICIES` query lists the existing [retention policies](../concepts/glossary.html#retention-policy) on a given database, and it takes the following form:
+```sql
+SHOW RETENTION POLICIES ON <database_name>
+```
+
+CLI example:
+```sql
+> SHOW RETENTION POLICIES ON NOAA_water_database
+```
+
+CLI response:
+```sh
+name	    duration	 replicaN	 default
+default	 0		       1		       true
+```
+
+The first column of the output contains the names of the different retention policies in the specified database. The second column shows the [duration](../concepts/glossary.html#duration) and the third column shows the [replication factor](../concepts/glossary.html#replication-factor) of the retention policy. The fourth column specifies if the retention policy is the default retention policy for the database. 
+
+The following example shows a hypothetical CLI response where there are four different retention policies in the database, and where the default retention policy is `three_days_only`:
+
+```sh
+name		           duration	 replicaN	 default
+default		        0		       1		       false
+two_days_only	   48h0m0s		 1		       false
+one_day_only	    24h0m0s		 1		       false
+three_days_only	 72h0m0s		 1		       true
 ```
 
 ## Explore series with `SHOW SERIES`
@@ -264,4 +295,64 @@ CLI response:
 
 The measurement `average_temperature` doesn't have the tag key `randtag` so InfluxDB returns nothing.
 
+## Explore field keys with `SHOW FIELD KEYS`
+The `SHOW FIELD KEYS` query returns the [field keys](../concepts/glossary.html#field-key) across each measurement in the database. It takes the following form, where the `FROM` clause is optional:
 
+```sql
+SHOW FIELD KEYS FROM <measurement_name>
+```
+
+Return the field keys across all measurements in the database `NOAA_water_database`:
+
+```sql
+> SHOW FIELD KEYS
+```
+
+CLI response:
+```sh
+name: average_temperature
+-------------------------
+fieldKey
+degrees
+
+
+name: h2o_feet
+--------------
+fieldKey
+level description
+water_level
+
+
+name: h2o_pH
+------------
+fieldKey
+pH
+
+
+name: h2o_quality
+-----------------
+fieldKey
+index
+
+
+name: h2o_temperature
+---------------------
+fieldKey
+degrees
+```
+
+Return the field keys in the measurement `h2o_feet` in the database `NOAA_water_database`:
+
+```sql
+> SHOW FIELD KEYS FROM h2o_feet
+```
+
+CLI response:
+
+```sh
+name: h2o_feet
+--------------
+fieldKey
+level description
+water_level
+```
