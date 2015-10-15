@@ -48,7 +48,7 @@ InfluxDB's HTTP API and the command line interface (CLI), which connects to the 
 
 ### Set up authentication
 ---
-1. Create your users. See the [authorization section](../administration/authentication_and_authorization.html#authorization) for how to create [admin users](../administration/authentication_and_authorization.html#admin-users) and [non-admin users](../administration/authentication_and_authorization.html#non-admin-users).
+1. Create at least one [admin user](../administration/authentication_and_authorization.html#admin-users). See the [authorization section](../administration/authentication_and_authorization.html#authorization) for how to create an admin user.
  
 2. By default, authentication is disabled in the configuration file. Enable authentication by setting the `auth-enabled` option to `true` in the `[http]` section of the configuration file:
 

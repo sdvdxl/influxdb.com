@@ -137,7 +137,7 @@ CREATE RETENTION POLICY <retention_policy_name> ON <database_name> DURATION <dur
 `w` weeks  
 `INF` infinite
 
-    <dt> Currently, the `DURATION` clause supports only single units. For example, you cannot express the duration `7230m` as `120h 30m`. See GitHub Issue [#3634](https://github.com/influxdb/influxdb/issues/3634) for more information. </dt>
+    <dt> Currently, the `DURATION` attribute supports only single units. For example, you cannot express the duration `7230m` as `120h 30m`. See GitHub Issue [#3634](https://github.com/influxdb/influxdb/issues/3634) for more information. </dt>
 
 * `REPLICATION` determines how many independent copies of each point are stored in the cluster, where `n` is the number of data nodes.
 
@@ -159,7 +159,7 @@ A successful `CREATE RETENTION POLICY` query returns an empty response.
 
 ### Modify retention policies with ALTER RETENTION POLICY
 ---
-The `ALTER RETENTION POLICY` query takes the following form, where you must set at least one of THE THINGS `DURATION`, `REPLICATION`, or `DEFAULT`:
+The `ALTER RETENTION POLICY` query takes the following form, where you must declare at least one of the retention policy attributes `DURATION`, `REPLICATION`, or `DEFAULT`:
 ```sql
 ALTER RETENTION POLICY <retention_policy_name> ON <database_name> DURATION <duration> REPLICATION <n> [DEFAULT]
 ```
