@@ -59,7 +59,7 @@ name		           duration	 replicaN	 default
 default		        0		       1		       false
 two_days_only	   48h0m0s		 1		       false
 one_day_only	    24h0m0s		 1		       false
-three_days_only	 24h0m0s		 1		       true
+three_days_only	 72h0m0s		 1		       true
 ```
 
 ## Explore series with `SHOW SERIES`
