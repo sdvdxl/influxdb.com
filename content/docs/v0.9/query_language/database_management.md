@@ -48,6 +48,9 @@ A successful `CREATE DATABASE` query returns an empty result.
 
 ### Rename a database with ALTER DATABASE
 ---
+<dt> `ALTER DATABASE` will become functional with the 0.9.5 release.
+</dt>
+
 The `ALTER DATABASE` query takes the following form:
 ```sql
 ALTER DATABASE <old_database_name> RENAME TO <new_database_name>
