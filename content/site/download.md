@@ -169,9 +169,12 @@ Every install of Chronograf requires a free registration on InfluxData Enterpris
             var form = $("form#download");
             var url = form.attr("action") ;
             var data = form.serialize();
+            var email = $("input#email");
 
-            $.post(url, data);
-            Cookies.set("submitted", true);
+            if (email.val() != "") {
+                $.post(url, data);
+                Cookies.set("submitted", true);
+            }
         })
     }
 </script>
