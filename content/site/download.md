@@ -159,3 +159,24 @@ If you did not install Chronograf via a package, you can just directly run the e
 ## Registration
 
 Every install of Chronograf requires a free registration on InfluxData Enterprise. Registration allows us to improve release management and functionality for Chronograf.
+
+<script>
+    if (typeof Cookies.get("submitted") === 'undefined') {
+        var inst = $('[data-remodal-id=download]').remodal();
+        inst.open();
+
+        $(document).on('confirmation', '.remodal', function () {
+            var form = $("form#download");
+            var url = form.attr("action") ;
+            var data = form.serialize();
+            var email = $("input#email");
+
+            if (email.val() != "") {
+                $.post(url, data);
+                Cookies.set("submitted", true);
+            }
+        })
+    }
+</script>
+
+

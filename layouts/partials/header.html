@@ -50,6 +50,11 @@
 	
 	<link rel="stylesheet" href="/css/style.css" />
 	
+	<link rel="stylesheet" href="/css/remodal.css" />
+	<link rel="stylesheet" href="/css/remodal-default-theme.css" />
+
+    <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
 	<!-- Lea Verou's Prefix Free, lets you use only un-prefixed properties in yuor CSS files -->
 	<script src="/js/prefixfree.min.js"></script>
 	
@@ -57,6 +62,10 @@
 		 Before you move to production, you should generate a custom build that only has the detects you need. -->
 	<script src="/js/modernizr-2.7.0.dev.js"></script>
 	
+	<script src="/js/remodal.min.js"></script>
+
+	<script src="/js/js.cookie.js"></script>
+
 	<!-- Application-specific meta tags -->
 	<!-- Windows 8 -->
 	<meta name="application-name" content="InfluxDB" /> 
@@ -76,8 +85,164 @@
 	<!-- Google -->
 	<meta name="google-site-verification" content="Qa4cVa_M02QG2zCUOfOkD-ibbFDLdDbnwdwn1bqNhco" />
 
+    <style type="text/css">
+        form {
+            text-align: left;
+        }
+
+        label {
+            font-weight: 700;
+        }
+
+        label.radioFieldLabel {
+            font-weight: 400;
+            display: block;
+            width: 150px;
+        }
+
+        input[type=text], input[type=email] {
+            margin-bottom: 1em;
+            font-size: 0.8em;
+            padding-top: 0.5em;
+        }
+
+
+        input[type=radio] {
+            float: left;
+            display: block;
+        }
+
+        div.radio {
+            margin-top: 5px;
+        }
+
+        textarea {
+            margin-bottom: 1em;
+        }
+
+        .contact-form select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            border: 1px solid #ccc;
+            border-radius: 2px;
+            font-size: 0.8em;
+            margin-bottom: 1em;
+            padding-top: 0.5em;
+            padding-left: 8px;
+        }
+
+        label.radioFieldLabel {
+            height: 20px;
+            line-height: 1;
+            vertical-align: middle;
+            margin-bottom: 0.5em;
+            
+        }
+
+        label.radioFieldLabel input[type=radio] {
+            float: left;
+            width: 24px;
+        }
+
+        label.radioFieldLabel span {
+            line-height: 1.25;
+        }
+    </style>
 </head>
 
 <body>
+    <div class="remodal" data-remodal-id="download" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+      <button data-remodal-action="close" class="remodal-close" aria-label="Close"></button>
+      <div>
+        <h2 style="margin-bottom:0.25em; font-size:20px;" id="modal1Title">Download Survey</h2>
+        <p style="margin-bottom: 1em; font-style:italic;">Tell us a bit about how you're using InfluxDB and we'll send you some free goodies!</p>
+
+    <article class="article-docs article-main-column" style="width:100%; padding:0;">
+        <form id="download" method="post" enctype="multipart/form-data" action="https://marketing.influxdb.com/acton/eform/16929/0002/d-ext-0001" accept-charset="UTF-8" class="contact-form">
+            <input type="hidden" name="Lead Source" id="lead_source" value="Download Request Form">
+
+            <div style="width:49%; float:left;">
+                <label for="first_name">First Name</label>
+                <b style="color: #FF0000; cursor: default" title="Required Field">*</b>
+                <input type="text" id="first_name" name="First Name" value="">
+            </div>
+
+            <div style="width:49%; float:right;">
+                <label for="form_0004_fld_1_ln">Last Name</label>
+                <b style="color: #FF0000; cursor: default" title="Required Field">*</b>
+                <input type="text" id="last_name" name="Last Name" value="">
+            </div>
+
+            <label for="form_0004_fld_1_em">Email Address</label>
+            <b style="color: #FF0000; cursor: default" title="Required Field">*</b>
+            <input type="email" id="email" name="E-mail Address" value="">
+
+            <div style="width:100%; float:left;">
+                <label for="company">Company</label>
+                <b style="color: #FF0000; cursor: default" title="Required Field">*</b>
+                <input type="text" id="company" name="Company" value="">
+            </div>
+
+            <div style="width:100%; float:right;">
+                <label for="development_stage">Where are you in the development lifecycle?</label>
+                <select name="Development Stage" id="development_stage" onclick="event.cancelBubble = true;">
+                    <option value="Researching">Researching</option>
+                    <option value="Architecture & Design">Architecture & Design</option>
+                    <option value="Development">Development</option>
+                    <option value="Testing">Testing</option>
+                    <option value="Production">Production</option>
+                </select>
+            </div>
+
+            <div style="width:100%; float:right;">
+            <label for="use_case">What best describes your use case?</label>
+            <select name="Use Case" id="use_case" onclick="event.cancelBubble = true;">
+                <option value="Custom DevOps Monitoring">Custom DevOps Monitoring</option>
+                <option value="Real-Time Analytics">Real-Time Analytics</option>
+                <option value="IoT & Sensor Data">IoT & Sensor Data</option>
+                <option value="Other">Other</option>
+            </select>
+            </div>
+
+            <div style="width:100%; float:left;">
+                <label for="competitors">What other solutions are you considering?</label>
+                <input type="text" id="competitors" name="Competitors" value="">
+            </div>
+
+            <div style="width:100%; float:right;">
+            <label>How did you hear about InfluxDB?</label>
+            <select name="Referral" id="referral" onclick="event.cancelBubble = true;">
+                <option value="Search Engine">Search Engine</option>
+                <option value="Blog">Blog</option>
+                <option value="GitHub">GitHub</option>
+                <option value="Social Media">Social Media</option>
+                <option value="Personal Recommendation">Personal Recommendation</option>
+                <option value="Event">Event</option>
+                <option value="Advertisement">Advertisement</option>
+                <option value="Other">Other</option>
+            </select>
+            </div>
+
+            <label>Can we send you a free pack of stickers?</label>
+            <div class="radio">
+                <label for="stickers" class="formFieldLabel radioFieldLabel">
+                    <input type="radio" name="Stickers" id="stickers" value="Yes" checked><span>Yes</span>
+                </label>
+
+                <label for="stickers" class="formFieldLabel radioFieldLabel">
+                    <input type="radio" name="Stickers" id="stickers" value="No"><span>No</span>
+                </label>
+            </div>
+
+        </form>
+    </article>
+
+      </div>
+      <button data-remodal-action="confirm" class="remodal-confirm">Submit</button>
+      <br>
+      <a style="padding-top: 3em; font-size: 12px; float:right;" href="#" onclick="javascript:;">No thanks, just take me to the downloads!</a>
+    </div>
+    
     <script>/*<![CDATA[*/(function(w,a,b,d,s){w[a]=w[a]||{};w[a][b]=w[a][b]||{q:[],track:function(r,e,t){this.q.push({r:r,e:e,t:t||+new Date});}};var e=d.createElement(s);var f=d.getElementsByTagName(s)[0];e.async=1;e.src='//marketing.influxdb.com/cdnr/93/acton/bn/tracker/16929';f.parentNode.insertBefore(e,f);})(window,'ActOn','Beacon',document,'script');ActOn.Beacon.track();/*]]>*/</script>
 
