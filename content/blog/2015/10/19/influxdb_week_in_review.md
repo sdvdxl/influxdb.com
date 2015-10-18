@@ -25,7 +25,7 @@ We need your help [testing and benchmarking](https://influxdb.com/docs/v0.9/intr
 
 ### [GeoGraphite](http://www.geographite.com/)
 
-Geographite is a tool for displaying time-series data with a spatial component. Possible applications include creating dashboard maps for sensor networks, vehicle fleets, or operational activity. Data can be displayed as individual points or aggregated into visualizations like a heat map. What did GeoGraphite find compelling about InfluxDB? The ability to include multiple values per data point was key as they wanted to store latitude and longitude alongside the metric. Compatibility with existing graphing tools like Grafana was also important.
+GeoGraphite is a tool for displaying time-series data with a spatial component. Possible applications include creating dashboard maps for sensor networks, vehicle fleets, or operational activity. Data can be displayed as individual points or aggregated into visualizations like a heat map. What did GeoGraphite find compelling about InfluxDB? The ability to include multiple values per data point was key as they wanted to store latitude and longitude alongside the metric. Compatibility with existing graphing tools like Grafana was also important.
 
 ![Smarsh](/img/blog/smarsh_logo.png)
 
