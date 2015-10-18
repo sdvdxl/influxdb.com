@@ -1,8 +1,8 @@
 ---
 title: InfluxDB Week in Review - October 19, 2015
 author: Todd Persen
-date: 2015-10-18
-publishdate: 2015-10-18
+date: 2015-10-19
+publishdate: 2015-10-19
 ---
 
 In this post we’ll recap the most interesting InfluxDB related content you may have missed in the last week or so.
