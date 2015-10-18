@@ -5,9 +5,9 @@ date = "2015-10-20"
 publishdate = "2015-10-20"
 +++
 
-When you decide to build a database, you set yourself a particular software engineering challenge. It must *work*. If people are going to rely on your system for reliably storing their data, you need to be sure it does just that.
+When you decide to build a database, you set yourself a particular software engineering challenge. As infrastructure software it must *work*. If people are going to rely on your system for reliably storing their data, you need to be sure it does just that.
 
-InfluxDB is tested in various ways. We use [CircleCI](https://www.circleci.com) for unit-level and some basic integration-level testing. We find CircleCI to be easy to use, well-designed, and responsive. But as we approach the 1.0 release our testing is becoming more sophisticated and thorough.
+InfluxDB is tested in various ways. We use [CircleCI](https://www.circleci.com) for unit-level testing, as well as some basic integration-level testing. We find CircleCI to be easy to use, well-designed, and responsive. But as we approach the 1.0 release our testing is becoming more sophisticated and thorough.
 
 Correct software is obviously critical -- every data point received must be indexed, and every query must return the correct results. But resource usage -- CPU, disk IO, and RAM -- are just as important. We want a system that is stable when running, and monitoring resource usage during testing can flag issues. Memory leaks become apparent, and excessive disk IO can indicate a sub-optimal design or implementation. Bugs too, may be exposed -- a pegged CPU may indicate a problem in the code. So in this post we discuss how we monitor resource usage on systems under test.
 
@@ -22,7 +22,7 @@ While an InfluxDB system is under load we record various metrics about the host 
 
 ## Testing the TSM1 Engine
 
-We recently starting testing the [new tsm1 storage engine](https://influxdb.com/blog/2015/10/07/the_new_influxdb_storage_engine_a_time_structured_merge_tree.html). A recent test ran for about 8 hours and involved writing 100 billion points to a single InfluxDB node, across 1000s of different series. The target retention policy also had a duration of 1 hour, so we could test those code paths too -- since old data would be deleted hourly as new data was being indexed. The Grafana dashboard, with results of the complete test run, is shown below.
+We recently starting testing the [new tsm1 storage engine](https://influxdb.com/blog/2015/10/07/the_new_influxdb_storage_engine_a_time_structured_merge_tree.html). A recent test ran for about 8 hours and involved writing 100 billion points to a single InfluxDB node, across 1000s of different series. The target retention policy also had a duration of 1 hour, so we could test those code paths too -- since old data would be deleted hourly as new data was being indexed. The Grafana dashboard, showing results of the complete test run, is shown below.
 
 ![](/img/blog/testing_tsm/100b-1hrt.png)
 
@@ -34,7 +34,7 @@ By comparison, the bz1 engine consumes resources in a more irregular manner, as 
 
 ## Test Environments
 
-We run this kind of testing on a mixture of systems -- [AWS EC2](https://aws.amazon.com/ec2/) instances, [Digital Ocean](https://www.digitalocean.com/) droplets, and physical machines. Physical machines are a particularly important part of our test infrastructure as they allow us to focus on our software -- after all nothing is changing between test runs except our code. We don't have to worry about [noisy neighbours](http://www.liquidweb.com/blog/index.php/why-aws-is-bad-for-small-organizations-and-users/) or busy networks. Running on physical hardware allows us to rule out all factors except the ones we control. But, of course, testing with cloud environments is very important since so many of our users run InfluxDB systems in such environments.
+We run this kind of testing on a mixture of systems -- [AWS EC2](https://aws.amazon.com/ec2/) instances, [Digital Ocean](https://www.digitalocean.com/) droplets, and physical machines. Physical machines are a particularly important part of our test infrastructure as they allow us to focus on our software -- after all nothing is changing between test runs except our code. We don't have to worry about [noisy neighbours](http://www.liquidweb.com/blog/index.php/why-aws-is-bad-for-small-organizations-and-users/) or busy networks -- running on physical hardware allows us to rule out all factors except the ones we control. But, of course, testing with cloud environments is very important since so many of our users run InfluxDB systems in such environments.
 
 We also use [Ansible](http://www.ansible.com/) for our test system deployment and configuration management.
 
@@ -46,4 +46,4 @@ We recently started building [race-detection](https://golang.org/doc/articles/ra
 
 We have much more to do as we ramp up testing. Unit and basic integration testing can only take you so far, and it's important to run tests that last for hours and days. Other key features -- such as clustering -- are still Beta so as new features come online testing in those areas will increase. Query performance is another key area, which will undergo significant work and testing in the near future.
 
-As [Richard Feynman](http://www.feynman.com/) once said: "For a successful technology, reality must take precedence over public relations, for nature cannot be fooled." And testing makes sure we don't fool ourselves.
+As [Richard Feynman](http://www.feynman.com/) once said: "For a successful technology, reality must take precedence over public relations, for nature cannot be fooled." And our testing makes sure we don't fool ourselves.
