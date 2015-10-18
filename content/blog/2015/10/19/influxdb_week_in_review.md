@@ -31,7 +31,7 @@ GeoGraphite is a tool for displaying time-series data with a spatial component. 
 
 ### [Smarsh](http://www.smarsh.com/)
 
-Smarsh uses InfluxDB as a swap in replacement for graphite for storing system, networking, application metrics. Smarsh also leverages telegraf as a local state check for system and services for its alerting infrastructure. What did Smarsh find compelling about InfluxDB? The ease of deploying, a simple HTTP API, and the ability to perform statistical analysis on measurements. Plus, Telegraf being a drop in replacement for diamond that can be easily wrapped around other tooling mechanisms.
+Smarsh uses InfluxDB as a swap in replacement for graphite for storing system, networking, application metrics. Smarsh also leverages Telegraf as a local state check for system and services for its alerting infrastructure. What did Smarsh find compelling about InfluxDB? The ease of deploying, a simple HTTP API, and the ability to perform statistical analysis on measurements. Plus, Telegraf being a drop in replacement for diamond that can be easily wrapped around other tooling mechanisms.
 
 ![Row44](/img/blog/row44_logo.png)
 
