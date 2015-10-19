@@ -13,8 +13,8 @@ branch=$(git rev-parse --abbrev-ref HEAD)
 if [[ "$branch" == "master" ]]; then
   rm -rf deploy
   hugo -d deploy --config=config-production.toml
-  echo "Syncing public/* with s3://$bucket"
-  s3cmd --acl-public --delete-removed --no-progress sync public/* s3://$bucket
+  echo "Syncing deploy/* with s3://$bucket"
+  s3cmd --acl-public --delete-removed --no-progress sync deploy/* s3://$bucket
   echo -e "\nUpdated s3://$bucket"
 else
   echo "*** s3://$bucket only gets synced from master! ***"
