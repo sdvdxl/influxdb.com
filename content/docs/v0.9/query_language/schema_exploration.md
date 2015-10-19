@@ -2,7 +2,7 @@
 title: Schema Exploration
 ---
 
-InfluxQL is an SQL-like query language for interacting with data in InfluxDB. The following sections cover useful query syntax for exploring your schema (that is, how you set up your time series data): 
+InfluxQL is an SQL-like query language for interacting with data in InfluxDB. The following sections cover useful query syntax for exploring your schema (that is, how you set up your time series data):
 
 * [See all databases with `SHOW DATABASES`](../query_language/schema_exploration.html#see-all-databases-with-show-databases)
 * [Explore retention policies with `SHOW RETENTION POLICIES`](../query_language/schema_exploration.html#explore-retention-policies-with-show-retention-policies)
@@ -50,7 +50,7 @@ name	    duration	 replicaN	 default
 default	 0		       1		       true
 ```
 
-The first column of the output contains the names of the different retention policies in the specified database. The second column shows the [duration](../concepts/glossary.html#duration) and the third column shows the [replication factor](../concepts/glossary.html#replication-factor) of the retention policy. The fourth column specifies if the retention policy is the default retention policy for the database. 
+The first column of the output contains the names of the different retention policies in the specified database. The second column shows the [duration](../concepts/glossary.html#duration) and the third column shows the [replication factor](../concepts/glossary.html#replication-factor) of the retention policy. The fourth column specifies if the retention policy is the default retention policy for the database.
 
 The following example shows a hypothetical CLI response where there are four different retention policies in the database, and where the default retention policy is `three_days_only`:
 
@@ -115,7 +115,7 @@ h2o_temperature,location=coyote_creek	   coyote_creek
 h2o_temperature,location=santa_monica	   santa_monica
 ```
 
-`SHOW SERIES` organizes its output by [measurement](../concepts/glossary.html#measurement) name. From the return you can see that the data in the database `NOAA_water_database` have five different measurements and 14 different series. The measurements are `average_temperature`, `h2o_feet`, `h2o_pH`, `h2o_quality`, and `h2o_temperature`. Every measurement 
+`SHOW SERIES` organizes its output by [measurement](../concepts/glossary.html#measurement) name. From the return you can see that the data in the database `NOAA_water_database` have five different measurements and 14 different series. The measurements are `average_temperature`, `h2o_feet`, `h2o_pH`, `h2o_quality`, and `h2o_temperature`. Every measurement
 has the [tag key](../concepts/glossary.html#tag-key) `location` with the [tag values](../concepts/glossary.html#tag-value) `coyote_creek` and `santa_monica` - that makes 10 series. The measurement `h2o_quality` has the additional tag key `randtag` with the tag values `1`,`2`, and `3` - that makes 14 series.
 
 Return series for a specific measurement:
