@@ -74,8 +74,6 @@ Largest valid timestamp: `9023372036854775807` (approximately `2255-12-09T23:13:
 ## Querying a time range that spans epoch 0
 Currently, InfluxDB can return results for queries that cover either the time range before epoch 0 or the time range after epoch 0, not both. A query with a time range that spans epoch 0 returns partial results.
 
-> **Note:** InfluxDB has supported negative timestamps (timestamps that occur before epoch 0) in the past, but users should be aware of a bug when attempting to [write data with negative timestamps](../troubleshooting/frequently_encountered_issues.html#writing-data-with-negative-timestamps).
-
 <dt> [GitHub Issue #2703](https://github.com/influxdb/influxdb/issues/2703)  </dt>
 
 ## Querying with booleans
@@ -188,9 +186,7 @@ Writes a float: `value=100`
 > **Note:** This syntax for writing integers is for versions 0.9.3+. Versions prior to 0.9.3 had a different syntax, see [PR #3526](https://github.com/influxdb/influxdb/pull/3526).
 
 ## Writing data with negative timestamps
-InfluxDB has supported negative UNIX timestamps in the past, but there is currently a bug in the line protocol parser that treats negative timestamps as invalid syntax. For example, `INSERT waybackwhen past=1 -1` returns `ERR: unable to parse 'waybackwhen past=1 -1': bad timestamp`.
-
-<dt> [GitHub Issue #3367](https://github.com/influxdb/influxdb/issues/3367) </dt>
+There was a bug in the line protocol parser in versions 0.9.0 to 0.9.4 which treated negative timestamps as invalid syntax. For example, `INSERT waybackwhen past=1 -1` returned `ERR: unable to parse 'waybackwhen past=1 -1': bad timestamp`. Starting with version 0.9.5 and later, the line protocol parser accepts negative timestamps.
 
 ## Writing duplicate points
 In InfluxDB 0.9 a point is uniquely identified by the measurement name, full [tag set]()(../concepts/glossary.html#tag-set), and the nanosecond timestamp. If a point is submitted with an identical measurement, tag set, and timestamp it will silently overwrite the previous point. This is the intended behavior.
