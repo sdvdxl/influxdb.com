@@ -22,7 +22,7 @@ While an InfluxDB system is under load we record various metrics about the host 
 
 ## Testing the TSM1 Engine
 
-We recently starting testing the [new tsm1 storage engine](https://influxdb.com/blog/2015/10/07/the_new_influxdb_storage_engine_a_time_structured_merge_tree.html). A recent test ran for about 8 hours and involved writing 100 billion points to a single InfluxDB node, across 1000s of different series. The target retention policy also had a duration of 1 hour, so we could test those code paths too -- since old data would be deleted hourly as new data was being indexed. The Grafana dashboard, showing results of the complete test run, is shown below.
+We recently starting testing the [new tsm1 storage engine](https://influxdb.com/blog/2015/10/07/the_new_influxdb_storage_engine_a_time_structured_merge_tree.html). A recent test ran for about 8 hours and involved writing billions points to a single InfluxDB node, across 1000s of different series. The target retention policy also had a duration of 1 hour, so we could test those code paths too -- since old data would be deleted hourly as new data was being indexed. The Grafana dashboard, showing results of the complete test run, is shown below.
 
 ![](/img/blog/testing_tsm/100b-1hrt.png)
 
