@@ -13,7 +13,7 @@ By default InfluxDB will use TCP ports `8083` and `8086` so these ports should b
 ## Ubuntu & Debian
 Debian users can install 0.9.4.2 by downloading the package and installing it like this:
 
-```bash
+```shell
 # 64-bit system install instructions
 wget http://influxdb.s3.amazonaws.com/influxdb_0.9.4.2_amd64.deb
 sudo dpkg -i influxdb_0.9.4.2_amd64.deb
@@ -21,14 +21,14 @@ sudo dpkg -i influxdb_0.9.4.2_amd64.deb
 
 Then start the daemon by running:
 
-```sh
-sudo /etc/init.d/influxdb start
+```shell
+sudo service influxdb start
 ```
 
 ## RedHat & CentOS
 RedHat and CentOS users can install by downloading and installing the rpm like this:
 
-```bash
+```shell
 # 64-bit system install instructions
 wget http://influxdb.s3.amazonaws.com/influxdb-0.9.4.2-1.x86_64.rpm
 sudo yum localinstall influxdb-0.9.4.2-1.x86_64.rpm
@@ -36,14 +36,14 @@ sudo yum localinstall influxdb-0.9.4.2-1.x86_64.rpm
 
 Then start the daemon by running:
 
-```sh
-sudo /etc/init.d/influxdb start
+```shell
+sudo service influxdb start
 ```
 
 ## SLES & openSUSE
 There are RPM packages provided by openSUSE Build Service for SUSE Linux users.
 
-```bash
+```shell
 # add go repository
 zypper ar -f obs://devel:languages:go/ go
 # install latest influxdb
@@ -54,23 +54,23 @@ zypper in influxdb
 
 Users of OS X 10.8 and higher can install using the [Homebrew](http://brew.sh/) package manager.
 
-```sh
+```shell
 brew update
 brew install influxdb
 ```
 
 To have launchd start influxdb at login:
-```sh
+```shell
 ln -sfv /usr/local/opt/influxdb/*.plist ~/Library/LaunchAgents
 ```
 
 Then to load influxdb now:
-```
+```shell
 launchctl load ~/Library/LaunchAgents/homebrew.mxcl.influxdb.plist
 ```
 
 Or, if you don't want/need launchctl, in a separate terminal window you can just run:
-```
+```shell
 influxd -config /usr/local/etc/influxdb.conf
 ```
 
@@ -153,38 +153,21 @@ You'll have to update the config file appropriately for each InfluxDB instance y
     ...
 ```
 
-### Init.d File
+### Permissions
 
-You'll have to update the `init.d` scripts appropriately for each InfluxDB instance you have.
+When using non-standard directories for InfluxDB data and configurations, also be sure to set filesystem permissions correctly:
 
-```bash
-...
-
-USER=influxdb
-GROUP=influxdb
-
-chown $USER:$GROUP /mnt/influx
-chown $USER:$GROUP /mnt/db
-
-...
+```shell
+chown influxdb:influxdb /mnt/influx
+chown influxdb:influxdb /mnt/db
 ```
 
-**Note:** If you're planning on using a cluster, you may also want to set `hostname` and `join` flags in `INFLUXD_OPTS`. For example
+### Other Considerations
+
+If you're planning on using a cluster, you may also want to set `hostname` and `join` flags for the `INFLUXD_OPTS` variable in `/etc/default/influxdb`. For example:
 
 ```
-...
-
 INFLUXD_OPTS='-hostname host[:port] [-join hostname_1:port_1[,hostname_2:port_2]]'
-
-...
-
-USER=influxdb
-GROUP=influxdb
-
-chown $USER:$GROUP /mnt/influx
-chown $USER:$GROUP /mnt/db
-
-...
 ```
 
 For more detailed instructions on how to set up a cluster, see the documenation on [clustering](/docs/v0.9/guides/clustering.html)
