@@ -14,7 +14,7 @@ InfluxQL is an SQL-like query language for interacting with data in InfluxDB. Th
 
 The examples below query data using [InfluxDB's Command Line Interface (CLI)](../introduction/getting_started.html). See the [Querying Data](../guides/querying_data.html) guide for how to directly query data with the HTTP API.
 
-**Sample data**  
+**Sample data**
 
 This document uses the same sample data as the [Data Exploration](../query_language/data_exploration.html) page. Note that some of the measurements and data in the database are fictional - they're meant to make the next sections more explanatory and (hopefully) more interesting. The next sections will get you acquainted with the schema of the sample data in the `NOAA_water_database` database.
 
@@ -66,7 +66,7 @@ three_days_only	 72h0m0s		 1		       true
 The `SHOW SERIES` query returns the distinct [series](../concepts/glossary.html#series) in your database and takes the following form, where the `FROM` and `WHERE` clauses are optional:
 
 ```sql
-SHOW SERIES FROM <measurement_name> WHERE <tag_key>=<'tag_value'>
+SHOW SERIES FROM [<measurement_name> WHERE <tag_key>='<tag_value>']
 ```
 
 Return all series in the database `NOAA_water_database`:
@@ -154,7 +154,7 @@ h2o_quality,location=coyote_creek,randtag=3	   coyote_creek	   3
 ## Explore measurements with `SHOW MEASUREMENTS`
 The `SHOW MEASUREMENTS` query returns all [measurements](../concepts/glossary.html#measurement) in your database and it takes the following form, where the `WHERE` clause is optional:
 ```sql
-SHOW MEASUREMENTS WHERE <tag_key>=<'tag_value'>
+SHOW MEASUREMENTS [WHERE <tag_key>=<'tag_value'>]
 ```
 
 Return all measurements in the `NOAA_water_database` database:
@@ -207,7 +207,7 @@ h2o_quality
 ## Explore tag keys with SHOW TAG KEYS
 `SHOW TAG KEYS` returns the [tag keys](../concepts/glossary.html#tag-key) associated with each measurement and takes the following form, where the `FROM` clause is optional:
 ```sql
-SHOW TAG KEYS FROM <measurement_name>
+SHOW TAG KEYS [FROM <measurement_name>]
 ```
 
 Return all tag keys that are in the database `NOAA_water_database`:
@@ -266,7 +266,7 @@ location
 ## Explore tag values with SHOW TAG VALUES
 The `SHOW TAG VALUES` query returns the set of [tag values](../concepts/glossary.html#tag-value) for a specific tag key across all measurements in the database. It takes the following form, where the `FROM` clause is optional:
 ```sql
-SHOW TAG VALUES FROM <measurement_name> WITH KEY = tag_key
+SHOW TAG VALUES [FROM <measurement_name> WITH KEY = <tag_key>]
 ```
 
 Return the tag values for the tag key `randtag` across all measurements in the database `NOAA_water_database`:
@@ -299,7 +299,7 @@ The measurement `average_temperature` doesn't have the tag key `randtag` so Infl
 The `SHOW FIELD KEYS` query returns the [field keys](../concepts/glossary.html#field-key) across each measurement in the database. It takes the following form, where the `FROM` clause is optional:
 
 ```sql
-SHOW FIELD KEYS FROM <measurement_name>
+SHOW FIELD KEYS [FROM <measurement_name>]
 ```
 
 Return the field keys across all measurements in the database `NOAA_water_database`:
