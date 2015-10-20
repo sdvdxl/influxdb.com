@@ -117,7 +117,7 @@ curl -G 'http://localhost:8086/query' --data-urlencode "db=mydb" --data-urlencod
 ```
 
 #### Authentication
-Authentication in InfluxDB is disabled by default. See the [authentication page](../administration/authentication.html) for how to enable and set up authentication.
+Authentication in InfluxDB is disabled by default. See [Authentication and Authorization](../administration/authentication_and_authorization.html) for how to enable and set up authentication.
 
 #### Chunk size
 For large queries, results are returned in batches of 10,000 points unless you use the query string parameter `chunk_size` to explicitly set the batch size. For example, get your results in batches of 20,000 points with:  

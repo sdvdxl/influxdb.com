@@ -1,8 +1,8 @@
 ---
 title: Authentication and authorization
 aliases:
-  - /docs/v0.9/concepts/authentication.html
-  - /docs/v0.9/concepts/authorization.html
+  - /docs/v0.9/administration/authentication.html
+  - /docs/v0.9/administration/authorization.html
 ---
 
 This document covers setting up and managing authentication and authorization in InfluxDB.
