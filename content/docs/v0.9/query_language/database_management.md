@@ -5,18 +5,18 @@ aliases:
   - /docs/v0.9/query_language/database_management.html
 ---
 
-InfluxQL offers a full suite of administrative commands. 
+InfluxQL offers a full suite of administrative commands.
 
-* [Data management](../query_language/database_management.html#data-management)    
-&nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Create a database with `CREATE DATABASE`](../query_language/database_management.html#create-a-database-with-create-database)      
-&nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Delete a database with `DROP DATABASE`](../query_language/database_management.html#delete-a-database-with-drop-database)  
-&nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Delete series with `DROP SERIES`](../query_language/database_management.html#delete-series-with-drop-series)  
-&nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Delete measurements with `DROP MEASUREMENT`](../query_language/database_management.html#delete-measurements-with-drop-measurement)  
+* [Data management](../query_language/database_management.html#data-management)
+&nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Create a database with `CREATE DATABASE`](../query_language/database_management.html#create-a-database-with-create-database)
+&nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Delete a database with `DROP DATABASE`](../query_language/database_management.html#delete-a-database-with-drop-database)
+&nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Delete series with `DROP SERIES`](../query_language/database_management.html#delete-series-with-drop-series)
+&nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Delete measurements with `DROP MEASUREMENT`](../query_language/database_management.html#delete-measurements-with-drop-measurement)
 
-* [Retention policy management](../query_language/database_management.html#retention-policy-management)  
-&nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Create retention policies with `CREATE RETENTION POLICY`](../query_language/database_management.html#create-retention-policies-with-create-retention-policy)    
-&nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Modify retention policies with `ALTER RETENTION POLICY`](../query_language/database_management.html#modify-retention-policies-with-alter-retention-policy)   
-&nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Delete retention policies with `DROP RETENTION POLICY`](../query_language/database_management.html#delete-retention-policies-with-drop-retention-policy)   
+* [Retention policy management](../query_language/database_management.html#retention-policy-management)
+&nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Create retention policies with `CREATE RETENTION POLICY`](../query_language/database_management.html#create-retention-policies-with-create-retention-policy)
+&nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Modify retention policies with `ALTER RETENTION POLICY`](../query_language/database_management.html#modify-retention-policies-with-alter-retention-policy)
+&nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Delete retention policies with `DROP RETENTION POLICY`](../query_language/database_management.html#delete-retention-policies-with-drop-retention-policy)
 
 The examples in the sections below use InfluxDB's [Command Line Interface (CLI)](../introduction/getting_started.html). You can also execute the commands using the HTTP API; simply  send a `GET` request to the `/query` endpoint and include the command in the URL parameter `q`. See the [Querying Data](../guides/querying_data.html) guide for more on using the HTTP API.
 
@@ -43,13 +43,13 @@ Create the database `NOAA_water_database` only if it doesn't exist:
 >
 ```
 
-A successful `CREATE DATABASE` query returns an empty result. 
+A successful `CREATE DATABASE` query returns an empty result.
 
 ### Delete a database with DROP DATABASE
 ---
 The `DROP DATABASE` query deletes all of the data, measurements, series, continuous queries, and retention policies from the specified database. The query takes the following form:
 ```sql
-DROP DATABASE <database_name> 
+DROP DATABASE <database_name>
 ```
 
 CLI example:
@@ -64,7 +64,7 @@ A successful `DROP DATABASE` query returns an empty result.
 ---
 The `DROP SERIES` query deletes all points from [series](../concepts/glossary.html#series) in a database. The query takes the following form, where you must specify either the `FROM` clause or the `WHERE` clause:
 ```sql
-DROP SERIES FROM <measurement_name[,measurement_name]> WHERE <tag_key='tag_value'>
+DROP SERIES FROM <measurement_name[,measurement_name]> WHERE <tag_key>='<tag_value>'
 ```
 
 Delete all series from a single measurement:
