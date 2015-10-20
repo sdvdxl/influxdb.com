@@ -8,8 +8,7 @@ aliases:
 InfluxQL offers a full suite of administrative commands. 
 
 * [Data management](../query_language/database_management.html#data-management)    
-&nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Create a database with `CREATE DATABASE`](../query_language/database_management.html#create-a-database-with-create-database)    
-&nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Rename a database with `ALTER DATABASE`](../query_language/database_management.html#rename-a-database-with-alter-database)    
+&nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Create a database with `CREATE DATABASE`](../query_language/database_management.html#create-a-database-with-create-database)      
 &nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Delete a database with `DROP DATABASE`](../query_language/database_management.html#delete-a-database-with-drop-database)  
 &nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Delete series with `DROP SERIES`](../query_language/database_management.html#delete-series-with-drop-series)  
 &nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Delete measurements with `DROP MEASUREMENT`](../query_language/database_management.html#delete-measurements-with-drop-measurement)  
@@ -45,22 +44,6 @@ Create the database `NOAA_water_database` only if it doesn't exist:
 ```
 
 A successful `CREATE DATABASE` query returns an empty result. 
-
-### Rename a database with ALTER DATABASE
----
-<dt> `ALTER DATABASE` will become functional with the 0.9.5 release.
-</dt>
-
-The `ALTER DATABASE` query takes the following form:
-```sql
-ALTER DATABASE <old_database_name> RENAME TO <new_database_name>
-```
-
-CLI example:
-```sh
-> ALTER DATABASE NOAA_water_database RENAME TO water_database
->
-```
 
 ### Delete a database with DROP DATABASE
 ---
