@@ -21,7 +21,7 @@ InfluxDB is a time-series database. Optimizing for this use-case entails some tr
   * *Con:* The InfluxDB development team was forced to make tradeoffs to increase performance
 1. Being able to write and query the data is more important than having a strongly consistent view.
   * *Pro:* Writing and querying the database can be done by multiple clients and at high loads
-  * *Con:* Query returns may not return the most recent points if database is under heavy load
+  * *Con:* Query returns may not include the most recent points if database is under heavy load
 1. Many time series are ephemeral. There are often time series that appear only for a few hours and then go away, e.g. a new host that gets started and reports for a while and then gets shut down.
   * *Pro:* InfluxDB is good at managing discontinuous data
   * *Con:* Schema-less design means that some database functions are not supported e.g. there are no cross table joins
