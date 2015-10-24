@@ -54,7 +54,7 @@ Write the data in `cpu_data.txt` to the `mydb` database with:
 <br>
 `curl -i -XPOST 'http://localhost:8086/write?db=mydb' --data-binary @cpu_data.txt`
 
-> **Note:** If your data file is big enough, it may be necessary to split that file into several files in order to write your data in batches to InfluxDB. [By default](https://github.com/influxdb/influxdb/blob/master/etc/config.sample.toml#L97), InfluxDB does not complete write operations that take longer than five seconds.
+> **Note:** If your data file has more than 5,000 points, it may be necessary to split that file into several files in order to write your data in batches to InfluxDB. [By default](https://github.com/influxdb/influxdb/blob/master/etc/config.sample.toml#L97), the HTTP request times out after five seconds. InfluxDB will still attempt to write the points after that time out but there will be no confirmation that they were successfully written.
 
 ### Schemaless Design
 ---
