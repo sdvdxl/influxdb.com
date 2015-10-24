@@ -32,8 +32,6 @@ Find us on freenode in #influxdb.
 
 <icon class="fa fa-exclamation-circle fa-border fa-2x fa-lg pull-right fa-align-center"></icon>
 
-Ask us questions at [support@influxdb.com](mailto:support@influxdb.com)</p>
-
 Log issues on [GitHub](https://github.com/influxdb/influxdb/issues).
 
 Help us out with [RFCs](https://github.com/influxdb/influxdb/labels/RFC).
@@ -58,7 +56,7 @@ If you're in New York City or San Francisco we're up for meeting up and hacking 
 
 ## Support
 
-We're available for professional services and support. We can help you build out a custom solution on top of InfluxDB or help you get set up to make the most of InfluxDB. Drop us a line at [support@influxdb.com](mailto:support@influxdb.com).
+Developer and Production support plans are available. Visit our [support page](/support/index.html) to learn more.
 
 ## Presenting
 
