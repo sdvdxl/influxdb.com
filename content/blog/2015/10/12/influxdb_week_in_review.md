@@ -5,6 +5,16 @@ date: 2015-10-12
 publishdate: 2015-10-12
 ---
 
+<style type="text/css">
+  img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 3.5em;
+    margin-bottom: -1.5em;
+  }
+</style>
+
 In this post we’ll recap the most interesting InfluxDB related content you may have missed in the last week or so.
 
 ### Blogs, Videos, Articles, Docs and How-Tos
@@ -15,7 +25,7 @@ In this post we’ll recap the most interesting InfluxDB related content you may
 * [Docs: Updated query language guide for selecting, grouping and limiting the results of queries](https://influxdb.com/docs/v0.9/query_language/data_exploration.html)
 * [Video: Intro to the new storage engine plus what’s coming in 0.9.5](https://vimeo.com/140372527)
 
-<iframe src="https://player.vimeo.com/video/140372527" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="margin-left:180px; margin-bottom:50px;"></iframe>
+<iframe src="https://player.vimeo.com/video/140372527" width="500" height="375" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="display:block; margin-left: auto; margin-right:auto; margin-bottom: 50px;"></iframe>
 
 ### PRs == Free T-Shirts
 

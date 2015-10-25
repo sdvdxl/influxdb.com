@@ -5,6 +5,16 @@ date: 2015-10-19
 publishdate: 2015-10-19
 ---
 
+<style type="text/css">
+  img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 3.5em;
+    margin-bottom: -1.5em;
+  }
+</style>
+
 In this post we’ll recap the most interesting InfluxDB related content you may have missed in the last week or so.
 
 ### Blogs, Videos, Articles, Docs and How-Tos
@@ -15,7 +25,7 @@ In this post we’ll recap the most interesting InfluxDB related content you may
 * [Slides: Introduction to the New InfluxDB Storage Engine](https://speakerdeck.com/pauldix/influxdbs-new-storage-engine-the-time-structured-merge-tree)
 * [Docs: Getting Started with Authentication and Authorization in InfluxDB](https://influxdb.com/docs/v0.9/administration/authentication_and_authorization.html)
 
-<iframe src="https://player.vimeo.com/video/142540768" width="500" height="375" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+<iframe src="https://player.vimeo.com/video/142540768" width="500" height="375" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="display:block; margin-left: auto; margin-right:auto; margin-bottom: 50px;"></iframe>
 
 ### PRs == Free T-Shirts
 
