@@ -28,7 +28,7 @@ The examples in the sections below use InfluxDB's [Command Line Interface (CLI)]
 ---
 The `CREATE DATABASE` query takes the following form, where `IF NOT EXISTS` is optional:
 ```sql
-CREATE DATABASE <database_name> [IF NOT EXISTS]
+CREATE DATABASE [IF NOT EXISTS] <database_name>
 ```
 
 Create the database ` NOAA_water_database`:
@@ -39,7 +39,7 @@ Create the database ` NOAA_water_database`:
 
 Create the database `NOAA_water_database` only if it doesn't exist:
 ```sh
-> CREATE DATABASE  NOAA_water_database IF NOT EXISTS
+> CREATE DATABASE IF NOT EXISTS NOAA_water_database
 >
 ```
 
