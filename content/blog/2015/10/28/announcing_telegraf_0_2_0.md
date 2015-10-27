@@ -15,7 +15,7 @@ agent, is now available!
 - [PR #240](https://github.com/influxdb/telegraf/pull/240): procstat plugin, thanks [@ranjib](https://github.com/ranjib)!
 - [PR #244](https://github.com/influxdb/telegraf/pull/244): netstat plugin, thanks [@shirou](https://github.com/shirou)!
 - [PR #262](https://github.com/influxdb/telegraf/pull/262): zookeeper plugin, thanks [@jrxFive](https://github.com/jrxFive)!
-- [PR #237](https://github.com/influxdb/telegraf/pull/237): statsd service plugin, thanks [@sparrc](https://github.com/sparrc)
+- [PR #237](https://github.com/influxdb/telegraf/pull/237): statsd service plugin
 - [PR #273](https://github.com/influxdb/telegraf/pull/273): puppet agent plugin, thanks [@jrxFive](https://github.com/jrxFive)!
 - [PR #286](https://github.com/influxdb/telegraf/pull/286): bcache plugin, thanks [@cornerot](https://github.com/cornerot)!
 - [PR #287](https://github.com/influxdb/telegraf/pull/287): Batch AMQP output, thanks [@ekini](https://github.com/ekini)!
@@ -31,9 +31,10 @@ agent, is now available!
 - Debug and test output will now print the raw line-protocol string.
 - Telegraf will now, by default, round the collection interval to the nearest
 even interval. This means that `interval="10s"` will collect every :00, :10, etc.
-- To ease scale concerns, flushing will be "jittered" by a random amount so that
-all Telegraf instances do not flush at the same time. Both of these options can
-be controlled via the `round_interval` and `flush_jitter` config options.
+- To address scaling concerns Telegraf now adds a small amount of "jitter"
+to the flush period. This ensures that if a large number of Telegraf instances
+are deployed, they do not all flush at the same instant. The amount of jitter
+can be controlled via the configuration file.
 - Telegraf will now retry metric flushes twice.
 
 ## Get your InfluxDB hoodie while they last!
