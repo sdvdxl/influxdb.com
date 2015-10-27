@@ -11,8 +11,8 @@ If you've installed InfluxDB locally, the `influx` command should be available v
 
 ```sh
 $ influx
-Connected to http://localhost:8086 version 0.9.0
-InfluxDB shell 0.9.0
+Connected to http://localhost:8086 version 0.9.4
+InfluxDB shell 0.9.4
 > 
 ```
 
@@ -73,7 +73,7 @@ stock,symbol=AAPL bid=127.46,ask=127.48
 temperature,machine=unit42,type=assembly external=25,internal=37 1434067467000000000
 ```
 
-> **Note:** Measurements, tags, and field names containing any character other than (A-Z,a-z,0-9,_) or starting with a digit must be double-quoted. More information on the line protocol can be found on the [Reading and Writing Data](../concepts/reading_and_writing_data.html) page.
+> **Note:** More information on the line protocol can be found on the [Write Syntax](../write_protocols/write_syntax.html) page.
 
 To insert a single time-series datapoint into InfluxDB using the CLI, enter `INSERT` followed by a point:
 
