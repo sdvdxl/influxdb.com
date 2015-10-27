@@ -50,6 +50,19 @@ zypper ar -f obs://devel:languages:go/ go
 zypper in influxdb
 ```
 
+## FreeBSD/PC-BSD
+
+InfluxDB is part of the FreeBSD package system. It can be installed by running
+```shell
+sudo pkg install influxdb
+```
+The configuration file is `/usr/local/etc/influxd.conf` with examples in `/usr/local/etc/influxd.conf.sample`.
+Start the backend by executing
+```shell
+sudo service influxd onestart
+```
+and/or adding `influxd_enable="YES"` to `/etc/rc.conf` for launch influxd during system boot.
+
 ## OS X
 
 Users of OS X 10.8 and higher can install using the [Homebrew](http://brew.sh/) package manager.
