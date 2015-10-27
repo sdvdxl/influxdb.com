@@ -54,12 +54,12 @@ zypper in influxdb
 
 InfluxDB is part of the FreeBSD package system. It can be installed by running
 ```shell
-# pkg install influxdb
+sudo pkg install influxdb
 ```
 The configuration file is `/usr/local/etc/influxd.conf` with examples in `/usr/local/etc/influxd.conf.sample`.
 Start the backend by executing
 ```shell
-# service influxd onestart
+sudo service influxd onestart
 ```
 and/or adding `influxd_enable="YES"` to `/etc/rc.conf` for launch influxd during system boot.
 
