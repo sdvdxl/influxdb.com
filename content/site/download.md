@@ -77,7 +77,7 @@ Deprecated versions are no longer actively developed.
 
 # <a id="telegraf"></a>Telegraf Downloads
 
-## Version 0.1.9
+## Version 0.2.0
 
 #### OS X
 
@@ -90,24 +90,20 @@ Deprecated versions are no longer actively developed.
 
 - 64-bit system install instructions
 
-		wget https://s3.amazonaws.com/get.influxdb.org/telegraf/telegraf_0.1.9_amd64.deb
-		sudo dpkg -i telegraf_0.1.9_amd64.deb
+		wget https://s3.amazonaws.com/get.influxdb.org/telegraf/telegraf_0.2.0_amd64.deb
+		sudo dpkg -i telegraf_0.2.0_amd64.deb
 
 #### RedHat & CentOS
 
 - 64-bit system install instructions
 
-		wget https://s3.amazonaws.com/get.influxdb.org/telegraf/telegraf-0.1.9-1.x86_64.rpm
-		sudo yum localinstall telegraf-0.1.9-1.x86_64.rpm
+		wget https://s3.amazonaws.com/get.influxdb.org/telegraf/telegraf-0.2.0-1.x86_64.rpm
+		sudo yum localinstall telegraf-0.2.0-1.x86_64.rpm
 
 - 64-bit system download & decompress instructions
 
-		wget https://s3.amazonaws.com/get.influxdb.org/telegraf/telegraf_linux_amd64_0.1.9.tar.gz
-		tar xvfz telegraf_linux_amd64_0.1.9.tar.gz
-
-#### Windows
-
-- <p>64-bit system install via the [Telegraf Windows Installer](https://s3.amazonaws.com/get.influxdb.org/telegraf/telegraf_0.1.9_amd64.msi)</p>
+		wget https://s3.amazonaws.com/get.influxdb.org/telegraf/telegraf_linux_amd64_0.2.0.tar.gz
+		tar xvfz telegraf_linux_amd64_0.2.0.tar.gz
 
 # <a id="chronograf"></a>Chronograf Downloads
 
