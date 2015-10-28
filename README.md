@@ -65,7 +65,7 @@ Just make sure the `hugo` binary is in your `PATH` before running the script.
 
 ### Publishing Changes
 
-When you execute `publish.sh`, it will generate a new copy of the site in the `deploy` directory, to ensure that you don't have a collision with changes in the default `public` directory. It will then deploy all of the changes directly to the bucket. You'll still need to enter the CloudFront invalidation via the AWS interface (for now).
+When you execute `publish.sh`, it will generate a new copy of the site in the `deploy` directory, to ensure that you don't have a collision with changes in the default `public` directory. It will then deploy all of the changes directly to the bucket. *The CloudFront invalidation will automatically be triggered after the files are synchronized.*
 
 If you see any errors, double check that you'd supplied the correct S3 credentials and that both the `s3cmd` and `hugo` binaries are in your `PATH`.
 
