@@ -9,6 +9,8 @@
 bucket='influxdb.com'
 
 branch=$(git rev-parse --abbrev-ref HEAD)
+timestamp=$(date +%s)
+json="{\"Paths\":{\"Quantity\":1,\"Items\":[\"/*\"]},\"CallerReference\":\"$timestamp\"}"
 
 if [[ "$branch" == "master" ]]; then
   rm -rf deploy
@@ -19,7 +21,7 @@ if [[ "$branch" == "master" ]]; then
   s3cmd --acl-public --delete-removed --no-progress sync deploy/* s3://$bucket
   echo -e "\nUpdated s3://$bucket"
   echo -e "\nRunning Cloudfront invalidation..."
-  aws cloudfront create-invalidation --invalidation-batch file://etc/invalidation.json --distribution-id E10ZG9KVHHU3HM
+  aws cloudfront create-invalidation --distribution-id E10ZG9KVHHU3HM --invalidation-batch $json
 else
   echo "*** s3://$bucket only gets synced from master! ***"
 fi
