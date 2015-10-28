@@ -5,16 +5,6 @@ date: 2015-10-12
 publishdate: 2015-10-12
 ---
 
-<style type="text/css">
-  img {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 3.5em;
-    margin-bottom: -1.5em;
-  }
-</style>
-
 In this post we’ll recap the most interesting InfluxDB related content you may have missed in the last week or so.
 
 ### Blogs, Videos, Articles, Docs and How-Tos
@@ -89,3 +79,13 @@ Missed this month’s newsletter? [Sign up](http://influxdb.us5.list-manage2.com
 **Get your InfluxDB hoodie while they last!**
 
 Does your company have a cool app or product that uses InfluxDB in production? We'd love to feature it on influxdb.com and give you a shout out on social media. As a "thank you" gift, we'll send you an InfluxDB hoodie and a pack of stickers. Just [fill out this simple form](https://influxdb.com/testimonials/) and we'll let you know when your entry is live and the hoodie is in the mail. Drop us a line at contact@influxdb.com if you have any questions. Thanks for the support!
+
+<style type="text/css">
+  img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 3.5em;
+    margin-bottom: -1.5em;
+  }
+</style>
