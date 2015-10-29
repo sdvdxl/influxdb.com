@@ -116,7 +116,7 @@ If no `-config` option is supplied, InfluxDB will use an internal default config
 
 > Note: The `influxd` command has two similarly named flags. The `config` flag prints a generated default configuration file to STDOUT but does not launch the `influxd` process. The `-config` flag takes a single argument, which is the path to the InfluxDB configuration file to use when launching the process.
 
-The `config` and `-config` flags can be combined to output the union of the internal default configuration and the configuration file passed to `-config`. The options specificed in the configuration file will overwrite any internally generated configration.
+The `config` and `-config` flags can be combined to output the union of the internal default configuration and the configuration file passed to `-config`. The options specificed in the configuration file will overwrite any internally generated configuration.
 
 ```shell
 /opt/influxdb/influxd config -config /etc/influxdb/influxdb.partial.conf
@@ -138,7 +138,7 @@ We’ve seen the best performance with the C3 class of machines.
 
 ## Configuring the Instance
 
-This example assumes that you are using two SSD volumes and that you have mounted them appropriately. This example also assumes that each of those volumes is mounted at `/mnt/influx` and `/mnt/db`. For more infomation on how to do that see the Amazon documentation on how to [Add a Volume to Your Instance](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-add-volume-to-instance.html).
+This example assumes that you are using two SSD volumes and that you have mounted them appropriately. This example also assumes that each of those volumes is mounted at `/mnt/influx` and `/mnt/db`. For more information on how to do that see the Amazon documentation on how to [Add a Volume to Your Instance](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-add-volume-to-instance.html).
 
 ### Config File
 You'll have to update the config file appropriately for each InfluxDB instance you have.
@@ -183,7 +183,7 @@ If you're planning on using a cluster, you may also want to set `hostname` and `
 INFLUXD_OPTS='-hostname host[:port] [-join hostname_1:port_1[,hostname_2:port_2]]'
 ```
 
-For more detailed instructions on how to set up a cluster, see the documenation on [clustering](/docs/v0.9/guides/clustering.html)
+For more detailed instructions on how to set up a cluster, see the documentation on [clustering](/docs/v0.9/guides/clustering.html)
 
 ## Development Versions
 

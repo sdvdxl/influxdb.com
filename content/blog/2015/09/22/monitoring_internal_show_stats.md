@@ -5,7 +5,7 @@ date: 2015-09-22
 publishdate: 2015-09-22
 ---
 
-With the 0.9.4 release of InfluxDB comes new [statistics and diagnostics support](https://github.com/influxdb/influxdb/tree/master/monitor). This information allows developers and system adminstrators to make better use of their InfluxDB system, diagnose problems, and troubleshoot issues.
+With the 0.9.4 release of InfluxDB comes new [statistics and diagnostics support](https://github.com/influxdb/influxdb/tree/master/monitor). This information allows developers and system administrators to make better use of their InfluxDB system, diagnose problems, and troubleshoot issues.
 
 This post outlines some of statistics and diagnostics currently gathered by InfluxDB, and some advice on how to work with this information. Please note that this functionality is still experimental and is subject to change.
 
@@ -60,7 +60,7 @@ All this statistical information is very useful, but is reset when the system re
 
 Some examples may help.
 
-If you have questions about how InfluxDB is using the Go heap, it's easy to see how usage changes over time. For example using the `influx` CLI, issue the following queries to see Go heap usage every 10 secods.
+If you have questions about how InfluxDB is using the Go heap, it's easy to see how usage changes over time. For example using the `influx` CLI, issue the following queries to see Go heap usage every 10 seconds.
 
 ```
 > USE _internal

@@ -18,7 +18,7 @@ A high level view of our test infrastructure is shown below.
 
 On each node under test we run [collectd](https://collectd.org/), configured to output in [Graphite format](https://collectd.org/wiki/index.php/Plugin:Write_Graphite), and [Telegraf](https://github.com/influxdb/telegraf). Data from these agents is then sent to another InfluxDB system, which we run specifically to store metric data from our test systems. This setup achieves two objectives -- it allows us to analyze the test results and means we are also [dogfooding](https://en.wikipedia.org/wiki/Eating_your_own_dog_food) our own software.
 
-While an InfluxDB system is under load we record various metrics about the host machine during the entire test run. Most importantly we record disk IO, memory usage, CPU load, and the [resident set size](https://en.wikipedia.org/wiki/Resident_set_size) of the InfluxDB process. During and after a test the results are shared with the team, and with the help of our Grafana dashboads, we study the results for problems, and (hopefully!) confirm our software is working as expected.
+While an InfluxDB system is under load we record various metrics about the host machine during the entire test run. Most importantly we record disk IO, memory usage, CPU load, and the [resident set size](https://en.wikipedia.org/wiki/Resident_set_size) of the InfluxDB process. During and after a test the results are shared with the team, and with the help of our Grafana dashboards, we study the results for problems, and (hopefully!) confirm our software is working as expected.
 
 ## Testing the TSM1 Engine
 
