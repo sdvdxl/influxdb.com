@@ -26,19 +26,22 @@ While configuration files from prior versions of InfluxDB 0.9 should work with f
     influxd config -config /etc/influxdb/influx_v0.9.x.conf
     ```  
 
-For a more detailed discussion, see the [Generate a configuration file](../introduction/installation.html#generate-a-configuration-file) section on the Installation page. 
+For a more detailed discussion, see [Generate a configuration file](../introduction/installation.html#generate-a-configuration-file). 
 
-## The configuration file
+## The configuration file by section
 ---
 The following sections follow the structure of the [sample configuration file on GitHub](https://github.com/influxdb/influxdb/blob/master/etc/config.sample.toml) and offer detailed explanations of the different options.  Note that this documentation refers to the configuration file for the last official release - the configuration file on GitHub will always be slightly ahead of what is documented here.
 
 Configuration sections:  
 
-* [reporting](../administration/config.html#reporting)  
+* [[reporting]](../administration/config.html#reporting)  
+* [[registration]](../administration/config.html#registration)  
 * [[meta]](../administration/config.html#meta)  
 * [[data]](../administration/config.html#data)  
+* [[hinted-handoff]](../administration/config.html#hinted-handoff)  
 * [[cluster]](../administration/config.html#cluster)  
 * [[retention]](../administration/config.html#retention)  
+* [[shard-precreation]](../administration/config.html#shard-precreation)
 * [[monitor]](../administration/config.html#monitor)  
 * [[admin]](../administration/config.html#admin)  
 * [[http]](../administration/config.html#http)  
@@ -47,16 +50,29 @@ Configuration sections:
 * [[opentsdb]](../administration/config.html#opentsdb)  
 * [[udp]](../administration/config.html#udp)  
 * [[continuous_queries]](../administration/config.html#continuous-queries)  
-* [[hinted-handoff]](../administration/config.html#hinted-handoff)  
 
-## reporting
-Once every 24 hours InfluxDB reports anonymous data to m.influxdb.com. Those data include a unique, randomly-generated cluster identifier (an 8-byte Raft ID), OS, architecture, InfluxDB version, and metadata (🎁 help on clarifying metadata - users could interpret it to mean nearly anything). InfluxDB doesn't request, track, or store the IP addresses of those servers that report. InfluxDB uses these data primarily to track the number of deployed clusters for each version. 
+## [reporting]
+Once every 24 hours InfluxDB reports anonymous data to m.influxdb.com. Those data include a unique, randomly-generated cluster identifier (an 8-byte Raft ID); OS; architecture; InfluxDB version; and the number of [databases](../concepts/glossary.html#database), [measurements](../concepts/glossary.html#measurement), and unique [series](../concepts/glossary.html#series). 
+
+InfluxDB doesn't request, track, or store the IP addresses of those servers that report. InfluxDB uses these data primarily to track the number of deployed clusters for each version. 
 
 **reporting-disabled = false**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Change this option to `true` to disable reporting.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set this option to `true` to disable reporting.
+
+## [registration]
+Controls Enterprise registration.  
+
+**enabled = true**  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+**url = "https://enterprise.influxdata.com"**  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The Enterprise server URL.
+
+**token = ""**  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The registration token for the Enterprise server.
 
 ## [meta]
-This section handles some of the parameters for the InfluxDB cluster. Specifically, it controls the parameters for the Raft consensus group which coordinates metadata about the cluster. For step-by-step instructions on setting up a cluster, see the [setup guide](../guides/clustering.html). 
+This section controls some of the parameters for the InfluxDB cluster. Specifically, it handles the parameters for the Raft consensus group which coordinates metadata about the cluster. For step-by-step instructions on setting up an InfluxDB cluster, see [Cluster Setup](../guides/clustering.html). 
 
 **dir = "/var/opt/influxdb/meta"**  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The directory where InfluxDB stores `id`, `peers.json`, `raft.db`, and the `snapshots` directory.
@@ -64,103 +80,146 @@ This section handles some of the parameters for the InfluxDB cluster. Specifical
 > * `id` stores the identification number of the Raft peer: `1` for the first node to join the cluster, `2` for the second node, and `3` for the third node to join the cluster.
 * `peers.json` stores the hostnames and ports of the three Raft peers.
 * `snapshots` contains the server's snapshots taken for the purpose of log compaction.
-* `raft.db` 🎁
+* `raft.db` is the BoltDB database that contains the Raft log and snapshots.
 
 **hostname = "localhost"**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The `hostname` of the Raft peer. 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The `hostname` of the Raft peer.  
 
 **bind-address = ":8088"**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The `port` over which the Raft peer communicates.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The `port` over which the Raft peer communicates.  
 
 **retention-autocreate = true**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🎁
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set to `false` to disable the autocreation of the [`default` retention policy](../concepts/glossary.html#retention-policy-rp) when InfluxDB creates a database.  
 
 **election-timeout = "1s"**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The time that the follower waits for communication from the leader before the follower begins a new election. In practice, InfluxDB staggers this parameter for each 
-Raft peer. The default should work for most systems.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The time a candidate spends in the candidate state without a leader before it starts an election. In practice, InfluxDB staggers this parameter for each Raft peer. The default setting should work for most systems.  
 
 **heartbeat-timeout = "1s"**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The rate at which the leader sends heartbeats to the other Raft peers to preserve its leader status. You may want to alter this parameter depending on your network.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The time a follower remains in the follower state without a leader before it starts an election. You may want to alter this parameter depending on your network.  
 
 **leader-lease-timeout = "500ms"**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🎁
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The time a raft leader can remain the leader without hearing from a majority of nodes. After the timeout the leader steps down to the follower state.  
 
 **commit-timeout = "50ms"**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🎁
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The amount of time raft will go without issuing a command before a heartbeat is sent to tell the leader it is alive.  
 
 ## [data]
-This section controls where the actual data for InfluxDB live and how they are flushed from the WAL. You may want to change the `dir` setting, but the WAL settings are an advanced configuration. The defaults should work for most systems.
+This section controls where the actual data for InfluxDB live and how they are flushed from the write ahead log (WAL). You may want to change the `dir` setting, but the WAL settings are an advanced configuration - the defaults should work for most systems.
 
 **dir = "/var/opt/influxdb/data"**  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The directory where InfluxDB stores the data.
 
-The following three WAL settings are for the b1 storage engine used in 0.9.2. They won't apply to any new shards created after upgrading to versions 0.9.3+. 
+*The following three WAL settings apply to the b1 storage engine used in InfluxDB version 0.9.2. The settings won't apply to any new shards created after you've upgraded to versions 0.9.3+.*
  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **max-wal-size = 104857600**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The maximum size the WAL can reach before a flush. Defaults to 100MB.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The maximum size of the WAL before a flush. This defaults to 100MB.
   
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**wal-flush-interval = "10m"**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The maximum time data can sit in the WAL before a flush.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The maximum time data can stay in the WAL before a flush.
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**wal-partition-flush-delay = "2s"**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The delay time between each WAL partition being flushed.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The delay time between each WAL partition flush.
 
-The following WAL settings are for the storage engine in versions 0.9.3+.
+*The following WAL settings are for the storage engine in InfluxDB versions 0.9.3+.*
  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**wal-dir = "/var/opt/influxdb/wal"**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;For best throughput, the WAL directory and the data directory should be on different physical devices. If you have performance concerns, you will want to make this setting different from the `dir` in the [[data]](../administration/config.html#data) section.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The WAL directory. For best throughput, the WAL directory and the data directory should be on different physical devices. If you have performance concerns, you will want to make this setting different from the `dir` in the [[data]](../administration/config.html#data) section.
  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**wal-enable-logging = true**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set this option to `false` to disable logging.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set to `false` to disable logging.
 
-The following settings are for version 0.9.3 only. The WAL in versions 0.9.4+ no longer has five partitions. 
+*The following settings are for InfluxDB version 0.9.3 only. The WAL in versions 0.9.4+ no longer has five partitions.* 
 
 **# wal-ready-series-size = 25600**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;When a series in the WAL in-memory cache reaches this size in bytes it is marked as ready to flush to the index.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The size (in bytes) of a series in the WAL in-memory cache at which the series is marked as ready to flush to the index.
   
 **# wal-compaction-threshold = 0.6**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Flush and compact a partition once this ratio of series are over the ready size.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The ratio of series that are over the `wal-ready-series-size` that triggers a partition flush and compaction.
 
 **# wal-max-series-size = 2097152**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Force a flush and compaction if any series in a partition gets above this size in bytes.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The maximum size (in bytes) of a series in a partition. If any series in a partition gets above this size,  the partition is forced to flush and compact.
 
 **# wal-flush-cold-interval = "10m"**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Force a flush of all series and full compaction if there have been no writes in this amount of time. This is useful for ensuring that shards that are cold for writes don't keep a bunch of data cached in memory and in the WAL.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The amount of time with no writes after which a flush of all series and full compaction is forced. This option ensures that shards that are cold for writes don't keep a lot of data cached in memory and in the WAL.
 
 **# wal-partition-size-threshold = 20971520**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Force a partition to flush its largest series if it reaches this approximate size in bytes. Remember there are five partitions so you'll need at least five times this amount of memory. The more memory you have, the bigger this can be.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The size (in bytes) of a partition at which the partition is forced to flush its largest series. There are five partitions so you'll need at least five times this amount of memory. The more memory you have, the bigger this setting can be.
+
+**# query-log-enabled = true**  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set to `false` to disable logging queries before execution. Note that when set to `true` InfluxDB will log any sensitive data in a query.
+
+## [hinted-handoff]
+This section controls the hinted handoff feature, which allows nodes to temporarily store queued data when one node of a cluster is down for a short period of time. Note that the hinted handoff has no function in a single node cluster.
+
+**enabled = true**  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set to `false` to disable hinted handoff. 
+
+**dir = "/var/opt/influxdb/hh"**  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+**max-size = 1073741824**  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The maximum size of the hinted handoff queue for a node. If the queue is full, new writes are rejected and an error is returned to the client. The queue is drained when either the writes are retried successfully or the writes expire.  
+
+**max-age = "168h"**  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The time writes sit in the queue before they are purged. The time is determined by how long the batch has been in the queue, not by the timestamps in the data.  
+
+**retry-rate-limit = 0**  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The rate (in bytes per second) per node at which the hinted handoff retries writes. Set to `0` to disable the rate limit.  
+
+*Hinted handoff begins retrying writes to down nodes at the interval defined by the `retry-interval`. If any error occurs, it will backoff exponentially until it reaches the interval defined by the `retry-max-interval`. Hinted handoff then retries writes at that interval until it succeeds. The interval resets to the `retry-interval` once hinted handoff successfully completes writes to all nodes.*
+
+**retry-interval = "1s"**  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The initial interval at which the hinted handoff retries a write after it fails.  
+
+**retry-max-interval = "1m"**  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The maximum interval at which the hinted handoff retries a write after it fails. It retries at this interval until it succeeds.
+
+**purge-interval = "1h"**  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The interval at which InfluxDB checks to purge data that are above `max-age`.  
 
 ## [cluster]
-This section handles non-Raft cluster behavior, which generally includes how data are shared across shards.
+This section controls non-Raft cluster behavior, which generally includes how data are shared across shards.
 
-**shard-writer-timeout = "5s"**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The time within which a shard must respond to a write.🎁 What happens if this limit is exceeded? The write goes to hinted handoff?
+**shard-writer-timeout = "10s"**  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The time that a write from one node to another must complete before the write times out. If the write times out, it may still succeed on the remote node but the client node stops waiting and queues it in [hinted handoff](../concepts/glossary.html#hinted-handoff). This timeout should always be less than or equal to the write-timeout.
  
  **write-timeout = "5s"**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The time within which a write operation must complete on the cluster.🎁If this fails is the write rejected? Is this related to the consistency setting or does this timeout happen before or after that consistency setting would apply?
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The time during which the coordinating node must receive a successful response for writing to all remote shard owners before it considers the write a failure. If the write times out, it may still succeed but we stop waiting and queue those writes in [hinted handoff](../concepts/glossary.html#hinted-handoff). Depending on the requested consistency level and the number of successful responses received, the return value will be either `write failure` or `partial write`.
 
 ## [retention]
 This section controls the enforcement of retention policies for evicting old data.
 
 **enabled = true**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Change this to `false` to prevent InfluxDB from enforcing retention policies. 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set to `false` to prevent InfluxDB from enforcing retention policies. 
 
 **check-interval = "30m"**  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The rate at which InfluxDB checks to enforce a retention policy. 
 
+## [shard-precreation]
+Controls the precreation of shards before data arrive. Only shards that will exist in the future, at the time of creation, are precreated.
+
+**enabled = true** 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+**check-interval = "10m"**  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+**advance-period = "30m"**  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
 ## [monitor]
 This section controls InfluxDB's [system self-monitoring](https://github.com/influxdb/influxdb/blob/master/monitor/README.md).
 
-By default, InfluxDB writes the data to the `_internal` database. If that database does not exist, InfluxDB creates it automatically. The default retention policy on the `_internal` database is seven days. If you want to use a retention policy other than the seven-day retention policy, you must [create](../administration/administration.html#retention-policy-management) it. 
+By default, InfluxDB writes the data to the `_internal` database. If that database does not exist, InfluxDB creates it automatically. The `DEFAULT` retention policy on the `_internal` database is seven days. If you want to use a retention policy other than the seven-day retention policy, you must [create](../administration/administration.html#retention-policy-management) it. 
 
 **store-enabled = true**   
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Whether to record statistics internally.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set to `false` to disable recording statistics internally.
 
 **store-database = "_internal"**  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The destination database for recorded statistics.
 
 **store-interval = "10s"**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The interval at which to record statistics.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The interval at which InfluxDB records statistics.
 
 ## [admin]
 Controls the availability of the built-in, web-based admin interface.
@@ -168,63 +227,66 @@ Controls the availability of the built-in, web-based admin interface.
 >**Note:** If you want to enable HTTPS for the admin interface you must also enable HTTPS on the [[http]](../administration/config.html#http) service.
 
 **enabled = true**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set this option to `false` to disable the admin interface.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set to `false` to disable the admin interface.
 
 **bind-address = ":8083"**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The admin interface uses port `8083` by default.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The port used by the admin interface.
 
 **https-enabled = false**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set this option to `true` to enable HTTPS for the admin interface.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set to `true` to enable HTTPS for the admin interface.
 
 **https-certificate = "/etc/ssl/influxdb.pem"**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set this option to the path of the certificate file.🎁 What happends if this is a different PEM from the one in the [http] section? Can they be different?
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The path of the certificate file.  
 
 ## [http]
-This section controls how InfluxDB configures the HTTP endpoints. These are the primary mechanism for getting data into and out of InfluxDB. Edit options in this section to enable HTTPS and authentication.
+This section controls how InfluxDB configures the HTTP endpoints. These are the primary mechanisms for getting data into and out of InfluxDB. Edit the options in this section to enable HTTPS and authentication. See [Authentication and Authorization](../administration/authentication_and_authorization.html).
 
 **enabled = true**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set this option to `false` to disable HTTP. Note that the InfluxDB CLI connects to the database using the HTTP API.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set to `false` to disable HTTP. Note that the InfluxDB [command line interface (CLI)](../tools/shell.html) connects to the database using the HTTP API.
 
 **bind-address = ":8086"**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The HTTP API uses port `8086`  by default.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The port used by the HTTP API.
 
 **auth-enabled = false**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set this option to `true` to enable authentication.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set to `true` to enable authentication.
 
 **log-enabled = true**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set this option to `false` to disable logging.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set to `false` to disable logging.
 
 **write-tracing = false**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🎁Does this control whether we log every write event or not?
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set to `true` to enable logging for the write payload. 
 
 **pprof-enabled = false**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🎁
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set to `true` to enable [pprof](http://blog.golang.org/profiling-go-programs) on InfluxDB so that it gathers detailed performance information. 
 
 **https-enabled = false**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set this option to `true` to enable HTTPS.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set to `true` to enable HTTPS.
 
 **https-certificate = "/etc/ssl/influxdb.pem"**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set this option to the path of the certificate file.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The path of the certificate file.
 
 ## [[graphite]]
 This section controls one or many listeners for Graphite data. See the [README](https://github.com/influxdb/influxdb/blob/master/services/graphite/README.md) on GitHub for more information.
 
 **enabled = false**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set this to `true` to enable Graphite input.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set to `true` to enable Graphite input.
+
+**database = "graphite"**  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The name of the database that you want to write to.  
 
 **# bind-address = ":2003"**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The default port.
 
 **# protocol = "tcp"**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🎁What are the options? TCP, UDP, anything else?
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set to `tcp` or `udp`.
 
 **# consistency-level = "one"**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set the number of nodes that must confirm the write. If the requirement is not met the return value will be either `partial write` if some points in the batch fail or `write failure` if all points in the batch fail. For more information, see the Query String Parameters for Writes section in the [Line Protocol Syntax Reference ](../write_protocols/write_syntax.html).
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The number of nodes that must confirm the write. If the requirement is not met the return value will be either `partial write` if some points in the batch fail or `write failure` if all points in the batch fail. For more information, see the Query String Parameters for Writes section in the [Line Protocol Syntax Reference ](../write_protocols/write_syntax.html).
 
 **# name-separator = "."**  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-The next three options control how batching works. You should have this enabled otherwise you could get dropped metrics or poor performance. Batching will buffer points in memory if you have many coming in.
+*The next three options control how batching works. You should have this enabled otherwise you could get dropped metrics or poor performance. Batching will buffer points in memory if you have many coming in.*
 
 **# batch-size = 1000**  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The input will flush if this many points get buffered.
@@ -251,24 +313,24 @@ The next three options control how batching works. You should have this enabled 
 ```
 
 **ignore-unnamed = true**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If set to `true`, when the input metric name has more fields than `name-schema` specified, the extra fields will be ignored. Otherwise an error will be logged and the metric rejected.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set to `true` so that when the input metric name has more fields than `name-schema` specified, the extra fields are ignored. Otherwise an error will be logged and the metric rejected.
 
 ## [collectd]
-This section controls the listener for Collectd data.
+This section controls the listener for collectd data.
 
 **enabled = false**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set this option to `true` to enable Collectd writes.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set to `true` to enable collectd writes.
 
 **# bind-address = ""**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🎁 No default?
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An empty string is equivalent to `0.0.0.0`.
 
 **# database = ""**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The name of the database that you want to write to. 🎁 Default to collectd?
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The name of the database that you want to write to. This defaults to `collectd`. 
 
 **# typesdb = ""**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🎁
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Defaults to `/usr/share/collectd/types.db`.
 
-The next three options control how batching works. You should have this enabled otherwise you could get dropped metrics or poor performance. Batching will buffer points in memory if you have many coming in.
+*The next three options control how batching works. You should have this enabled otherwise you could get dropped metrics or poor performance. Batching will buffer points in memory if you have many coming in.*
 
 **# batch-size = 1000**  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The input will flush if this many points get buffered.
@@ -283,18 +345,27 @@ The next three options control how batching works. You should have this enabled 
 Controls the listener for OpenTSDB data. See the [README](https://github.com/influxdb/influxdb/blob/master/services/opentsdb/README.md) on GitHub for more information.
 
 **enabled = false**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set this option to `true` to enable openTSDB writes.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set to `true` to enable openTSDB writes.
 
-**# bind-address = ""**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🎁Default?
+**# bind-address = ":4242"**  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The default port.
 
-**# database = ""**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The name of the database that you want to write to. If the database does not exist, it will be created automatically when the input is initialized.🎁Default?
+**# database = "opentsdb"**  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The name of the database that you want to write to. If the database does not exist, it will be created automatically when the input is initialized.  
 
 **# retention-policy = ""**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🎁Default?
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The relevant retention policy. An empty string is equivalent to the database's `DEFAULT` retention policy.
 
-The next three options control how batching works. You should have this enabled otherwise you could get dropped metrics or poor performance. Only points metrics received over the telnet protocol undergo batching.
+**# consistency-level = "one"**  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+**# tls-enabled = false**  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+**# certificate = ""**  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+*The next three options control how batching works. You should have this enabled otherwise you could get dropped metrics or poor performance. Only points metrics received over the telnet protocol undergo batching.*
 
 **# batch-size = 1000**  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The input will flush if this many points get buffered.
@@ -309,18 +380,21 @@ The next three options control how batching works. You should have this enabled 
 This section controls the listeners for InfluxDB line protocol data via UDP. See the [UDP page](../write_protocols/udp.html) for more information.
 
 **enabled = false**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set this option to `true` to enable writes over UDP.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set to `true` to enable writes over UDP.
 
 **# bind-address = ""**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An empty string is equivalent to `0.0.0.0`.
 
-**# database = ""**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The name of the database that you want to write to.
+**# database = "udp"**  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The name of the database that you want to write to.  
 
-The next three options control how batching works. You should have this enabled otherwise you could get dropped metrics or poor performance. Batching will buffer points in memory if you have many coming in.
+**# retention-policy = ""**  
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The relevant retention policy for your data. An empty string is equivalent to the database's `DEFAULT` retention policy.
+
+*The next three options control how batching works. You should have this enabled otherwise you could get dropped metrics or poor performance. Batching will buffer points in memory if you have many coming in.*
 
 **# batch-size = 1000**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Will flush if this many points get buffered.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The input will flush if this many points get buffered.
 
 **# batch-pending = 5**  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The number of batches that may be pending in memory.
@@ -329,47 +403,31 @@ The next three options control how batching works. You should have this enabled 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The input will flush at least this often even if it hasn't reached the configured batch-size.
 
 ## [continuous_queries]
-This section controls how continuous queries run within InfluxDB.
+This section controls how [continuous queries (CQs)](../concepts/glossary.html#continuous-query-cq) run within InfluxDB.
 
 **log-enabled = true**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set this option to `false` to disable logging for continuous query events.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set to `false` to disable logging for CQ events.
 
 **enabled = true**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set this option to `false` to disable continuous queries.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set to `false` to disable CQs.
+
+*When InfluxDB executes a CQ, it computes the CQ for the current time interval and it recomputes the CQ for previous time intervals. The next two options control the number of previous time intervals that InfluxDB recomputes.*
 
 **recompute-previous-n = 2**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🎁
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The number of previous intervals that InfluxDB recomputes if `(recompute-previous-n * ɣ) <  recompute-no-older-than`, where `ɣ` is the  `GROUP BY time()` interval in the CQ specified in the same units as `recompute-no-older-than`.
 
-**recompute-no-older-than = "10m"**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The maximum interval over which the continuous query will recompute results.
+**recompute-no-older-than = "10m0s"**  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The maximum time over which InfluxDB recomputes results if `(recompute-previous-n * ɣ) > recompute-no-older-than`, where `ɣ` is the  `GROUP BY time()` interval in the CQ specified in the same units as `recompute-no-older-than`.
+
+*The next two options control the rate at which InfluxDB computes CQs.* 
 
 **compute-runs-per-interval = 10**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🎁
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;InfluxDB executes the CQ at `(ɣ / compute-runs-per-interval)` if `(ɣ / compute-runs-per-interval) > compute-no-more-than`, where `ɣ` is the  `GROUP BY time()` interval in the CQ specified in the same units as `compute-no-more-than`.
 
-**compute-no-more-than = "2m"**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🎁
+**compute-no-more-than = "2m0s"**  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;InfluxDB executes the CQ at `compute-no-more-than` if `(ɣ / compute-runs-per-interval) < compute-no-more-than`, where `ɣ` is the  `GROUP BY time()` interval in the CQ specified in the same units as `compute-no-more-than`. This is the minimum rate at which InfluxDB executes a CQ.
 
-## [hinted-handoff]
-This section controls the hinted handoff feature, which allows nodes to temporarily store queued data when one node of a cluster is down for a short period of time. Note that the hinted handoff has no function in a single node cluster.
 
-🎁Any notes on what may need to be changed for most systems?
 
-**enabled = true**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set this option to `false` to disable hinted handoff. 
-
-**dir = "/var/opt/influxdb/hh"**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-**max-size = 1073741824**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The maximum size of the hinted handoff queue.🎁What happens if this is exceeded? Are older writes pushed off the stack by newer ones? Do new writes for that node fail? Return failures to the client?
-
-**max-age = "168h"**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🎁Do points age-out after max-age? Do entire files age out? Are they silently dropped? Is anything logged or returned to STDERR?
-
-**retry-rate-limit = 0**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🎁
-
-**retry-interval = "1s"**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🎁
 
 
