@@ -22,6 +22,10 @@ This is a list of the client libraries which have some support for InfluxDB vers
 ## Lisp
 - [cl-influxdb](https://github.com/mmaul/cl-influxdb) by [mmaul](https://github.com/mmaul)
 
+## .Net
+- [InfluxDB.Client.Net](https://github.com/AdysTech/InfluxDB.Client.Net) by [mvadu](https://github.com/mvadu)
+
+
 ## Perfmon
 - [naf_windows_perfmon_to_influxdb](https://github.com/willemdh/naf_windows_perfmon_to_influxdb) by [willemdh](https://github.com/willemdh)
 
