@@ -89,7 +89,7 @@ influxd -config /usr/local/etc/influxdb.conf
 
 ## Windows
 
-InfluxDB maintains an install package for Windows binaries. To get started [download the package](https://s3.amazonaws.com/influxdb/influxdb_0.9.4.2_amd64.msi) and click through the license to install InfluxDB.
+InfluxDB maintains an install package for Windows binaries. To get started [download the package](https://s3.amazonaws.com/influxdb/influxdb_0.9.4.2_amd64.msi) and click through the license to install InfluxDB. Note: You will need admin rights on the system in order to install InfluxDB.
 
 After the installation you will see a new folder in your Startup Menu called “InfluxDB”. The following shortcuts are installed for your convenience:
 
