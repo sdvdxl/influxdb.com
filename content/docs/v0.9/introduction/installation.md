@@ -87,12 +87,23 @@ Or, if you don't want/need launchctl, in a separate terminal window you can just
 influxd -config /usr/local/etc/influxdb.conf
 ```
 
-<a href="getting_started.html"><font size="6"><b>⇒ Now get started!</b></font></a>
+## Windows
+
+InfluxDB maintains an install package for Windows binaries. To get started [download the package](https://s3.amazonaws.com/influxdb/influxdb_0.9.4.2_amd64.msi) and click through the license to install InfluxDB.
+
+After the installation you will see a new folder in your Startup Menu called “InfluxDB”. The following shortcuts are installed for your convenience:
+
+* InfluxDB Server - Launches the InfluxDB database service.
+* InfluxDB CLI - Launches the command line interface used to query and communicate with your InfluxDB server.
+* Admin Dashboard - Opens the dashboard at [`http://localhost:8083`](http://localhost:8083) used to communicate with your InfluxDB server.
+* Documentation - Links to the online documentation for InfluxDB.
 
 
 ## Hosted
 
 For users who don't want to install any software and are ready to use InfluxDB, you may want to check out our [managed hosted InfluxDB offering](http://customers.influxdb.com).
+
+<a href="getting_started.html"><font size="6"><b>⇒ Now get started!</b></font></a>
 
 ## Generate a configuration file
 
