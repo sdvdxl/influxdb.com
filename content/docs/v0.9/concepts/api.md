@@ -9,7 +9,7 @@ All current API Endpoints are listed below.
 
 ### /ping
 
-The ping endpoint accepts both `GET` and `HEAD` HTTP requests. There are no query parameters that can be passed to the endpoint. The response body is empty. The version of the InfluxDB server you issued the request to can be extracted through the `X-Influxdb-Version` field of the header. For example this is the response from a server running `0.9.5-nightly-548b898` of InfluxDB:
+The ping endpoint accepts both `GET` and `HEAD` HTTP requests. The response body is empty. The version of the InfluxDB server you issued the request to can be extracted through the `X-Influxdb-Version` field of the header. For example this is the response from a server running `0.9.5-nightly-548b898` of InfluxDB:
 
 ```sh
 $ curl -sl -I localhost:8086/ping
