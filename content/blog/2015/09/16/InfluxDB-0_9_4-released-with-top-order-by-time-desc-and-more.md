@@ -31,7 +31,7 @@ One final note is that this is the first version of InfluxDB that's built with G
 
 Our number one priority for the next release is to improve write throughput and the on disk size of data in the database. To that end, we're working on a new storage engine designed specifically for our needs. This won't require any sort of data migration and the next release will still be a drop in upgrade.
 
-Preliminary tests have shown significant improvements in sustained write throughput and on-disk size of the data. We'll be making an announcment when it's available in a nightly build for testing. Or you can [track this issue to get notified when the new storage engine is available for testing](https://github.com/influxdb/influxdb/issues/4086).
+Preliminary tests have shown significant improvements in sustained write throughput and on-disk size of the data. We'll be making an announcement when it's available in a nightly build for testing. Or you can [track this issue to get notified when the new storage engine is available for testing](https://github.com/influxdb/influxdb/issues/4086).
 
 We're also continuing work on clustering with bug fixes for replication as we find them, performance improvements, and wiring up every query to work within a cluster.
 
