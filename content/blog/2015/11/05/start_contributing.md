@@ -10,7 +10,7 @@ Of course, there is another way to contribute to InfluxDB, and that is to actual
 
 ## Help Wanted!
 
-To help you make your mark on the InfluxDB source code, we on the Core team recently selected a set of issues that we think are the most approachable. All the [issues are logged on Github and are marked with the _help-wanted_ label](https://github.com/influxdb/influxdb/labels/status%2Fhelp-wanted). We have tried to add some introductory notes to each issue to help you get started, and will make a particular effort to answer questions about these issues. Some issues are more difficult than others, and have been labelled as such.
+To help you make your mark on the InfluxDB source code, we on the Core team recently selected a set of issues that we think are the most approachable. All the [issues are logged on Github and are marked with the _help-wanted_ label](https://github.com/influxdb/influxdb/labels/status%2Fhelp-wanted). We have tried to add some introductory notes to each issue to help you get started, and will make a particular effort to answer questions about these issues as you proceed. Some issues are more difficult than others, and have been labelled as such.
 
 Before you start working with the source, be sure to check out the [CONTRIBUTING guide](https://github.com/influxdb/influxdb/blob/master/CONTRIBUTING.md) to learn how to configure your build enviroment. You will also need to [sign the CLA](https://influxdb.com/community/cla.html) before any of your changes can be merged.
 
