@@ -16,9 +16,8 @@ Before you start working with the source, be sure to check out the [CONTRIBUTING
 
 ## Get your t-shirt
 
-As an added-incentive, anyone who fixes one of these issues, and once the change is merged to master, will get an InfluxDB t-shirt. Just remind us in the ticket when the change is merged, and we'll contact you for shipping details. Wear the shirt with pride, knowing your code is running across the world!
+As an added-incentive, anyone whose PR is merged to master will get an InfluxDB t-shirt. Just remind us in the Issue when the change is merged, and we'll contact you for shipping details. Wear the shirt with pride, knowing your code is running across the world!
 
 ## So start coding!
 
 We know it can be difficult to get up to speed on a complex code base like InfluxDB, so we hope this will help make it fun. Learning how a time-series database works can be a fascinating experience, and there is no better way to do so than getting into the code. Hopefully these particular issues will help you get going.
-
