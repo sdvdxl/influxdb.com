@@ -201,7 +201,7 @@ this timing was only taken once every 10 runs.
 ### Notes
 
 Telegraf aggregates stats as they arrive, and limits the number of timings cached
-to keep it's memory footprint low. By default, Telegraf will keep track of 1000
+to keep its memory footprint low. By default, Telegraf will keep track of 1000
 timings per-stat when calculating percentiles. This can be adjusted using the
 `percentile_limit` config option.
 
@@ -213,7 +213,7 @@ unique.users:100|s
 
 Sets can be used to count unique occurences. In the above example, the
 `unique.users` metric will be incremented by 1, then will not be incremented no
-matterhow many times the value `100` is sent.
+matter how many times the value `100` is sent.
 
 ## Future Work
 
