@@ -21,12 +21,16 @@ layout = "sidebar"
 		wget https://s3.amazonaws.com/influxdb/influxdb_0.9.4.2_amd64.deb
 		sudo dpkg -i influxdb_0.9.4.2_amd64.deb
 
+MD5 checksum: `2f5c6a63d250568ef0d89bd8359dab79`
+
 #### RedHat & CentOS
 
 - 64-bit system install instructions
 
 		wget https://s3.amazonaws.com/influxdb/influxdb-0.9.4.2-1.x86_64.rpm
 		sudo yum localinstall influxdb-0.9.4.2-1.x86_64.rpm
+
+MD5 checksum: `bc90b9b01ab7e8f7a6ba5f1f5572a55d`
 
 #### Standalone Binary
 
@@ -35,9 +39,13 @@ layout = "sidebar"
 		wget https://s3.amazonaws.com/influxdb/influxdb_0.9.4.2_x86_64.tar.gz
 		tar xvfz influxdb_0.9.4.2_x86_64.tar.gz
 
+MD5 checksum: `6abb3d5df9b69aeb9bae37d0889bf67a`
+
 #### Windows
 
 - <p>64-bit system install via the [InfluxDB Windows Installer](https://s3.amazonaws.com/influxdb/influxdb_0.9.4.2_amd64.msi)</p>
+
+MD5 checksum: `8c6c0e198876772b40c036a96a94ba7e`
 
 ## Version 0.9.5 (Nightly)
 Nightly builds are created once-a-day, at midnight San Francisco, CA time, using the top-of-tree of [master](https://github.com/influxdb/influxdb/tree/master) source code. These builds will include all the latest fixes, but also undergo only basic testing.
@@ -93,6 +101,8 @@ Deprecated versions are no longer actively developed.
 		wget https://s3.amazonaws.com/get.influxdb.org/telegraf/telegraf_0.2.0_amd64.deb
 		sudo dpkg -i telegraf_0.2.0_amd64.deb
 
+MD5 checksum: `9c34466f5d514e1ceac3543ac2aa2ccf`
+
 #### RedHat & CentOS
 
 - 64-bit system install instructions
@@ -100,10 +110,16 @@ Deprecated versions are no longer actively developed.
 		wget https://s3.amazonaws.com/get.influxdb.org/telegraf/telegraf-0.2.0-1.x86_64.rpm
 		sudo yum localinstall telegraf-0.2.0-1.x86_64.rpm
 
+MD5 checksum: `ba6b796aa3bd38272da79d569dd5b925`
+
+#### Standalone Binary
+
 - 64-bit system download & decompress instructions
 
 		wget https://s3.amazonaws.com/get.influxdb.org/telegraf/telegraf_linux_amd64_0.2.0.tar.gz
 		tar xvfz telegraf_linux_amd64_0.2.0.tar.gz
+
+MD5 checksum: `e850f2d3712aa077f4fc5d6aaf2aef57`
 
 # <a id="chronograf"></a>Chronograf Downloads
 
@@ -123,12 +139,16 @@ Deprecated versions are no longer actively developed.
 		wget https://s3.amazonaws.com/get.influxdb.org/chronograf/chronograf_0.2.0_amd64.deb
 		sudo dpkg -i chronograf_0.2.0_amd64.deb
 
+MD5 checksum: `fa0835263a691ac1d572ca8987b5d95d`
+
 #### RedHat & CentOS
 
 - 64-bit system install instructions
 
 		wget https://s3.amazonaws.com/get.influxdb.org/chronograf/chronograf-0.2.0-1.x86_64.rpm
 		sudo yum localinstall chronograf-0.2.0-1.x86_64.rpm
+
+MD5 checksum: `a13e4dd1064643a914d6e193a9199343`
 
 #### Standalone OS X Binary
 
@@ -137,9 +157,13 @@ Deprecated versions are no longer actively developed.
 		wget https://s3.amazonaws.com/get.influxdb.org/chronograf/chronograf-0.2.0-darwin_amd64.tar.gz
 		tar xvfz chronograf-0.2.0-darwin_amd64.tar.gz
 
+MD5 checksum: `3081177631db17e9b42eafd79783107e`
+
 #### Windows
 
 - <p>64-bit system install via the [Chronograf Windows Installer](https://s3.amazonaws.com/get.influxdb.org/chronograf/chronograf_0.2.0_amd64.msi)</p>
+
+MD5 checksum: `e85f4b630004e9c8f2e2151b68ed6ab1`
 
 ## Usage
 
