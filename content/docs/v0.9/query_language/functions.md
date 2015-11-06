@@ -523,7 +523,7 @@ SELECT MIN(<field_key>) FROM <measurement_name> [WHERE <stuff>] [GROUP BY <stuff
 
 Examples:
 
-* Select the mimimum `water_level` in the measurement `h2o_feet`:
+* Select the minimum `water_level` in the measurement `h2o_feet`:
 ```sql
 > SELECT MIN(water_level) FROM h2o_feet
 ```
@@ -730,7 +730,7 @@ Note that in the raw data, `water_level` equals `4.055` at `2015-08-18T04:06:00Z
 ## DERIVATIVE()
 Returns the rate of change for the values in a single [field](../concepts/glossary.html#field) in a [series](../concepts/glossary.html#series). InfluxDB calculates the difference between chronological non-`NAN` field values and converts those results into the rate of change per `unit`. The `unit` argument is optional and, if not specified, defaults to one second (`1s`).
 
-The basic `DERVATIVE()` query:
+The basic `DERIVATIVE()` query:
 ```sql
 SELECT DERIVATIVE(<field_key>, [<unit>]) FROM <measurement_name> [WHERE <stuff>]
 ```
@@ -745,7 +745,7 @@ Valid time specifications for `unit` are:
 
 `DERIVATIVE()` also works with a nested function coupled with a `GROUP BY time()` clause. For queries that include those options, InfluxDB first performs the aggregation, selection, or transformation across the time interval specified in the `GROUP BY time()` clause and then carries out the same procedure outlined above.
 
-The `DERVATIVE()` query with an aggregation function and `GROUP BY time()` clause:
+The `DERIVATIVE()` query with an aggregation function and `GROUP BY time()` clause:
 ```sql
 SELECT DERIVATIVE(AGGREGATION_FUNCTION(<field_key>),[<unit>]) FROM <measurement_name> WHERE <stuff> GROUP BY time(<aggregation_interval>)
 ```
@@ -851,7 +851,7 @@ The numerator is the difference between non-`NAN` field values. The denominator 
 
 > **Note:** Specifying `12m` as the `unit` **does not** mean that InfluxDB calculates the rate of change for every 12 minute interval of data. Instead, InfluxDB calculates the rate of change per 12 minutes for each interval of non-`NAN` data.
 
-* `DERVATIVE()` with two arguments, a function, and a `GROUP BY time()` clause:  
+* `DERIVATIVE()` with two arguments, a function, and a `GROUP BY time()` clause:  
 Select the `MAX()` value at 12 minute intervals and calculate the rate of change per 12 minutes
 
 ```sql
@@ -937,7 +937,7 @@ The numerator is the difference between non-`NAN` field values. The denominator 
 ## NON_NEGATIVE_DERIVATIVE()
 Returns the non-negative rate of change for the values in a single [field](../concepts/glossary.html#field) in a [series](../concepts/glossary.html#series). InfluxDB calculates the difference between chronological non-`NAN` field values and converts those results into the rate of change per `unit`. The `unit` argument is optional and, if not specified, defaults to one second (`1s`).
 
-The basic `NON_NEGATIVE_DERVATIVE()` query:
+The basic `NON_NEGATIVE_DERIVATIVE()` query:
 ```sql
 SELECT NON_NEGATIVE_DERIVATIVE(<field_key>, [<unit>]) FROM <measurement_name> [WHERE <stuff>]
 ```
@@ -952,7 +952,7 @@ Valid time specifications for `unit` are:
 
 `NON_NEGATIVE_DERIVATIVE()` also works with a nested function coupled with a `GROUP BY time()` clause. For queries that include those options, InfluxDB first performs the aggregation, selection, or transformation across the time interval specified in the `GROUP BY time()` clause and then carries out the same procedure outlined above.
 
-The `NON_NEGATIVE_DERVATIVE()` query with an aggregation function and `GROUP BY time()` clause:
+The `NON_NEGATIVE_DERIVATIVE()` query with an aggregation function and `GROUP BY time()` clause:
 ```sql
 SELECT NON_NEGATIVE_DERIVATIVE(AGGREGATION_FUNCTION(<field_key>),[<unit>]) FROM <measurement_name> WHERE <stuff> GROUP BY time(<aggregation_interval>)
 ```
