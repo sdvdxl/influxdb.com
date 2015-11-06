@@ -12,6 +12,10 @@ A brief explanation of InfluxDB's core architecture useful for new beginners.
 
 A useful overview of the InfluxDB time series data structure and how it affects performance.
 
+## [Design Insights and Tradeoffs](/docs/v0.9/concepts/schema_and_data_layout.html)
+
+A brief treatment of some of the performance tradeoffs made during the design phase of InfluxDB 
+
 ## [HTTP API Endpoints](/docs/v0.9/concepts/api.html)
 
 The list of InfluxDB's HTTP API endpoints and the parameters they accept.
