@@ -72,7 +72,7 @@ The shard group returned from the metadata service should have shards in it and 
 
 Once we have the shard group we hash the measurement name and tagset and mod that against the number of shards to see which shard in the group the data point should be written to. Notice that this isn't a consistent hashing algorithm. The reason we're not bothering with consistent hashing is because once the shard group becomes cold for writes we don't need to worry about balancing those across a resized cluster. While getting more read scalability is as simple as copying the cold for write shards to other servers in the cluster.
 
-The key for the data is the measurement name, tagset, and nanosecond timestamp. An an example, let’s say that the shard exists on servers 2, 3, and 4:
+The key for the data is the measurement name, tagset, and nanosecond timestamp. As an example, let’s say that the shard exists on servers 2, 3, and 4:
 
 ![Cluster Write](/img/blog/write_3_owners.png)
 
