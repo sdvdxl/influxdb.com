@@ -485,7 +485,7 @@ time			               last
 CLI response:
 ```sh
 name: h2o_feet
-tags: location =    coyote_creek
+tags: location = coyote_creek
 time			               last
 ----			               ----
 1970-01-01T00:00:00Z	 3.235
