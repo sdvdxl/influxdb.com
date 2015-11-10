@@ -130,7 +130,7 @@ The collection of data in InfluxDB's data structure that share a measurement, ta
 Related entries: [field set](../concepts/glossary.html#field-set), [measurement](../concepts/glossary.html#measurement), [retention policy](../concepts/glossary.html#retention-policy-rp), [tag set](../concepts/glossary.html#tag-set)
 
 ## series cardinality
-The size of the set of all combinations of measurement and tag set within a given data set. For example, take measurement `mem_available` with tags `host` and `total_mem`.  If there are 35 different `host`s and 15 different `total_mem` values then series cardinality for that measurement is `35 * 15 = 525`. To calculate series cardinality for a database 
+The size of the set of all combinations of measurement and tag set within a given data set. For example, take measurement `mem_available` with tags `host` and `total_mem`.  If there are 35 different `host`s and 15 different `total_mem` values then series cardinality for that measurement is `35 * 15 = 525`. To calculate series cardinality for a database add the series cardinalities for the individual measurements together.
 
 Related entries: [tag set](../concepts/glossary.html#tag-set), [measurement](../concepts/glossary.html#measurement), [tag key](../concepts/glossary.html#tag-key)
 
