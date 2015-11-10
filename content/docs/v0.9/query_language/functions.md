@@ -27,14 +27,14 @@ The examples in this document use the same sample data as the [Data Exploration]
 # Aggregations
 
 ## COUNT()
-Returns the number of non-NULL values in a single [field](https://influxdb.com/docs/v0.9/concepts/glossary.html#field). 
+Returns the number of non-null values in a single [field](https://influxdb.com/docs/v0.9/concepts/glossary.html#field). 
 ```sql
 SELECT COUNT(<field_key>) FROM <measurement_name> [WHERE <stuff>] [GROUP BY <stuff>]
 ```
 
 Examples:
 
-* Count the number of non-NULL field values in the `water_level` field:
+* Count the number of non-null field values in the `water_level` field:
 ```sql
 > SELECT COUNT(water_level) FROM h2o_feet
 ```
@@ -49,7 +49,7 @@ time			               count
 
 > **Note:** InfluxDB often uses [epoch 0](https://en.wikipedia.org/wiki/Unix_time) (`1970-01-01T00:00:00Z`) as a null timestamp equivalent. If you request a query that has no timestamp to return, such as an aggregation function with an unbounded time range, InfluxDB returns epoch 0 as the timestamp.
 
-* Count the number of non-NULL field values in the `water_level` field at four-day intervals:
+* Count the number of non-null field values in the `water_level` field at four-day intervals:
 ```sql
 > SELECT COUNT(water_level) FROM h2o_feet WHERE time >= '2015-08-18T00:00:00Z' AND time < '2015-09-18T17:00:00Z' GROUP BY time(4d)
 ```
@@ -114,6 +114,8 @@ time			                distinct
 1970-01-01T00:00:00Z	  [below 3 feet between 3 and 6 feet between 6 and 9 feet]
 ```
 
+<dt> The returned timestamps mark the start of the relevant time interval for the query. See GitHub Issue [#4680](https://github.com/influxdb/influxdb/issues/4680) for more information. </dt>
+
 * Nest `DISTINCT()` in [`COUNT()`](../query_language/functions.html#count) to get the number of unique field values in `level description` grouped by the `location` tag:
 
 ```sql
@@ -123,13 +125,13 @@ time			                distinct
 CLI response:
 ```sh
 name: h2o_feet
-tags: location=coyote_creek
+tags: location = coyote_creek
 time			               count
 ----			               -----
 1970-01-01T00:00:00Z	 4
 
 name: h2o_feet
-tags: location=santa_monica
+tags: location = santa_monica
 time			               count
 ----			               -----
 1970-01-01T00:00:00Z	 3
@@ -218,17 +220,19 @@ time			               median
 CLI response:
 ```sh
 name: h2o_feet
-tags: location=coyote_creek
+tags: location = coyote_creek
 time			               median
 ----			               ------
 2015-08-18T00:00:00Z	 7.8245
 
 name: h2o_feet
-tags: location=santa_monica
+tags: location = santa_monica
 time			               median
 ----			               ------
 2015-08-18T00:00:00Z	 2.0575
 ```
+
+<dt> The returned timestamps mark the start of the relevant time interval for the query. See GitHub Issue [#4680](https://github.com/influxdb/influxdb/issues/4680) for more information. </dt>
 
 ## SUM()
 Returns the sum of the all values in a single [field](../concepts/glossary.html#field). The field must be of type int64 or float64.
@@ -278,6 +282,8 @@ Returns the smallest `N` values in a single [field](../concepts/glossary.html#fi
 SELECT BOTTOM(<field_key>[,<tag_keys>],<N>)[,<tag_keys>] FROM <measurement_name> [WHERE <stuff>] [GROUP BY <stuff>]
 ```
 
+> **Note:** `BOTTOM()` is available in InfluxDB versions 0.9.5+.
+
 Examples:
 
 * Select the smallest three values of `water_level`:
@@ -325,12 +331,12 @@ time			               bottom	 location
 
 The output shows the bottom values of `water_level` for each tag value of `location` (`santa_monica` and `coyote_creek`).
 
-> **Note:** It's useful to see the results of the same query where `N` equals `3` and `N` equals `1`.
+> **Note:** Queries with the syntax `SELECT BOTTOM(<field_key>,<tag_key>,<N>)`, where the tag has `X` distinct values, return `N` or `X` field values, whichever is smaller, and each returned point has a unique tag value. To demonstrate this behavior, see the results of the above example query where `N` equals `3` and `N` equals `1`.
 
 > * `N` = `3`
 
 > ```sql
-> SELECT BOTTOM(water_level,location,3) FROM h2o_feet
+> > SELECT BOTTOM(water_level,location,3) FROM h2o_feet
 > ```
 
 > CLI response:
@@ -348,7 +354,7 @@ time			         bottom	 location
 > * `N` = `1`
 
 > ```sql
-> SELECT BOTTOM(water_level,location,1) FROM h2o_feet
+> > SELECT BOTTOM(water_level,location,1) FROM h2o_feet
 > ```
 
 > CLI response:
@@ -361,6 +367,31 @@ time			         bottom	 location
 > ```
 
 > InfluxDB compares the bottom values of `water_level` within each tag value of `location` and returns the smaller value of `water_level`.
+
+* Select the smallest two values of `water_level` between August 18, 2015 at 4:00:00 and August 18, 2015 at 4:18:00 for every tag value of `location`:
+
+```sql
+> SELECT BOTTOM(water_level,2) FROM h2o_feet WHERE time >= '2015-08-18T04:00:00Z' AND time < '2015-08-18T04:24:00Z' GROUP BY location
+```
+
+CLI response:
+```sh
+name: h2o_feet
+tags: location = coyote_creek
+time			               bottom
+----			               ------
+2015-08-18T04:00:00Z	 2.625
+2015-08-18T04:00:00Z	 2.717
+
+name: h2o_feet
+tags: location = santa_monica
+time			               bottom
+----			               ------
+2015-08-18T04:00:00Z	 3.911
+2015-08-18T04:00:00Z	 4.055
+```
+
+<dt> The returned timestamps mark the start of the relevant time interval for the query. See GitHub Issue [#4680](https://github.com/influxdb/influxdb/issues/4680) for more information. </dt>
 
 * Select the smallest two values of `water_level` between August 18, 2015 at 4:00:00 and August 18, 2015 at 4:18:00 in `santa_monica`:
 ```sql
@@ -421,6 +452,8 @@ time			               first
 1970-01-01T00:00:00Z	 2.064
 ```
 
+<dt> The returned timestamps mark the start of the relevant time interval for the query. See GitHub Issue [#4680](https://github.com/influxdb/influxdb/issues/4680) for more information. </dt>
+
 ## LAST()
 Returns the newest value (determined by the timestamp) of a single [field](../concepts/glossary.html#field).
 ```sql
@@ -463,6 +496,10 @@ time			               last
 ----			               ----
 1970-01-01T00:00:00Z	 4.938
 ```
+
+<dt> The returned timestamps mark the start of the relevant time interval for the query. See GitHub Issue [#4680](https://github.com/influxdb/influxdb/issues/4680) for more information. </dt>
+
+> **Note:** `LAST()` does not return points that occur after `now()` unless the `WHERE` clause specifies that time range. See [Frequently Encountered Issues](../troubleshooting/frequently_encountered_issues.html#querying-after-now) for how to query after `now()`.
 
 ## MAX()
 Returns the highest value in a single [field](../concepts/glossary.html#field). The field must be of type int64 or float64.
@@ -610,15 +647,19 @@ time			               percentile
 1970-01-01T00:00:00Z	 7.205
 ```
 
-Notice that `PERCENTILE(<field_key>,100)` is equivalent to `MAX(<field_key>)`. `PERCENTILE(<field_key>,0)` is equivalent to `MIN(<field_key)`.
+Notice that `PERCENTILE(<field_key>,100)` is equivalent to `MAX(<field_key>)`.
 
-> **Note**: PERCENTILE(field_key, 50) is nearly equivalent to MEDIAN(), except MEDIAN() returns the average of the two middle values if the field contains an even number of points.
+<dt> Currently, `PERCENTILE(<field_key>,0)` is not equivalent to `MIN(<field_key>)`. See GitHub Issue [#4724](https://github.com/influxdb/influxdb/issues/4724) for more information. </dt>
+
+> **Note**: `PERCENTILE(<field_key>, 50)` is nearly equivalent to `MEDIAN()`, except `MEDIAN()` returns the average of the two middle values if the field contains an even number of points.
 
 ## TOP()
 Returns the largest `N` values in a single [field](../concepts/glossary.html#field). The field type must be int64 or float64.
 ```sql
 SELECT TOP(<field_key>[,<tag_keys>],<N>)[,<tag_keys>] FROM <measurement_name> [WHERE <stuff>] [GROUP BY <stuff>]
 ```
+
+> **Note:** `TOP()` is available in InfluxDB versions 0.9.5+.
 
 Examples:
 
@@ -667,12 +708,12 @@ time			               top	   location
 
 The output shows the top values of `water_level` for each tag value of `location` (`santa_monica` and `coyote_creek`).
 
-> **Note:** It's useful to see the results of the same query where `N` equals `3` and `N` equals `1`.
+> **Note:** Queries with the syntax `SELECT TOP(<field_key>,<tag_key>,<N>)`, where the tag has `X` distinct values, return `N` or `X` field values, whichever is smaller, and each returned point has a unique tag value. To demonstrate this behavior, see the results of the above example query where `N` equals `3` and `N` equals `1`.
 
 > * `N` = `3`
 
 > ```sql
-> SELECT TOP(water_level,location,3) FROM h2o_feet
+> > SELECT TOP(water_level,location,3) FROM h2o_feet
 > ```
 
 > CLI response:
@@ -690,7 +731,7 @@ time			         top	 location
 > * `N` = `1`
 
 > ```sql
-> SELECT TOP(water_level,location,1) FROM h2o_feet
+> > SELECT TOP(water_level,location,1) FROM h2o_feet
 > ```
 
 > CLI response:
@@ -703,6 +744,30 @@ time			         top	 location
 > ```
 
 > InfluxDB compares the top values of `water_level` within each tag value of `location` and returns the larger value of `water_level`.
+
+* Select the largest two values of `water_level` between August 18, 2015 at 4:00:00 and August 18, 2015 at 4:18:00 for every tag value of `location`:
+```sql
+> SELECT TOP(water_level,2) FROM h2o_feet WHERE time >= '2015-08-18T04:00:00Z' AND time < '2015-08-18T04:24:00Z' GROUP BY location
+```
+
+CLI response:
+```sh
+name: h2o_feet
+tags: location = coyote_creek
+time			               top
+----			               ---
+2015-08-18T04:00:00Z	 2.943
+2015-08-18T04:00:00Z	 2.831
+
+name: h2o_feet
+tags: location = santa_monica
+time			               top
+----			               ---
+2015-08-18T04:00:00Z	 4.124
+2015-08-18T04:00:00Z	 4.055
+```
+
+<dt> The returned timestamps mark the start of the relevant time interval for the query. See GitHub Issue [#4680](https://github.com/influxdb/influxdb/issues/4680) for more information. </dt>
 
 * Select the largest two values of `water_level` between August 18, 2015 at 4:00:00 and August 18, 2015 at 4:18:00 in `santa_monica`:
 ```sql
@@ -728,7 +793,7 @@ Note that in the raw data, `water_level` equals `4.055` at `2015-08-18T04:06:00Z
 <dt> See GitHub Issue [#3691](https://github.com/influxdb/influxdb/issues/3691) for more information. </dt>
 
 ## DERIVATIVE()
-Returns the rate of change for the values in a single [field](../concepts/glossary.html#field) in a [series](../concepts/glossary.html#series). InfluxDB calculates the difference between chronological non-`NAN` field values and converts those results into the rate of change per `unit`. The `unit` argument is optional and, if not specified, defaults to one second (`1s`).
+Returns the rate of change for the values in a single [field](../concepts/glossary.html#field) in a [series](../concepts/glossary.html#series). InfluxDB calculates the difference between chronological field values and converts those results into the rate of change per `unit`. The `unit` argument is optional and, if not specified, defaults to one second (`1s`).
 
 The basic `DERIVATIVE()` query:
 ```sql
@@ -791,7 +856,7 @@ Notice that the first field value (`0.00014`) in the `derivative` column is **no
 (2.116 - 2.064) / (360s / 1s)
 ```
 
-The numerator is the difference between non-`NAN` field values. The denominator is the difference between the relevant timestamps in seconds (`2015-08-18T00:06:00Z` - `2015-08-18T00:00:00Z` = `360s`) divided by `unit` (`1s`). This returns the rate of change per second from `2015-08-18T00:00:00Z` to `2015-08-18T00:06:00Z`.
+The numerator is the difference between chronological field values. The denominator is the difference between the relevant timestamps in seconds (`2015-08-18T00:06:00Z` - `2015-08-18T00:00:00Z` = `360s`) divided by `unit` (`1s`). This returns the rate of change per second from `2015-08-18T00:00:00Z` to `2015-08-18T00:06:00Z`.
 
 * `DERIVATIVE()` with two arguments:  
 Calculate the rate of change per six minutes
@@ -819,7 +884,7 @@ The calculation of the first value in the `derivative` column looks like this:
 (2.116 - 2.064) / (6m / 6m)
 ```
 
-The numerator is the difference between non-`NAN` field values. The denominator is the difference between the relevant timestamps in minutes (`2015-08-18T00:06:00Z` - `2015-08-18T00:00:00Z` = `6m`) divided by `unit` (`6m`). This returns the rate of change per six minutes from `2015-08-18T00:00:00Z` to `2015-08-18T00:06:00Z`.
+The numerator is the difference between chronological field values. The denominator is the difference between the relevant timestamps in minutes (`2015-08-18T00:06:00Z` - `2015-08-18T00:00:00Z` = `6m`) divided by `unit` (`6m`). This returns the rate of change per six minutes from `2015-08-18T00:00:00Z` to `2015-08-18T00:06:00Z`.
 
 * `DERIVATIVE()` with two arguments:  
 Calculate the rate of change per 12 minutes
@@ -847,9 +912,9 @@ The calculation of the first value in the `derivative` column looks like this:
 (2.116 - 2.064 / (6m / 12m)
 ```
 
-The numerator is the difference between non-`NAN` field values. The denominator is the difference between the relevant timestamps in minutes (`2015-08-18T00:06:00Z` - `2015-08-18T00:00:00Z` = `6m`) divided by `unit` (`12m`). This returns the rate of change per 12 minutes from `2015-08-18T00:00:00Z` to `2015-08-18T00:06:00Z`.
+The numerator is the difference between chronological field values. The denominator is the difference between the relevant timestamps in minutes (`2015-08-18T00:06:00Z` - `2015-08-18T00:00:00Z` = `6m`) divided by `unit` (`12m`). This returns the rate of change per 12 minutes from `2015-08-18T00:00:00Z` to `2015-08-18T00:06:00Z`.
 
-> **Note:** Specifying `12m` as the `unit` **does not** mean that InfluxDB calculates the rate of change for every 12 minute interval of data. Instead, InfluxDB calculates the rate of change per 12 minutes for each interval of non-`NAN` data.
+> **Note:** Specifying `12m` as the `unit` **does not** mean that InfluxDB calculates the rate of change for every 12 minute interval of data. Instead, InfluxDB calculates the rate of change per 12 minutes for each interval of valid data.
 
 * `DERIVATIVE()` with two arguments, a function, and a `GROUP BY time()` clause:  
 Select the `MAX()` value at 12 minute intervals and calculate the rate of change per 12 minutes
@@ -884,7 +949,7 @@ Second, InfluxDB calculates the rate of change per `unit` (`12m`) to get the res
 (2.126 - 2.116) / (12m / 12m)
 ```
 
-The numerator is the difference between non-`NAN` field values. The denominator is the difference between the relevant timestamps in minutes (`2015-08-18T00:12:00Z` - `2015-08-18T00:00:00Z` = `12m`) divided by `unit` (`12m`). This returns rate of change per 12 minutes for the aggregated data from `2015-08-18T00:00:00Z` to `2015-08-18T00:12:00Z`.
+The numerator is the difference between chronological field values. The denominator is the difference between the relevant timestamps in minutes (`2015-08-18T00:12:00Z` - `2015-08-18T00:00:00Z` = `12m`) divided by `unit` (`12m`). This returns rate of change per 12 minutes for the aggregated data from `2015-08-18T00:00:00Z` to `2015-08-18T00:12:00Z`.
 
 * `DERIVATIVE()` with two arguments, a function, and a `GROUP BY time()` clause:  
 Aggregate the data to 18 minute intervals and calculate the rate of change per six minutes
@@ -917,7 +982,7 @@ Second, InfluxDB calculates the rate of change per `unit` (`6m`) to get the resu
 (6.218 - 6.208) / (18m / 6m)
 ```
 
-The numerator is the difference between non-`NAN` field values. The denominator is the difference between the relevant timestamps in minutes (`2015-08-18T00:18:00Z` - `2015-08-18T00:00:00Z` = `18m`) divided by `unit` (`6m`). This returns the rate of change per six minutes for the aggregated data from `2015-08-18T00:00:00Z` to `2015-08-18T00:18:00Z`.
+The numerator is the difference between chronological field values. The denominator is the difference between the relevant timestamps in minutes (`2015-08-18T00:18:00Z` - `2015-08-18T00:00:00Z` = `18m`) divided by `unit` (`6m`). This returns the rate of change per six minutes for the aggregated data from `2015-08-18T00:00:00Z` to `2015-08-18T00:18:00Z`.
 
 ## DIFFERENCE()
 `DIFFERENCE()` is not yet functional. 
@@ -935,7 +1000,7 @@ The numerator is the difference between non-`NAN` field values. The denominator 
 <dt> See GitHub Issue [#3674](https://github.com/influxdb/influxdb/issues/3674) for more information. </dt>
 
 ## NON_NEGATIVE_DERIVATIVE()
-Returns the non-negative rate of change for the values in a single [field](../concepts/glossary.html#field) in a [series](../concepts/glossary.html#series). InfluxDB calculates the difference between chronological non-`NAN` field values and converts those results into the rate of change per `unit`. The `unit` argument is optional and, if not specified, defaults to one second (`1s`).
+Returns the non-negative rate of change for the values in a single [field](../concepts/glossary.html#field) in a [series](../concepts/glossary.html#series). InfluxDB calculates the difference between chronological field values and converts those results into the rate of change per `unit`. The `unit` argument is optional and, if not specified, defaults to one second (`1s`).
 
 The basic `NON_NEGATIVE_DERIVATIVE()` query:
 ```sql
