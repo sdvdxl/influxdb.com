@@ -42,7 +42,7 @@ The examples below query data using [InfluxDB's Command Line Interface (CLI)](..
 <br>
 This document uses publicly available data from the [National Oceanic and Atmospheric Administration's (NOAA) Center for Operational Oceanographic Products and Services](http://tidesandcurrents.noaa.gov/stations.html?type=Water+Levels). The data include water levels (ft) collected every six seconds at two stations (Santa Monica, CA (ID 9410840) and Coyote Creek, CA (ID 9414575)) over the period from August 18, 2015 through September 18, 2015.
 
-A subsample of the data in InfluxDB: 
+A subsample of the data in the measurement `h2o_feet`: 
 ```
 name: h2o_feet
 --------------
@@ -62,6 +62,8 @@ time			                 level description	      location	       water_level
 The [series](../concepts/glossary.html#series) are made up of the [measurement](../concepts/glossary.html#measurement) `h2o_feet` and the [tag key](../concepts/glossary.html#tag-key) `location` with the [tag values](../concepts/glossary.html#tag-value) `santa_monica` and `coyote_creek`. There are two [fields](../concepts/glossary.html#field): `water_level` which stores floats and `level description` which stores strings. All of the data are in the `NOAA_water_database` database.
 
 > **Disclaimer:** The `level description` field isn't part of the original NOAA data - we snuck it in there for the sake of having a field key with a special character and string [field values](../concepts/glossary.html#field-value).
+
+If you'd like to follow along with the queries in this document, see [Sample Data](../sample_data/data_download.html) for how to download and write the data to InfluxDB.
 
 ## The SELECT statement and the `WHERE` clause
 InfluxQL's `SELECT` statement follows the form of an SQL `SELECT` statement where the `WHERE` clause is optional:

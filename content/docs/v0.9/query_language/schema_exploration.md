@@ -18,6 +18,8 @@ The examples below query data using [InfluxDB's Command Line Interface (CLI)](..
 
 This document uses the same sample data as the [Data Exploration](../query_language/data_exploration.html) page. Note that some of the measurements and data in the database are fictional - they're meant to make the next sections more explanatory and (hopefully) more interesting. The next sections will get you acquainted with the schema of the sample data in the `NOAA_water_database` database.
 
+If you’d like to follow along with the queries in this document, see [Sample Data](../sample_data/data_download.html) for how to download and write the data to InfluxDB.
+
 ## See all databases with `SHOW DATABASES`
 Get a list of all the databases in your system by entering:
 ```sql
