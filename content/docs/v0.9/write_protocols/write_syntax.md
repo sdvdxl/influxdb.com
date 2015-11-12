@@ -54,7 +54,7 @@ Tag keys and values, and field keys and values must be separated by the equals s
 
 ### Escaping Characters
 
-If a measurement, tag key, tag value, or field key contains a space ` `, comma `,`, or an equals sign `=` it must be escaped using the backslash character `\`. Backslash characters do not need to be escaped.
+If a tag key, tag value, or field key contains a space ` `, comma `,`, or an equals sign `=` it must be escaped using the backslash character `\`. Backslash characters do not need to be escaped. Commas `,` and spaces ` ` will also need to be escaped for measurements, though equals signs `=` do not.
 
 ### Comments
 
