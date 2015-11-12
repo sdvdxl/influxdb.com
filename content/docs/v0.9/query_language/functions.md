@@ -22,7 +22,7 @@ The examples below query data using [InfluxDB's Command Line Interface (CLI)](..
 
 **Sample data**
 
-The examples in this document use the same sample data as the [Data Exploration](../query_language/data_exploration.html) page.
+The examples in this document use the same sample data as the [Data Exploration](../query_language/data_exploration.html) page. The data are described and are available for download on the [Sample Data](../sample_data/data_download.html) page.
 
 # Aggregations
 
