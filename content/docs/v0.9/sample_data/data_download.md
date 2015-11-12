@@ -12,12 +12,12 @@ curl -G http://localhost:8086/query --data-urlencode "q=CREATE DATABASE NOAA_wat
 
 Download the text file that contains the data in [line protocol](https://influxdb.com/docs/v0.9/write_protocols/line.html) format:
 ```
-curl https://s3-us-west-1.amazonaws.com/noaa.water.database.0.9/NOAA_data.txt > NOAA_data1.txt
+curl https://s3-us-west-1.amazonaws.com/noaa.water.database.0.9/NOAA_data.txt > NOAA_data.txt
 ```
 
 Write the data to InfluxDB:
 ```
-curl -i -XPOST "http://localhost:8086/write?db=NOAA_water_database&precision=s" --data-binary @NOAA_data1.txt
+curl -i -XPOST "http://localhost:8086/write?db=NOAA_water_database&precision=s" --data-binary @NOAA_data.txt
 ```
 
 ### Test queries
@@ -72,8 +72,8 @@ time			                 level description	      location	       water_level
 ```
 
 ### Data sources and things to note
-We use publicly available data from the [National Oceanic and Atmospheric Administration’s (NOAA) Center for Operational Oceanographic Products and Services](http://tidesandcurrents.noaa.gov/stations.html?type=Water+Levels). The data include water levels (ft) collected every six seconds at two stations (Santa Monica, CA (ID 9410840) and Coyote Creek, CA (ID 9414575)) over the period from August 18, 2015 through September 18, 2015.
+The sample data are publicly available data from the [National Oceanic and Atmospheric Administration’s (NOAA) Center for Operational Oceanographic Products and Services](http://tidesandcurrents.noaa.gov/stations.html?type=Water+Levels). The data include water levels (ft) collected every six seconds at two stations (Santa Monica, CA (ID 9410840) and Coyote Creek, CA (ID 9414575)) over the period from August 18, 2015 through September 18, 2015.
 
-Note that the measurements `average_temperature`, `h2o_pH`, `h2o_quality`, and `h2o_temperature` contain fictional data. Those measurements are meant to make more explanatory the documentation in [Schema Exploration](../query_language/schema_exploration.html). 
+Note that the measurements `average_temperature`, `h2o_pH`, `h2o_quality`, and `h2o_temperature` contain fictional data. Those measurements serve to illuminate query functionality in [Schema Exploration](../query_language/schema_exploration.html). 
 
 The `h2o_feet` measurement is the only measurement that contains the NOAA data. Please note that the `level description` field isn't part of the original NOAA data - we snuck it in there for the sake of having a field key with a special character and string [field values](../concepts/glossary.html#field-value).
