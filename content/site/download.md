@@ -57,6 +57,8 @@ Release candidates are made available for testing one week prior to release of t
 		wget https://s3.amazonaws.com/influxdb/influxdb_0.9.5-rc2_amd64.deb
 		sudo dpkg -i influxdb_0.9.5-rc2_amd64.deb
 
+MD5 checksum: `49bc8a8a9dc6f42fafb2185800c0c678`
+
 #### RedHat & CentOS
 
 - 64-bit system install instructions
@@ -64,12 +66,16 @@ Release candidates are made available for testing one week prior to release of t
 		wget https://s3.amazonaws.com/influxdb/influxdb-0.9.5-0.1.rc2.x86_64.rpm
 		sudo yum localinstall influxdb-0.9.5-0.1.rc2.x86_64.rpm
 
+MD5 checksum: `93046678b393f7a05579930eecd289b4`
+
 #### Standalone Binary
 
 - 64-bit system download & decompress instructions
 
 		wget https://s3.amazonaws.com/influxdb/influxdb_0.9.5-rc2_x86_64.tar.gz
 		tar xvfz influxdb_0.9.5-rc2_x86_64.tar.gz
+
+MD5 checksum: `cd3f62f617126728bd76c297c4ad2cd8`
 
 ## Version 0.9.6 (Nightly)
 Nightly builds are created once-a-day, at midnight San Francisco, CA time, using the top-of-tree of [master](https://github.com/influxdb/influxdb/tree/master) source code. These builds will include all the latest fixes, but also undergo only basic testing.
