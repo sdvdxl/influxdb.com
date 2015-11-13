@@ -5,7 +5,7 @@ date: 2015-11-13
 publishdate: 2015-11-13
 ---
 
-Today we're releasing InfluxDB v0.9.5-rc2. For the last 4 weeks, we were blocking this release based on finishing our work on the new [Time Strucutred Merge Tree storage engine](/blog/2015/10/07/the_new_influxdb_storage_engine_a_time_structured_merge_tree.html). While the work on TSM isn't completed yet (and thus not included in this release), there are 32 features and 75 bug fixes in the change log waiting for a release. We decided that it would be best to release these improvements for our current users and keep TSM in the development stages. Read on for more details on what's in this release and what it means for you, the current state of the new storage engine, future work on clustering and the query engine, and our release cadence for the next 6 months.
+Today we're releasing InfluxDB v0.9.5-rc2. For the last 4 weeks, we were blocking this release based on finishing our work on the new [Time Structured Merge Tree storage engine](/blog/2015/10/07/the_new_influxdb_storage_engine_a_time_structured_merge_tree.html). While the work on TSM isn't completed yet (and thus not included in this release), there are 32 features and 75 bug fixes in the change log waiting for a release. We decided that it would be best to release these improvements for our current users and keep TSM in the development stages. Read on for more details on what's in this release and what it means for you, the current state of the new storage engine, future work on clustering and the query engine, and our release cadence for the next 6 months.
 
 ### What's new in this release?
 
@@ -17,7 +17,7 @@ We've also reverted this release to be built with Go 1.4.2. We had a few issues 
 
 ### What this release means for you
 
-If you're currently running a version 0f 0.9, you should probably upgrade. If you're one of the users with higher write throughput that is waiting for the new storage engine, sit tight and wait for the next nightly build that is ready for additional testing. We'll make an announcement on this blog to let you know that we're ready for another round of testing on the TSM engine.
+If you're currently running a version of 0.9, you should probably upgrade. If you're one of the users with higher write throughput that is waiting for the new storage engine, sit tight and wait for the next nightly build that is ready for additional testing. We'll make an announcement on this blog to let you know that we're ready for another round of testing on the TSM engine.
 
 If you're a user of 0.8 looking to upgrade, you could do so if your throughput is on the low end, or you may want to wait until the first version that has the TSM storage engine ready. From an API standpoint, we've been stable since 0.9.3 and have no breaking changes planned so you can start work on the migration path with this release.
 
@@ -43,6 +43,6 @@ Releases after 0.9.7 will be on a 2 month cycle. Every 2 months we'll cut a new 
 
 ### Want to give it a try?
 
-You can <a href="https://influxdb.com/download/" target="_">download InfluxDB</a> or sign up for a <a href="https://customers.influxdb.com/" target="_">free trial of a manged InfluxDB server</a> in the cloud. The managed hosting platform is still running 0.9.4.2, but will be upgraded to 0.9.5 on release.
+You can <a href="https://influxdb.com/download/" target="_">download InfluxDB</a> or sign up for a <a href="https://customers.influxdb.com/" target="_">free trial of a managed InfluxDB server</a> in the cloud. The managed hosting platform is still running 0.9.4.2, but will be upgraded to 0.9.5 on release.
 
-We also offer expert professional services for help with InfluxDB, feature requests, performance tuning, and advanced configurations. Contact us at [contact@influxdb.com](mailto:support@influxdb.com) to learn more about how we can help accelerate your project.
+We also offer expert professional services for help with InfluxDB, feature requests, performance tuning, and advanced configurations. Contact us at [contact@influxdb.com](mailto:contact@influxdb.com) to learn more about how we can help accelerate your project.
