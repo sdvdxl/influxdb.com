@@ -61,8 +61,8 @@ Release candidates are made available for testing one week prior to release of t
 
 - 64-bit system install instructions
 
-		wget https://s3.amazonaws.com/influxdb/influxdb-0.9.5-0.2.rc2.x86_64.rpm
-		sudo yum localinstall influxdb-0.9.5-0.2.rc2.x86_64.rpm
+		wget https://s3.amazonaws.com/influxdb/influxdb-0.9.5-0.1.rc2.x86_64.rpm
+		sudo yum localinstall influxdb-0.9.5-0.1.rc2.x86_64.rpm
 
 #### Standalone Binary
 
