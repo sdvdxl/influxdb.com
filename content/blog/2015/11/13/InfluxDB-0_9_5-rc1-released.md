@@ -9,7 +9,7 @@ Today we're releasing InfluxDB v0.9.5-rc2. For the last 4 weeks, we were blockin
 
 ### What's new in this release?
 
-This release has 32 features and 75 bug fixes. Many of the bug fixes are related to clustering, hinted hand-off, and other stability improvements. There were a number of bugs that would panic and crash the server that have been resolved.
+This release has 32 features and 75 bug fixes. Many of the bug fixes are related to clustering, hinted hand-off, and other stability improvements. A number of bugs that would panic and crash the server have been resolved.
 
 On the feature side of things, we've added functionality to drop servers (both Raft and non-raft) which is necessary for any node that leaves the cluster and isn't coming back. Another big feature is the addition of a `SUBSCRIBE` query to have all data coming into InfluxDB sent to another service via UDP. You can read see the [details about subscribe here](https://github.com/influxdb/influxdb/pull/4375).
 
