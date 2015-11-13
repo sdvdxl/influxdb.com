@@ -89,10 +89,9 @@ Now we will query for the data we just wrote.
 ```sql
 > SELECT * FROM cpu
 name: cpu
-tags: host=serverA, region=us-west
-time                value
-----                -----
-2015-06-11T16:02:54.830398489Z  0.64
+---------
+time		    	                     host     	region   value
+2015-10-21T19:28:07.580664347Z  	serverA	  us_west	0.64
 
 > 
 ```
@@ -111,14 +110,13 @@ Let's try storing a different type of data -- sensor data. Enter the following d
 All fields are returned on query:
 
 ```sql
-> select * from temperature
+> SELECT * FROM temperature
 name: temperature
-tags: machine=unit42, type=assembly
-time                external    internal
-----                --------    --------
-2015-06-11T16:04:52.653752331Z  25      37
+-----------------
+time		                        	 external	  internal	machine	type
+2015-10-21T19:28:08.385013942Z  25	        	37     		unit42  assembly
 
->
+> 
 ```
 
 InfluxDB supports a sophisticated query language, allowing many different types of queries. For example:
@@ -163,14 +161,4 @@ _key            TAG1  Tag1  tag1
 casesensitive             
 casesensitive,Tag1=key          key 
 casesensitive,TAG1=key,tag1=key,Tag1=key  key key key
-```
-
-```sql
-> select * from casesensitive
-name: casesensitive
-tags: TAG1=, Tag1=, tag1=
-time        VALUE Value value
-----        ----- ----- -----
-2015-06-12T23:08:54.80898266Z     1
-2015-06-12T23:10:28.604159664Z  3 2 1
 ```
