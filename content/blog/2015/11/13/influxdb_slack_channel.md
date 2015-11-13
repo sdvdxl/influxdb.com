@@ -10,7 +10,7 @@ With the recent blog on [contributing to InfluxDB](https://influxdb.com/blog/201
 
 ## Why not create your own community slack?
 
-The Gopher Slack community is very vibrant.  Since InfluxDB is a Go project, it makes sense to stay within that community.  It also allows developers who want to learn Go as well as contribute to projects like InfluxDB the perfect ecosystem to ask questions about both Go and InfluxDB.
+The Gopher Slack community is very vibrant.  Since InfluxDB is a Go project, it makes sense to stay within that community.  It also allows developers who want to learn Go as well as contribute to projects like InfluxDB, making it the perfect ecosystem to ask questions about both Go and InfluxDB.
 
 ## How to join.
 
