@@ -45,4 +45,4 @@ Releases after 0.9.7 will be on a 2 month cycle. Every 2 months we'll cut a new 
 
 You can <a href="https://influxdb.com/download/" target="_">download InfluxDB</a> or sign up for a <a href="https://customers.influxdb.com/" target="_">free trial of a manged InfluxDB server</a> in the cloud. The managed hosting platform is still running 0.9.4.2, but will be upgraded to 0.9.5 on release.
 
-We also offer expert professional services for help with InfluxDB, feature requests, performance tuning, and advanced configurations. Contact us at [support@influxdb.com](mailto:support@influxdb.com) to learn more about how we can help accelerate your project.
+We also offer expert professional services for help with InfluxDB, feature requests, performance tuning, and advanced configurations. Contact us at [contact@influxdb.com](mailto:support@influxdb.com) to learn more about how we can help accelerate your project.
