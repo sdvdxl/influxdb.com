@@ -403,7 +403,7 @@ This section controls the listeners for InfluxDB line protocol data via UDP. See
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The input will flush at least this often even if it hasn't reached the configured batch-size.
 
 ## [continuous_queries]
-This section controls how [continuous queries (CQs)](../concepts/glossary.html#continuous-query-cq) run within InfluxDB.
+This section controls how [continuous queries (CQs)](../concepts/glossary.html#continuous-query-cq) run within InfluxDB. CQs are automated batches of queries that execute over recent time intervals. InfluxDB executes one auto-generated query per `GROUP BY time()` interval.
 
 **log-enabled = true**  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set to `false` to disable logging for CQ events.
@@ -411,21 +411,17 @@ This section controls how [continuous queries (CQs)](../concepts/glossary.html#c
 **enabled = true**  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set to `false` to disable CQs.
 
-*When InfluxDB executes a CQ, it computes the CQ for the current time interval and it recomputes the CQ for previous time intervals. The next two options control the number of previous time intervals that InfluxDB recomputes.*
-
 **recompute-previous-n = 2**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The number of previous intervals that InfluxDB recomputes if `(recompute-previous-n * ɣ) <  recompute-no-older-than`, where `ɣ` is the  `GROUP BY time()` interval in the CQ specified in the same units as `recompute-no-older-than`.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The upper bound on the number of previous interval queries that InfluxDB executes per CQ batch.
 
 **recompute-no-older-than = "10m0s"**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The maximum time over which InfluxDB recomputes results if `(recompute-previous-n * ɣ) > recompute-no-older-than`, where `ɣ` is the  `GROUP BY time()` interval in the CQ specified in the same units as `recompute-no-older-than`.
-
-*The next two options control the rate at which InfluxDB computes CQs.* 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;InfluxDB does not resample points with timestamps that are less than `now()` - `recompute-no-older-than`.
 
 **compute-runs-per-interval = 10**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;InfluxDB executes the CQ at `(ɣ / compute-runs-per-interval)` if `(ɣ / compute-runs-per-interval) > compute-no-more-than`, where `ɣ` is the  `GROUP BY time()` interval in the CQ specified in the same units as `compute-no-more-than`.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The maximum number of generated queries per `GROUP BY time()` interval. The number of generated queries can be lower; this depends on the `GROUP BY time()` interval in the CQ and `compute-no-more-than`.
 
 **compute-no-more-than = "2m0s"**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;InfluxDB executes the CQ at `compute-no-more-than` if `(ɣ / compute-runs-per-interval) < compute-no-more-than`, where `ɣ` is the  `GROUP BY time()` interval in the CQ specified in the same units as `compute-no-more-than`. This is the minimum rate at which InfluxDB executes a CQ.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The maximum frequency of CQ batch execution. This varies per CQ.
 
 
 
