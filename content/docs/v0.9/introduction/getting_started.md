@@ -11,8 +11,8 @@ If you've installed InfluxDB locally, the `influx` command should be available v
 
 ```sh
 $ influx
-Connected to http://localhost:8086 version 0.9.4
-InfluxDB shell 0.9.4
+Connected to http://localhost:8086 version 0.9
+InfluxDB shell 0.9
 > 
 ```
 
@@ -38,11 +38,13 @@ The `SHOW DATABASES` statement can be used to show all existing databases.
 name: databases
 ---------------
 name
+_internal
 mydb
 
 > 
 ```
 
+> **Note:** The `_internal` database is created and used by InfluxDB to store internal runtime metrics. Check it out later to get an interesting look at how InfluxDB is performing under the hood.
 
 Unlike `SHOW DATABASES`, most InfluxQL statements must operate against a specific database. You may explicitly name the database with each query, but the CLI provides a convenient statement, `USE <db-name>`, which will automatically set the database for all future requests.
 
@@ -129,36 +131,5 @@ InfluxDB supports a sophisticated query language, allowing many different types 
 > SELECT * FROM cpu_load_short WHERE value > 0.9
 ```
 
-This is all you need to know to write data into InfluxDB and query it back. Of course, to write significant amounts of data you will want to access the HTTP API directly, or use one of the many client libraries.
-
-> **Note:** All identifiers are case-sensitive
-
-```sql
-> show databases
-name: databases
----------------
-name
-mydb
-MyDb
-MYDB
-```
-
-```sql
-> show series
-name: CaseSensitive
--------------------
-_key            TAG1  Tag1  tag1
-CaseSensitive             
-CaseSensitive,Tag1=key          key 
-CaseSensitive,tag1=key            key
-CaseSensitive,TAG1=key        key   
-CaseSensitive,TAG1=key,tag1=key,Tag1=key  key key key
-
-
-name: casesensitive
--------------------
-_key            TAG1  Tag1  tag1
-casesensitive             
-casesensitive,Tag1=key          key 
-casesensitive,TAG1=key,tag1=key,Tag1=key  key key key
-```
+This is all you need to know to write data into InfluxDB and query it back. To learn more about the InfluxDB write protocol, check out the guide on [Writing Data](https://influxdb.com/docs/v0.9/guides/writing_data.html). To futher explore the query language, check out the guide on [Querying Data](https://influxdb.com/docs/v0.9/guides/querying_data.html). For more information on InfluxDB concepts, check out the [Key Concepts]
+(https://influxdb.com/docs/v0.9/concepts/key_concepts.html) page.
