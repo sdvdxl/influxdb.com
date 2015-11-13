@@ -48,7 +48,7 @@ MD5 checksum: `6abb3d5df9b69aeb9bae37d0889bf67a`
 MD5 checksum: `8c6c0e198876772b40c036a96a94ba7e`
 
 ## Version 0.9.5 (Release Candidate 2)
-Release candidates are made available for testing one week prior to release of the stable point release.
+Release candidates are made available for testing one week prior to release of the stable point release. The release candidates are built from the [0.9.5 branch](https://github.com/influxdb/influxdb/tree/0.9.5).
 
 #### Ubuntu & Debian
 
@@ -77,8 +77,8 @@ MD5 checksum: `93046678b393f7a05579930eecd289b4`
 
 MD5 checksum: `cd3f62f617126728bd76c297c4ad2cd8`
 
-## Version 0.9.6 (Nightly)
-Nightly builds are created once-a-day, at midnight San Francisco, CA time, using the top-of-tree of [master](https://github.com/influxdb/influxdb/tree/master) source code. These builds will include all the latest fixes, but also undergo only basic testing.
+## Nightly Build
+Nightly builds are created once-a-day, at 12:00 AM PT, using the top-of-tree of [master](https://github.com/influxdb/influxdb/tree/master) source code. These builds include the upcoming release number in the version string.
 
 #### Ubuntu & Debian
 
