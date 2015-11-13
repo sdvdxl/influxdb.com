@@ -13,7 +13,7 @@ This release has 32 features and 75 bug fixes. Many of the bug fixes are related
 
 On the feature side of things, we've added functionality to drop servers (both Raft and non-raft) which is necessary for any node that leaves the cluster and isn't coming back. Another big feature is the addition of a `SUBSCRIBE` query to have all data coming into InfluxDB sent to another service via UDP. You can read see the [details about subscribe here](https://github.com/influxdb/influxdb/pull/4375).
 
-We've also reverted this release to be built with Go 1.4.3. We had a few issues pop up that we suspect are related to Go 1.5.1, which are slated to be fixed in 1.5.2. Given that we have enough happening in our own code base at this point, we figured it would be prudent to pull back to an earlier version of Go. Some of the issues: [#4548](https://github.com/influxdb/influxdb/issues/4548), [#4554](https://github.com/influxdb/influxdb/issues/4554).
+We've also reverted this release to be built with Go 1.4.2. We had a few issues pop up that we suspect are related to Go 1.5.1, which are slated to be fixed in 1.5.2. Given that we have enough happening in our own code base at this point, we figured it would be prudent to pull back to an earlier version of Go. Some of the issues: [#4548](https://github.com/influxdb/influxdb/issues/4548), [#4554](https://github.com/influxdb/influxdb/issues/4554).
 
 ### What this release means for you
 
