@@ -71,7 +71,7 @@ Release candidates are made available for testing one week prior to release of t
 		wget https://s3.amazonaws.com/influxdb/influxdb_0.9.5-rc2_x86_64.tar.gz
 		tar xvfz influxdb_0.9.5-rc2_x86_64.tar.gz
 
-## Version 0.9.5 (Nightly)
+## Version 0.9.6 (Nightly)
 Nightly builds are created once-a-day, at midnight San Francisco, CA time, using the top-of-tree of [master](https://github.com/influxdb/influxdb/tree/master) source code. These builds will include all the latest fixes, but also undergo only basic testing.
 
 #### Ubuntu & Debian
