@@ -1,11 +1,11 @@
 ---
-title: InfluxDB 0.9.5-rc1 released 
+title: InfluxDB 0.9.5-rc2 released 
 author: Paul Dix
 date: 2015-11-13
 publishdate: 2015-11-13
 ---
 
-Today we're releasing InfluxDB v0.9.5-rc1. For the last 4 weeks, we were blocking this release based on finishing our work on the new [Time Strucutred Merge Tree storage engine](/blog/2015/10/07/the_new_influxdb_storage_engine_a_time_structured_merge_tree.html). While the work on TSM isn't completed yet (and thus not included in this release), there are 32 features and 75 bug fixes in the change log waiting for a release. We decided that it would be best to release these improvements for our current users and keep TSM in the development stages. Read on for more details on what's in this release and what it means for you, the current state of the new storage engine, future work on clustering and the query engine, and our release cadence for the next 6 months.
+Today we're releasing InfluxDB v0.9.5-rc2. For the last 4 weeks, we were blocking this release based on finishing our work on the new [Time Strucutred Merge Tree storage engine](/blog/2015/10/07/the_new_influxdb_storage_engine_a_time_structured_merge_tree.html). While the work on TSM isn't completed yet (and thus not included in this release), there are 32 features and 75 bug fixes in the change log waiting for a release. We decided that it would be best to release these improvements for our current users and keep TSM in the development stages. Read on for more details on what's in this release and what it means for you, the current state of the new storage engine, future work on clustering and the query engine, and our release cadence for the next 6 months.
 
 ### What's new in this release?
 
