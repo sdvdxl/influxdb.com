@@ -48,7 +48,7 @@ MD5 checksum: `6abb3d5df9b69aeb9bae37d0889bf67a`
 MD5 checksum: `8c6c0e198876772b40c036a96a94ba7e`
 
 ## Version 0.9.5 (Release Candidate 3)
-Release candidates are made available for testing one week prior to release of the stable point release. The release candidates are built from the [0.9.5 branch](https://github.com/influxdb/influxdb/tree/0.9.5).
+Release candidates are made available for testing one week prior to release of the stable point release. The release candidates are built from the [0.9.5 branch](https://github.com/influxdb/influxdb/tree/0.9.5). Release candidates allow the latest code to be deployed with the caveat that they have only undergone basic testing.
 
 #### Ubuntu & Debian
 
@@ -57,7 +57,7 @@ Release candidates are made available for testing one week prior to release of t
 		wget https://s3.amazonaws.com/influxdb/influxdb_0.9.5-rc3_amd64.deb
 		sudo dpkg -i influxdb_0.9.5-rc3_amd64.deb
 
-MD5 checksum: `49bc8a8a9dc6f42fafb2185800c0c678`
+MD5 checksum: `9fcb276bff619f2ae7266df5fd083abd`
 
 #### RedHat & CentOS
 
@@ -66,7 +66,7 @@ MD5 checksum: `49bc8a8a9dc6f42fafb2185800c0c678`
 		wget https://s3.amazonaws.com/influxdb/influxdb-0.9.5-0.1.rc3.x86_64.rpm
 		sudo yum localinstall influxdb-0.9.5-0.1.rc3.x86_64.rpm
 
-MD5 checksum: `93046678b393f7a05579930eecd289b4`
+MD5 checksum: `4100866ff3e6d3d61d54917671ebdac0`
 
 #### Standalone Binary
 
@@ -75,7 +75,7 @@ MD5 checksum: `93046678b393f7a05579930eecd289b4`
 		wget https://s3.amazonaws.com/influxdb/influxdb_0.9.5-rc3_x86_64.tar.gz
 		tar xvfz influxdb_0.9.5-rc3_x86_64.tar.gz
 
-MD5 checksum: `cd3f62f617126728bd76c297c4ad2cd8`
+MD5 checksum: `b8d5fca5ee27b6f05463e5d53cf617e5`
 
 ## Nightly Build
 Nightly builds are created once-a-day, at 12:00 AM PT, using the top-of-tree of [master](https://github.com/influxdb/influxdb/tree/master) source code. These builds include the upcoming release number in the version string.
