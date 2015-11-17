@@ -47,15 +47,15 @@ MD5 checksum: `6abb3d5df9b69aeb9bae37d0889bf67a`
 
 MD5 checksum: `8c6c0e198876772b40c036a96a94ba7e`
 
-## Version 0.9.5 (Release Candidate 2)
+## Version 0.9.5 (Release Candidate 3)
 Release candidates are made available for testing one week prior to release of the stable point release. The release candidates are built from the [0.9.5 branch](https://github.com/influxdb/influxdb/tree/0.9.5).
 
 #### Ubuntu & Debian
 
 - 64-bit system install instructions
 
-		wget https://s3.amazonaws.com/influxdb/influxdb_0.9.5-rc2_amd64.deb
-		sudo dpkg -i influxdb_0.9.5-rc2_amd64.deb
+		wget https://s3.amazonaws.com/influxdb/influxdb_0.9.5-rc3_amd64.deb
+		sudo dpkg -i influxdb_0.9.5-rc3_amd64.deb
 
 MD5 checksum: `49bc8a8a9dc6f42fafb2185800c0c678`
 
@@ -63,8 +63,8 @@ MD5 checksum: `49bc8a8a9dc6f42fafb2185800c0c678`
 
 - 64-bit system install instructions
 
-		wget https://s3.amazonaws.com/influxdb/influxdb-0.9.5-0.1.rc2.x86_64.rpm
-		sudo yum localinstall influxdb-0.9.5-0.1.rc2.x86_64.rpm
+		wget https://s3.amazonaws.com/influxdb/influxdb-0.9.5-0.1.rc3.x86_64.rpm
+		sudo yum localinstall influxdb-0.9.5-0.1.rc3.x86_64.rpm
 
 MD5 checksum: `93046678b393f7a05579930eecd289b4`
 
@@ -72,8 +72,8 @@ MD5 checksum: `93046678b393f7a05579930eecd289b4`
 
 - 64-bit system download & decompress instructions
 
-		wget https://s3.amazonaws.com/influxdb/influxdb_0.9.5-rc2_x86_64.tar.gz
-		tar xvfz influxdb_0.9.5-rc2_x86_64.tar.gz
+		wget https://s3.amazonaws.com/influxdb/influxdb_0.9.5-rc3_x86_64.tar.gz
+		tar xvfz influxdb_0.9.5-rc3_x86_64.tar.gz
 
 MD5 checksum: `cd3f62f617126728bd76c297c4ad2cd8`
 
