@@ -60,4 +60,4 @@ That's it for 0.3!  Here are a few additional features already in the pipeline f
 * Different types of graphs (e.g. line graphs, histograms, etc.)
 * New kinds of visualizations (e.g. counters)
 
-Want to try it out?  You can [download Chronograf here](https://influxdb.com/download/index.html#chronograf).  We're still in active development and are eager to hear what you think!  Contact the team at [chronograf@influxdata.com](mailto:chronograf@influxdata.com).
+Want to try it out?  Chronograf is free to use, and without user or per server limits. You can [download Chronograf here](https://influxdb.com/download/index.html#chronograf).  We're still in active development and are eager to hear what you think!  Contact the team at [chronograf@influxdata.com](mailto:chronograf@influxdata.com).
