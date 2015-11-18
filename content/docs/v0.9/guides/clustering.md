@@ -7,11 +7,11 @@ aliases:
 
 ---
 
-> **Note:** Clustering is in a beta state right now. There are still a good number of rough edges. If you notice any issues please [report them](https://github.com/influxdb/influxdb/issues/new).
+> **Note:** Clustering is in a alpha state right now. There are still a good number of rough edges. If you notice any issues please [report them](https://github.com/influxdb/influxdb/issues/new).
 
 Starting with version 0.9.3, InfluxDB supports arbitrarily sized clusters that need not be fully replicated. Additionally new data nodes can be added to a cluster. The first three nodes to join a cluster are raft peers. All subsequent nodes are data nodes and do not participate in consensus.
 
-<dt> Distributed meta-queries are not fully functional. See issues [3295](https://github.com/influxdb/influxdb/issues/3295) and [3296](https://github.com/influxdb/influxdb/issues/3296) for more information.</dt>
+<dt> Distributed meta-queries are not fully functional. See issue [3295](https://github.com/influxdb/influxdb/issues/3295) for more information.</dt>
 
 
 ## Configuration
