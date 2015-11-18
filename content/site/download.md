@@ -153,11 +153,13 @@ MD5 checksum: `e850f2d3712aa077f4fc5d6aaf2aef57`
 
 # <a id="chronograf"></a>Chronograf Downloads
 
-## Version 0.2.0
+## Version 0.3.0
 
 #### OS X
 
 - Via [Homebrew](http://brew.sh/)
+
+> Note: The Homebrew formula will install version 0.2.0. Version 0.3 will be available on Homebrew once [this PR](https://github.com/Homebrew/homebrew-binary/pull/277) has been merged.
 
 		brew update
 		brew install homebrew/binary/chronograf
@@ -166,30 +168,32 @@ MD5 checksum: `e850f2d3712aa077f4fc5d6aaf2aef57`
 
 - 64-bit system install instructions
 
-		wget https://s3.amazonaws.com/get.influxdb.org/chronograf/chronograf_0.2.0_amd64.deb
-		sudo dpkg -i chronograf_0.2.0_amd64.deb
+		wget https://s3.amazonaws.com/get.influxdb.org/chronograf/chronograf_0.3.0_amd64.deb
+		sudo dpkg -i chronograf_0.3.0_amd64.deb
 
-MD5 checksum: `fa0835263a691ac1d572ca8987b5d95d`
+MD5 checksum: `eb2b67d4162973f28b9173d9ad3d7936`
 
 #### RedHat & CentOS
 
 - 64-bit system install instructions
 
-		wget https://s3.amazonaws.com/get.influxdb.org/chronograf/chronograf-0.2.0-1.x86_64.rpm
-		sudo yum localinstall chronograf-0.2.0-1.x86_64.rpm
+		wget https://s3.amazonaws.com/get.influxdb.org/chronograf/chronograf-0.3.0-1.x86_64.rpm
+		sudo yum localinstall chronograf-0.3.0-1.x86_64.rpm
 
-MD5 checksum: `a13e4dd1064643a914d6e193a9199343`
+MD5 checksum: `1739cd0ac3ebbabfab13b7ba6b6b071e`
 
 #### Standalone OS X Binary
 
 - 64-bit system download & decompress instructions
 
-		wget https://s3.amazonaws.com/get.influxdb.org/chronograf/chronograf-0.2.0-darwin_amd64.tar.gz
-		tar xvfz chronograf-0.2.0-darwin_amd64.tar.gz
+		wget https://s3.amazonaws.com/get.influxdb.org/chronograf/chronograf-0.3.0-darwin_amd64.tar.gz
+		tar xvfz chronograf-0.3.0-darwin_amd64.tar.gz
 
-MD5 checksum: `3081177631db17e9b42eafd79783107e`
+MD5 checksum: `74d0a6fdc5f215d6f929ef46a3cc2023`
 
 #### Windows
+
+> Note: The Windows installer will install version 0.2.0. A Windows installer for version 0.3 will be available soon.
 
 - <p>64-bit system install via the [Chronograf Windows Installer](https://s3.amazonaws.com/get.influxdb.org/chronograf/chronograf_0.2.0_amd64.msi)</p>
 
