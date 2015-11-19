@@ -157,12 +157,12 @@ To do the same for the streaming case the TICKscript is very similar:
 ```javascript
 // Get errors stream data
 var errors = stream
-            .from('errors')
+            .from().measurement('errors')
             .groupBy(*)
 
 // Get views stream data
 var views = stream
-            .from('views')
+            .from().measurement('views')
             .groupBy(*)
 
 // Join errors and views
@@ -186,7 +186,7 @@ Live Leaderboard of game scores
 ```javascript
 // Define a result that contains the top 5 scores by game updated every 1 second.
 var topScores = stream
-    .from('scores')
+    .from().measurement('scores')
     // Get the most recent score for each player
     .groupBy('game', 'player')
     .window()

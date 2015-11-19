@@ -15,7 +15,10 @@ Example:
 
 ```javascript
     stream
-        .from('"mydb"."myrp"."mymeasurement"')
+        .from()
+           .database('mydb')
+           .retentionPolicy('myrp')
+           .measurement('mymeasurement')
            .where(lambda: "host" =~ /logger\d+/)
         .window()
         ...
@@ -31,6 +34,39 @@ Properties
 
 Property methods modify state on the calling node. They do not add another node to the pipeline and always return a reference to the calling node.
 
+### Database
+
+The database name. 
+If empty any database will be used. 
+
+
+```javascript
+node.database(value string)
+```
+
+
+### Measurement
+
+The measurement name 
+If empty any measurement will be used. 
+
+
+```javascript
+node.measurement(value string)
+```
+
+
+### RetentionPolicy
+
+The retention policy name 
+If empty any retention policy will be used. 
+
+
+```javascript
+node.retentionPolicy(value string)
+```
+
+
 ### Truncate
 
 Optional duration for truncating timestamps. 
@@ -40,7 +76,7 @@ Example:
 
 ```javascript
     stream
-       .from('mydata')
+       .from().measurement('mydata')
            .truncate(1s)
 ```
 
@@ -100,15 +136,8 @@ Returns: [EvalNode](/docs/kapacitor/v0.1/tick/eval_node.html)
 
 ### From
 
-Which database, retention policy and measurement to select. 
-This is equivalent to the FROM statement in an InfluxQL 
-query. As such shortened selectors can be supplied 
-(i.e. &#34;mymeasurement&#34; is valid and selects all data points 
-from the measurement &#34;mymeasurement&#34; independent 
-of database or retention policy). 
-
 Creates a new stream node that can be further 
-filtered using the Where property. 
+filtered using the Database, RetentionPolicy, Measurement and Where properties. 
 From can be called multiple times to create multiple 
 independent forks of the data stream. 
 
@@ -116,9 +145,16 @@ Example:
 
 
 ```javascript
-    var cpu = stream.from('cpu')
-    var load = stream.from('load')
-    // Join cpu and load streams and do further processing
+    // Select the 'cpu' measurement from just the database 'mydb'
+    // and retention policy 'myrp'.
+    var cpu = stream.from()
+                       .database('mydb')
+                       .retentionPolicy('myrp')
+                       .measurement('cpu')
+    // Select the 'load' measurement from any database and retention policy.
+    var load = stream.from()
+                        .measurement('load')
+    // Join cpu and load streams and do further processing.
     cpu.join(load)
             .as('cpu', 'load')
         ...
@@ -127,7 +163,7 @@ Example:
 
 
 ```javascript
-node.from(from string)
+node.from()
 ```
 
 Returns: [StreamNode](/docs/kapacitor/v0.1/tick/stream_node.html)
