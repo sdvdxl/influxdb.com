@@ -17,6 +17,7 @@ This is a list of the client libraries which have some support for InfluxDB vers
 - [InfluxDB Java](https://github.com/influxdb/influxdb-java) by [majst01](https://github.com/majst01)
 
 ## JavaScript/Node.js
+- [node-influx](https://github.com/node-influx/node-influx) by [node-influx](https://github.com/node-influx)
 - [Influent](https://github.com/gobwas/influent) by [gobwas](https://github.com/gobwas)
 
 ## Lisp
