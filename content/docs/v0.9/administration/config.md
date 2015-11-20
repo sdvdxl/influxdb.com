@@ -180,10 +180,10 @@ This section controls the hinted handoff feature, which allows nodes to temporar
 ## [cluster]
 This section controls non-Raft cluster behavior, which generally includes how data are shared across shards.
 
-**shard-writer-timeout = "10s"**  
+**shard-writer-timeout = "5s"**  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The time that a write from one node to another must complete before the write times out. If the write times out, it may still succeed on the remote node but the client node stops waiting and queues it in [hinted handoff](../concepts/glossary.html#hinted-handoff). This timeout should always be less than or equal to the write-timeout.
  
- **write-timeout = "5s"**  
+ **write-timeout = "10s"**  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The time during which the coordinating node must receive a successful response for writing to all remote shard owners before it considers the write a failure. If the write times out, it may still succeed but we stop waiting and queue those writes in [hinted handoff](../concepts/glossary.html#hinted-handoff). Depending on the requested consistency level and the number of successful responses received, the return value will be either `write failure` or `partial write`.
 
 ## [retention]
@@ -196,7 +196,7 @@ This section controls the enforcement of retention policies for evicting old dat
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The rate at which InfluxDB checks to enforce a retention policy. 
 
 ## [shard-precreation]
-Controls the precreation of shards before data arrive. Only shards that will exist in the future, at the time of creation, are precreated.
+Controls the precreation of shards so that shards are available before data arrive. Only shards that, after creation, will have both a start- and end-time in the future are ever created. Shards that would be wholly or partially in the past are never precreated.
 
 **enabled = true** 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -205,7 +205,7 @@ Controls the precreation of shards before data arrive. Only shards that will exi
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 **advance-period = "30m"**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The maximum period in the future for which InfluxDB precreates shards. The `30m` default should work for most systems. Increasing this setting too far in the future can cause inefficiencies.   
 
 ## [monitor]
 This section controls InfluxDB's [system self-monitoring](https://github.com/influxdb/influxdb/blob/master/monitor/README.md).
