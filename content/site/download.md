@@ -5,11 +5,13 @@ layout = "sidebar"
 
 # <a id="influxdb"></a>InfluxDB Downloads
 
-## Version 0.9.4.2 (Stable)
+## Version 0.9.5 (Stable)
 
 #### OS X
 
 - Via [Homebrew](http://brew.sh/)
+
+> Note: The Homebrew version currently installs version 0.9.4.2. A Homebrew formula for version 0.9.5 will be available soon.
 
 		brew update
 		brew install influxdb
@@ -18,30 +20,32 @@ layout = "sidebar"
 
 - 64-bit system install instructions
 
-		wget https://s3.amazonaws.com/influxdb/influxdb_0.9.4.2_amd64.deb
-		sudo dpkg -i influxdb_0.9.4.2_amd64.deb
+		wget https://s3.amazonaws.com/influxdb/influxdb_0.9.5_amd64.deb
+		sudo dpkg -i influxdb_0.9.5_amd64.deb
 
-MD5 checksum: `2f5c6a63d250568ef0d89bd8359dab79`
+MD5 checksum: `f768f325980d2e211bfb382dd045dc2e`
 
 #### RedHat & CentOS
 
 - 64-bit system install instructions
 
-		wget https://s3.amazonaws.com/influxdb/influxdb-0.9.4.2-1.x86_64.rpm
-		sudo yum localinstall influxdb-0.9.4.2-1.x86_64.rpm
+		wget https://s3.amazonaws.com/influxdb/influxdb-0.9.5-1.x86_64.rpm
+		sudo yum localinstall influxdb-0.9.5-1.x86_64.rpm
 
-MD5 checksum: `bc90b9b01ab7e8f7a6ba5f1f5572a55d`
+MD5 checksum: `9a5a64fd0178f5a5fbdb71a6ec148bac`
 
 #### Standalone Binary
 
 - 64-bit system download & decompress instructions
 
-		wget https://s3.amazonaws.com/influxdb/influxdb_0.9.4.2_x86_64.tar.gz
-		tar xvfz influxdb_0.9.4.2_x86_64.tar.gz
+		wget https://s3.amazonaws.com/influxdb/influxdb_0.9.5_x86_64.tar.gz
+		tar xvfz influxdb_0.9.5_x86_64.tar.gz
 
-MD5 checksum: `6abb3d5df9b69aeb9bae37d0889bf67a`
+MD5 checksum: `f145134464f0181163b3e0bd3fe37d0f`
 
 #### Windows
+
+> Note: The Windows installer currently installs version 0.9.4.2. A Windows build of version 0.9.5 will be available soon.
 
 - <p>64-bit system install via the [InfluxDB Windows Installer](https://s3.amazonaws.com/influxdb/influxdb_0.9.4.2_amd64.msi)</p>
 
