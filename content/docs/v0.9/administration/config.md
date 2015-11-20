@@ -155,7 +155,7 @@ This section controls the hinted handoff feature, which allows nodes to temporar
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set to `false` to disable hinted handoff. 
 
 **dir = "/var/opt/influxdb/hh"**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The hinted handoff directory. For best throughput, the HH directory and the WAL directory should be on different physical devices. If you have performance concerns, you will also want to make this setting different from the dir in the [[data]](../administration/config.html#data) section.
 
 **max-size = 1073741824**  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The maximum size of the hinted handoff queue for a node. If the queue is full, new writes are rejected and an error is returned to the client. The queue is drained when either the writes are retried successfully or the writes expire.  
@@ -213,7 +213,7 @@ This section controls InfluxDB's [system self-monitoring](https://github.com/inf
 By default, InfluxDB writes the data to the `_internal` database. If that database does not exist, InfluxDB creates it automatically. The `DEFAULT` retention policy on the `_internal` database is seven days. If you want to use a retention policy other than the seven-day retention policy, you must [create](../administration/administration.html#retention-policy-management) it. 
 
 **store-enabled = true**   
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set to `false` to disable recording statistics internally.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set to `false` to disable recording statistics internally. If set to `false` it will make it substantially more difficult to diagnose issues with your installation.  
 
 **store-database = "_internal"**  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The destination database for recorded statistics.
@@ -248,13 +248,13 @@ This section controls how InfluxDB configures the HTTP endpoints. These are the 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The port used by the HTTP API.
 
 **auth-enabled = false**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set to `true` to enable authentication.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set to `true` to require authentication.
 
 **log-enabled = true**  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set to `false` to disable logging.
 
 **write-tracing = false**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set to `true` to enable logging for the write payload. 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set to `true` to enable logging for the write payload. If set to `true`, this will duplicate every write statement in the logs and is thus not recommended for general use.  
 
 **pprof-enabled = false**  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set to `true` to enable [pprof](http://blog.golang.org/profiling-go-programs) on InfluxDB so that it gathers detailed performance information. 
@@ -415,14 +415,15 @@ This section controls how [continuous queries (CQs)](../concepts/glossary.html#c
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The upper bound on the number of previous interval queries that InfluxDB executes per CQ batch.
 
 **recompute-no-older-than = "10m0s"**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;InfluxDB does not resample points with timestamps that are less than `now()` - `recompute-no-older-than`.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;InfluxDB will not generate queries with an upper time boundary older than `now()` - `recompute-no-older-than`, regardless of the value of `recompute-previous-n`.
 
 **compute-runs-per-interval = 10**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The maximum number of generated queries per `GROUP BY time()` interval. The number of generated queries can be lower; this depends on the `GROUP BY time()` interval in the CQ and `compute-no-more-than`.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The upper bound on the number of incremental queries generated within each `GROUP BY time()` interval. The actual number of generated queries can be lower, depending on the `GROUP BY time()` interval in the CQ and the `compute-no-more-than` setting.
 
 **compute-no-more-than = "2m0s"**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The maximum frequency of CQ batch execution. This varies per CQ.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Batches of CQs run at intervals determined by the `GROUP BY time()` interval divided by `compute-runs-per-interval`. However, CQ batches will never run more often than the `compute-no-more-than` value. 
 
+> **Note:** `GROUP BY time()` * (`recompute-previous-n` + 1) must be greater than `compute-no-more-than` or some time intervals will never be sampled.
 
 
 
