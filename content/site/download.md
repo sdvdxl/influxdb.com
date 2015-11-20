@@ -11,7 +11,7 @@ layout = "sidebar"
 
 - Via [Homebrew](http://brew.sh/)
 
-> Note: The Homebrew version currently installs version 0.9.4.2. A Homebrew formula for version 0.9.5 will be available soon.
+> Note: The Homebrew version currently installs version 0.9.4.2. A Homebrew formula for version 0.9.5 will be available once [this PR](https://github.com/Homebrew/homebrew/pull/46231) has been merged.
 
 		brew update
 		brew install influxdb
@@ -127,11 +127,13 @@ MD5 checksum: `e850f2d3712aa077f4fc5d6aaf2aef57`
 
 # <a id="chronograf"></a>Chronograf Downloads
 
-## Version 0.3.0
+## Version 0.3.2
 
 #### OS X
 
 - Via [Homebrew](http://brew.sh/)
+
+> Note: The Homebrew version currently installs version 0.3.0. A Homebrew formula for version 0.3.2 will be available once [this PR](https://github.com/Homebrew/homebrew-binary/pull/278) has been merged.
 
 		brew update
 		brew install homebrew/binary/chronograf
@@ -140,28 +142,28 @@ MD5 checksum: `e850f2d3712aa077f4fc5d6aaf2aef57`
 
 - 64-bit system install instructions
 
-		wget https://s3.amazonaws.com/get.influxdb.org/chronograf/chronograf_0.3.0_amd64.deb
-		sudo dpkg -i chronograf_0.3.0_amd64.deb
+		wget https://s3.amazonaws.com/get.influxdb.org/chronograf/chronograf_0.3.2_amd64.deb
+		sudo dpkg -i chronograf_0.3.2_amd64.deb
 
-MD5 checksum: `eb2b67d4162973f28b9173d9ad3d7936`
+MD5 checksum: `1a8c09b6abf8276408a2b2a4e1eb7e84`
 
 #### RedHat & CentOS
 
 - 64-bit system install instructions
 
-		wget https://s3.amazonaws.com/get.influxdb.org/chronograf/chronograf-0.3.0-1.x86_64.rpm
-		sudo yum localinstall chronograf-0.3.0-1.x86_64.rpm
+		wget https://s3.amazonaws.com/get.influxdb.org/chronograf/chronograf-0.3.2-1.x86_64.rpm
+		sudo yum localinstall chronograf-0.3.2-1.x86_64.rpm
 
-MD5 checksum: `1739cd0ac3ebbabfab13b7ba6b6b071e`
+MD5 checksum: `3b3343822c35b110a4b82c6faca09ad5`
 
 #### Standalone OS X Binary
 
 - 64-bit system download & decompress instructions
 
-		wget https://s3.amazonaws.com/get.influxdb.org/chronograf/chronograf-0.3.0-darwin_amd64.tar.gz
-		tar xvfz chronograf-0.3.0-darwin_amd64.tar.gz
+		wget https://s3.amazonaws.com/get.influxdb.org/chronograf/chronograf-0.3.2-darwin_amd64.tar.gz
+		tar xvfz chronograf-0.3.2-darwin_amd64.tar.gz
 
-MD5 checksum: `74d0a6fdc5f215d6f929ef46a3cc2023`
+MD5 checksum: `6d65946bf759a91213f9e60eb9227278`
 
 #### Windows
 
