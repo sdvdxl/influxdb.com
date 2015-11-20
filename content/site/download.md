@@ -11,7 +11,7 @@ layout = "sidebar"
 
 - Via [Homebrew](http://brew.sh/)
 
-> Note: The Homebrew version currently installs version 0.9.4.2. A Homebrew formula for version 0.9.5 will be available soon.
+> Note: The Homebrew version currently installs version 0.9.4.2. A Homebrew formula for version 0.9.5 will be available once [this PR](https://github.com/Homebrew/homebrew/pull/46231) has been merged.
 
 		brew update
 		brew install influxdb
