@@ -159,8 +159,6 @@ MD5 checksum: `e850f2d3712aa077f4fc5d6aaf2aef57`
 
 - Via [Homebrew](http://brew.sh/)
 
-> Note: The Homebrew formula will install version 0.2.0. Version 0.3 will be available on Homebrew once [this PR](https://github.com/Homebrew/homebrew-binary/pull/277) has been merged.
-
 		brew update
 		brew install homebrew/binary/chronograf
 
