@@ -55,5 +55,8 @@ This is a list of the client libraries which have some support for InfluxDB vers
 ## Scala
 - [scala-influxdb-client](https://github.com/paulgoldbaum/scala-influxdb-client) by [paulgoldbaum](https://github.com/paulgoldbaum)
 
+## Sensu
+- [sensu-influxdb-extension](https://github.com/jhrv/sensu-influxdb-extension) by [jhrv](https://github.com/jhrv)
+
 ## SNMP
 - [influxsnmp](https://github.com/paulstuart/influxsnmp) by [paulstuart](https://github.com/paulstuart)
