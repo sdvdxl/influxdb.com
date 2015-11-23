@@ -8,7 +8,7 @@ This page provides directions on downloading and starting InfluxDB Version 0.9.5
 Installation of the pre-built InfluxDB package requires root privileges on the host machine.
 
 ### Networking
-By default InfluxDB will use TCP ports `8083` and `8086` so these ports should be available on your system. Once installation is complete you can change those ports and other options in the configuration file, which is located by default in `/etc/opt/influxdb`.
+By default InfluxDB will use TCP ports `8083` and `8086` so these ports should be available on your system. Once installation is complete you can change those ports and other options in the configuration file, which is located by default in `/etc/influxdb`.
 
 ## Ubuntu & Debian
 Debian users can install 0.9.5 by downloading the package and installing it like this:
@@ -100,13 +100,13 @@ Configuration files from prior versions of InfluxDB 0.9 should work with future 
 To generate a new config file, run `influxd config` and redirect the output to a file. For example:
 
 ```shell
-/opt/influxdb/influxd config > /etc/influxdb/influxdb.generated.conf
+influxd config > /etc/influxdb/influxdb.generated.conf
 ```
 
 Edit the `influxdb.generated.conf` file to have the desired configuration settings. When launching InfluxDB, point the process to the correct configuration file using the `-config` option.
 
 ```shell
-/opt/influxdb/influxd -config /etc/influxdb/influxdb.generated.conf
+influxd -config /etc/influxdb/influxdb.generated.conf
 ```
 
 In addition, a valid configuration file can be displayed at any time using the command `influxd config`. Redirect the output to a file to save a clean generated configuration file.
@@ -118,7 +118,7 @@ If no `-config` option is supplied, InfluxDB will use an internal default config
 The `config` and `-config` flags can be combined to output the union of the internal default configuration and the configuration file passed to `-config`. The options specificed in the configuration file will overwrite any internally generated configuration.
 
 ```shell
-/opt/influxdb/influxd config -config /etc/influxdb/influxdb.partial.conf
+influxd config -config /etc/influxdb/influxdb.partial.conf
 ```
 
 The output will show every option configured in the `influxdb.partial.conf` file and will substitute internal defaults for any configuration options not specified in that file.
