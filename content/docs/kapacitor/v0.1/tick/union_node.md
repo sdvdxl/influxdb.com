@@ -12,9 +12,9 @@ Example:
 
 
 ```javascript
-    var logins = stream.from('logins')
-    var logouts = stream.from('logouts')
-    var frontpage = stream.from('frontpage')
+    var logins = stream.from().measurement('logins')
+    var logouts = stream.from().measurement('logouts')
+    var frontpage = stream.from().measurement('frontpage')
     // Union all user actions into a single stream
     logins.union(logouts, frontpage)
             .rename('user_actions')
@@ -55,6 +55,18 @@ node.alert()
 ```
 
 Returns: [AlertNode](/docs/kapacitor/v0.1/tick/alert_node.html)
+
+
+### Derivative
+
+Create a new node that computes the derivative of adjacent points. 
+
+
+```javascript
+node.derivative(field string)
+```
+
+Returns: [DerivativeNode](/docs/kapacitor/v0.1/tick/derivative_node.html)
 
 
 ### Eval

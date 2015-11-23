@@ -22,9 +22,9 @@ Example:
 
 ```javascript
     var errors = stream
-                   .from('errors')
+                   .from().measurement('errors')
     var requests = stream
-                   .from('requests')
+                   .from().measurement('requests')
     // Join the errors and requests streams
     errors.join(requests)
             // Provide prefix names for the fields of the data points.
@@ -121,6 +121,18 @@ node.alert()
 ```
 
 Returns: [AlertNode](/docs/kapacitor/v0.1/tick/alert_node.html)
+
+
+### Derivative
+
+Create a new node that computes the derivative of adjacent points. 
+
+
+```javascript
+node.derivative(field string)
+```
+
+Returns: [DerivativeNode](/docs/kapacitor/v0.1/tick/derivative_node.html)
 
 
 ### Eval
