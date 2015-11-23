@@ -41,14 +41,6 @@ MD5 checksum: `9a5a64fd0178f5a5fbdb71a6ec148bac`
 
 MD5 checksum: `f145134464f0181163b3e0bd3fe37d0f`
 
-#### Windows
-
-> Note: The Windows installer currently installs version 0.9.4.2. A Windows build of version 0.9.5 will be available soon.
-
-- <p>64-bit system install via the [InfluxDB Windows Installer](https://s3.amazonaws.com/influxdb/influxdb_0.9.4.2_amd64.msi)</p>
-
-MD5 checksum: `8c6c0e198876772b40c036a96a94ba7e`
-
 ## Nightly Build
 Nightly builds are created once-a-day, at 12:00 AM PT, using the top-of-tree of [master](https://github.com/influxdb/influxdb/tree/master) source code. These builds include the upcoming release number in the version string.
 
@@ -160,14 +152,6 @@ MD5 checksum: `3b3343822c35b110a4b82c6faca09ad5`
 		tar xvfz chronograf-0.3.2-darwin_amd64.tar.gz
 
 MD5 checksum: `6d65946bf759a91213f9e60eb9227278`
-
-#### Windows
-
-> Note: The Windows installer will install version 0.2.0. A Windows installer for version 0.3 will be available soon.
-
-- <p>64-bit system install via the [Chronograf Windows Installer](https://s3.amazonaws.com/get.influxdb.org/chronograf/chronograf_0.2.0_amd64.msi)</p>
-
-MD5 checksum: `e85f4b630004e9c8f2e2151b68ed6ab1`
 
 ## Usage
 
