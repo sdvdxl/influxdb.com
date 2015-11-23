@@ -2,7 +2,7 @@
 title: Installation
 ---
 
-This page provides directions on downloading and starting InfluxDB Version 0.9.4.2.
+This page provides directions on downloading and starting InfluxDB Version 0.9.5.
 
 ## Requirements
 Installation of the pre-built InfluxDB package requires root privileges on the host machine.
@@ -11,12 +11,12 @@ Installation of the pre-built InfluxDB package requires root privileges on the h
 By default InfluxDB will use TCP ports `8083` and `8086` so these ports should be available on your system. Once installation is complete you can change those ports and other options in the configuration file, which is located by default in `/etc/opt/influxdb`.
 
 ## Ubuntu & Debian
-Debian users can install 0.9.4.2 by downloading the package and installing it like this:
+Debian users can install 0.9.5 by downloading the package and installing it like this:
 
 ```shell
 # 64-bit system install instructions
-wget http://influxdb.s3.amazonaws.com/influxdb_0.9.4.2_amd64.deb
-sudo dpkg -i influxdb_0.9.4.2_amd64.deb
+wget http://influxdb.s3.amazonaws.com/influxdb_0.9.5_amd64.deb
+sudo dpkg -i influxdb_0.9.5_amd64.deb
 ```
 
 Then start the daemon by running:
@@ -30,8 +30,8 @@ RedHat and CentOS users can install by downloading and installing the rpm like t
 
 ```shell
 # 64-bit system install instructions
-wget http://influxdb.s3.amazonaws.com/influxdb-0.9.4.2-1.x86_64.rpm
-sudo yum localinstall influxdb-0.9.4.2-1.x86_64.rpm
+wget http://influxdb.s3.amazonaws.com/influxdb-0.9.5-1.x86_64.rpm
+sudo yum localinstall influxdb-0.9.5-1.x86_64.rpm
 ```
 
 Then start the daemon by running:
@@ -86,18 +86,6 @@ Or, if you don't want/need launchctl, in a separate terminal window you can just
 ```shell
 influxd -config /usr/local/etc/influxdb.conf
 ```
-
-## Windows
-
-InfluxDB maintains an install package for Windows binaries. To get started [download the package](https://s3.amazonaws.com/influxdb/influxdb_0.9.4.2_amd64.msi) and click through the license to install InfluxDB. Note: You will need admin rights on the system in order to install InfluxDB.
-
-After the installation you will see a new folder in your Startup Menu called “InfluxDB”. The following shortcuts are installed for your convenience:
-
-* InfluxDB Server - Launches the InfluxDB database service.
-* InfluxDB CLI - Launches the command line interface used to query and communicate with your InfluxDB server.
-* Admin Dashboard - Opens the dashboard at [`http://localhost:8083`](http://localhost:8083) used to communicate with your InfluxDB server.
-* Documentation - Links to the online documentation for InfluxDB.
-
 
 ## Hosted
 
