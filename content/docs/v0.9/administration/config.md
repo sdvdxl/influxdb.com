@@ -424,7 +424,3 @@ This section controls how [continuous queries (CQs)](../concepts/glossary.html#c
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Batches of CQs run at intervals determined by the `GROUP BY time()` interval divided by `compute-runs-per-interval`. However, CQ batches will never run more often than the `compute-no-more-than` value. 
 
 > **Note:** `GROUP BY time()` * (`recompute-previous-n` + 1) must be greater than `compute-no-more-than` or some time intervals will never be sampled.
-
-
-
-

@@ -6,7 +6,7 @@
 		<ul class="blog-archive">
 		{{ range .Data.Pages.ByPublishDate.Reverse }}
 			<li>
-				<h5 class="blog-post-metadata"><b>Paul Dix</b> &middot; {{ .Date.Format "January 2, 2006" }}</h5>
+                <h5 class="blog-post-metadata"><b>{{ .Params.author }}</b> &middot; {{ .Date.Format "January 2, 2006" }}</h5>
 				<h2 class="blog-heading"><a href="{{ .Permalink }}">{{ .Title }}</a></h2>
 				<p>{{ .Summary }}</p>
 				{{ if .Truncated }}

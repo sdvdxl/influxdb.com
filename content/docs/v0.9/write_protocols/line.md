@@ -23,10 +23,10 @@ Tags should be sorted by key before being sent for best performance. The sort sh
 # measurement only
 cpu
 
-# measurment and tags
+# measurement and tags
 cpu,host=serverA,region=us-west
 
-# measurment with commas
+# measurement with commas
 cpu\,01,host=serverA,region=us-west
 
 # tag value with spaces
@@ -43,7 +43,7 @@ Field keys are always strings and follow the same syntactical rules as described
 
 **Floats** are numeric values that are not followed by a trailing `i`. (e.g. 1, 1.0, -3.14, 6.0e5, 10).
 
-**Boolean** values indicate true or false.  Valid boolean strings are (t, T, true, TRUE, f, F, false, and FALSE).
+**Boolean** values indicate true or false.  Valid boolean strings are (t, T, true, True, TRUE, f, F, false, False and FALSE).
 
 **Strings** are text values.  All string values _must_ be surrounded in double-quotes `"`.  If the string contains
 a double-quote, it must be escaped with a backslash, e.g. `\"`.
