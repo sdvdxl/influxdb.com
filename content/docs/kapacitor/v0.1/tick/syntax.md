@@ -64,8 +64,8 @@ A statement begins with an identifier and any number of chaining function calls.
 Example:
 
 ```javascript
-    var errors = stream.from('errors')
-    var requests = stream.from('requests')
+    var errors = stream.from().measurement('errors')
+    var requests = stream.from().measurement('requests')
     // Join the errors and requests stream
     errors.join(requests)
             .as('errors', 'requests')

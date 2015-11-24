@@ -93,7 +93,7 @@ Our [TICKscript](/docs/kapacitor/v0.1/tick/index.html) will look like this:
 
 ```javascript
 var topPlayerScores = stream
-    .from('scores')
+    .from().measurement('scores')
     // Get the most recent score for each player per game.
     // Not likely that a player is playing two games but just in case.
     .groupBy('game', 'player')
@@ -186,7 +186,7 @@ Here is the complete task TICKscript if you don't want to copy paste as much :)
 ```javascript
 // Define a result that contains the most recent score per player.
 var topPlayerScores = stream
-    .from('scores')
+    .from().measurement('scores')
     // Get the most recent score for each player per game.
     // Not likely that a player is playing two games but just in case.
     .groupBy('game', 'player')

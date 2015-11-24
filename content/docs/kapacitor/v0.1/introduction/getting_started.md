@@ -165,7 +165,7 @@ Put the script below into a file called `cpu_alert.tick` in your working directo
 ```javascript
 stream
     // Select just the cpu_usage_idle measurement from our example database.
-    .from('cpu_usage_idle')
+    .from().measurement('cpu_usage_idle')
     .alert()
         .crit(lambda: "value" <  70)
         // Whenever we get an alert write it to a file.
@@ -259,7 +259,7 @@ It will then trigger an alert if the values are more than 3 standard deviations 
 
 ```javascript
 stream
-    .from('cpu_usage_idle')
+    .from().measurement('cpu_usage_idle')
     .alert()
         // Compare values to running mean and standard deviation
         .crit(lambda: sigma("value") > 3)
@@ -297,7 +297,7 @@ based off the 95th percentile.
 
 ```javascript
 stream
-    .from('cpu_usage_idle')
+    .from().measurement('cpu_usage_idle')
     // create a new field called 'used' which inverts the idle cpu.
     .eval(lambda: 100 - "value")
         .as('used')
