@@ -7,7 +7,7 @@ With [InfluxDB installed](installation.html), you're ready to start doing awesom
 > **Note:** The database can also be used by making direct HTTP requests to the API. See [Reading and Writing Data](../concepts/reading_and_writing_data.html) for examples.
 
 ## Logging in and creating your first database
-If you've installed InfluxDB locally, the `influx` command should be available via the command line. Executing `influx` will start the CLI and automatically connect to the local InfluxDB instance (assuming you have already started the server with `influxd`). If `influx` is not on your path, try `/opt/influxdb/influx`. The output should look like this:
+If you've installed InfluxDB locally, the `influx` command should be available via the command line. Executing `influx` will start the CLI and automatically connect to the local InfluxDB instance (assuming you have already started the server with `influxd`). The output should look like this:
 
 ```sh
 $ influx
