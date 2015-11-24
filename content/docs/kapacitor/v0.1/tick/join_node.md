@@ -123,6 +123,18 @@ node.alert()
 Returns: [AlertNode](/docs/kapacitor/v0.1/tick/alert_node.html)
 
 
+### Derivative
+
+Create a new node that computes the derivative of adjacent points. 
+
+
+```javascript
+node.derivative(field string)
+```
+
+Returns: [DerivativeNode](/docs/kapacitor/v0.1/tick/derivative_node.html)
+
+
 ### Eval
 
 Create an eval node that will evaluate the given transformation function to each data point. 
