@@ -30,7 +30,7 @@ increasing for the window node.
 Properties
 ----------
 
-Property methods modify state on the calling node. They do not add another node to the pipeline and always return a reference to the calling node.
+Property methods modify state on the calling node. They do not add another node to the pipeline, and always return a reference to the calling node.
 
 ### Align
 
