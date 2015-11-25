@@ -5,7 +5,7 @@ layout = "sidebar"
 
 # <a id="influxdb"></a>InfluxDB Downloads
 
-## Version 0.9.5 (Stable)
+## Version 0.9.5.1 (Stable)
 
 #### OS X
 
@@ -18,28 +18,28 @@ layout = "sidebar"
 
 - 64-bit system install instructions
 
-		wget https://s3.amazonaws.com/influxdb/influxdb_0.9.5_amd64.deb
-		sudo dpkg -i influxdb_0.9.5_amd64.deb
+		wget https://s3.amazonaws.com/influxdb/influxdb_0.9.5.1_amd64.deb
+		sudo dpkg -i influxdb_0.9.5.1_amd64.deb
 
-MD5 checksum: `f768f325980d2e211bfb382dd045dc2e`
+MD5 checksum: `31c8b48bcc3e833a6cab6e6efb977d71`
 
 #### RedHat & CentOS
 
 - 64-bit system install instructions
 
-		wget https://s3.amazonaws.com/influxdb/influxdb-0.9.5-1.x86_64.rpm
-		sudo yum localinstall influxdb-0.9.5-1.x86_64.rpm
+		wget https://s3.amazonaws.com/influxdb/influxdb-0.9.5.1-1.x86_64.rpm
+		sudo yum localinstall influxdb-0.9.5.1-1.x86_64.rpm
 
-MD5 checksum: `9a5a64fd0178f5a5fbdb71a6ec148bac`
+MD5 checksum: `e68963c467379ef6c7848a4a80ba63cc`
 
 #### Standalone Binary
 
 - 64-bit system download & decompress instructions
 
-		wget https://s3.amazonaws.com/influxdb/influxdb_0.9.5_x86_64.tar.gz
-		tar xvfz influxdb_0.9.5_x86_64.tar.gz
+		wget https://s3.amazonaws.com/influxdb/influxdb_0.9.5.1_x86_64.tar.gz
+		tar xvfz influxdb_0.9.5.1_x86_64.tar.gz
 
-MD5 checksum: `f145134464f0181163b3e0bd3fe37d0f`
+MD5 checksum: `da0cbcc5a521adc0e588327550441fbf`
 
 ## Nightly Build
 Nightly builds are created once-a-day, at 12:00 AM PT, using the top-of-tree of [master](https://github.com/influxdb/influxdb/tree/master) source code. These builds include the upcoming release number in the version string.
