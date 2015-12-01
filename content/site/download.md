@@ -168,6 +168,60 @@ If you did not install Chronograf via a package, you can just directly run the e
 
 Every install of Chronograf requires a free registration on InfluxData Enterprise. Registration allows us to improve release management and functionality for Chronograf.
 
+# <a id="kapacitor"></a>Kapacitor Downloads
+
+## Version 0.1.1
+
+#### OS X
+
+- Via [Homebrew](http://brew.sh/)
+
+    Homebrew support is comming just waiting on the [PR](https://github.com/Homebrew/homebrew/pull/46521)
+
+		brew update
+		brew install kapacitor
+
+#### Ubuntu & Debian
+
+- 64-bit system install instructions
+
+		wget https://s3.amazonaws.com/influxdb/kapacitor_0.1.1-1_amd64.deb
+		sudo dpkg -i kapacitor_0.1.1-1_amd64.deb
+
+MD5 checksum: `83f1497153d11476df5c5e4888a10da6`
+
+#### RedHat & CentOS
+
+- 64-bit system install instructions
+
+		wget https://s3.amazonaws.com/influxdb/kapacitor-0.1.1-1.x86_64.rpm
+		sudo yum localinstall kapacitor-0.1.1-1.x86_64.rpm
+
+MD5 checksum: `1c6ee3d921e1cf33a5e1313e7a583b4e`
+
+#### Standalone Binaries
+
+- Linux 64-bit system download & decompress instructions
+
+		wget https://s3.amazonaws.com/influxdb/kapacitor-0.1.1_linux_amd64.tar
+		tar xvf kapacitor-0.1.1_linux_amd64.tar
+
+MD5 checksum: `f8a21112456a41e752172b5d0cf6b526`
+
+- OS X 64-bit system download & decompress instructions
+
+		wget https://s3.amazonaws.com/influxdb/kapacitor-0.1.1_darwin_amd64.tar
+		tar xvf kapacitor-0.1.1_darwin_amd64.tar
+
+MD5 checksum: `55572763c160c3e0b615ea2dcd882a74`
+
+- Experimental Windows 64-bit system download
+
+		https://s3.amazonaws.com/influxdb/kapacitor-0.1.1_windows_amd64.zip
+
+MD5 checksum: `7e1b9167560082995023bec9fc4db203`
+
+
 <script>
     if (typeof Cookies.get("submitted") === 'undefined') {
         var inst = $('[data-remodal-id=download]').remodal();
