@@ -95,7 +95,7 @@ Deprecated versions are no longer actively developed.
 		wget https://s3.amazonaws.com/get.influxdb.org/telegraf/telegraf_0.2.3_amd64.deb
 		sudo dpkg -i telegraf_0.2.3_amd64.deb
 
-MD5 checksum: `9c34466f5d514e1ceac3543ac2aa2ccf`
+MD5 checksum: `fb89f40b087cbe72d36e11a7c0415cdf`
 
 #### RedHat & CentOS
 
@@ -104,16 +104,16 @@ MD5 checksum: `9c34466f5d514e1ceac3543ac2aa2ccf`
 		wget https://s3.amazonaws.com/get.influxdb.org/telegraf/telegraf-0.2.3-1.x86_64.rpm
 		sudo yum localinstall telegraf-0.2.3-1.x86_64.rpm
 
-MD5 checksum: `ba6b796aa3bd38272da79d569dd5b925`
+MD5 checksum: `f2e34c07dcd58482a72f15e08e379bbe`
 
 #### Standalone Binary
 
 - 64-bit system download & decompress instructions
 
 		wget https://s3.amazonaws.com/get.influxdb.org/telegraf/telegraf_linux_amd64_0.2.3.tar.gz
-		tar xvfz telegraf_linux_amd64_0.2.2.tar.gz
+		tar xvfz telegraf_linux_amd64_0.2.3.tar.gz
 
-MD5 checksum: `e850f2d3712aa077f4fc5d6aaf2aef57`
+MD5 checksum: `90fcb5ed91ee73c6adcf07b1ae51a8cd`
 
 # <a id="chronograf"></a>Chronograf Downloads
 
