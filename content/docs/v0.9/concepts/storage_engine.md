@@ -100,8 +100,6 @@ When a write comes in with points and optionally new series and fields defined, 
 
 Each entry in the WAL follows a TLV standard with a single byte representing what the type of entry it is (points, new fields, new series, or delete), a 4 byte uint32 for the length of the compressed block, and then the compressed block.
 
-It’s possible to disable the persistence of the WAL, instead relying on a regular flush to the index. This would result in the best possible performance at the cost of opening up a window of data loss for unflushed writes.
-
 The WAL keeps an in memory cache of all data points that are written to it. The points are organized by the key, which is the measurement, tagset, and unique field. Each field is kept as its own time ordered range. The data isn’t compressed while in memory.
 
 Queries to the storage engine will merge data from the WAL with data from the index. The cache uses a read-write lock to enable many goroutines to access the cache. When a query happens a copy of the data is made from the cache to be processed by the query engine. This way writes that come in while a query is happening won’t change the result.
