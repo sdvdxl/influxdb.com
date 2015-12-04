@@ -4,57 +4,93 @@ aliases:
   - /docs/v0.9/guides/hardware_sizing.html
 ---
 
-InfluxDB is a high performance database optimized for time series, but like any software its performance is affected by the hardware running it. Below are some recommendations for how to optimize your InfluxDB instance and understand which performance limitations are hardware related and which are software related. Below is a general list of hardware recommendations from the InfluxDB team.
+This guide offers general hardware recommendations for InfluxDB and addresses some frequently asked questions about hardware sizing.
 
-| Load         | Writes/Second  | Queries/Second | Unique Series |
+Single node:
+
+* [General hardware guidelines for a single node](../guides/hardware_sizing.html#general-hardware-guidelines-for-a-single-node)
+* [When do I need more RAM?](../guides/hardware_sizing.html#when-do-i-need-more-ram)
+* [What kind of storage do I need?](../guides/hardware_sizing.html#what-kind-of-storage-do-i-need)
+* [How much storage do I need?](../guides/hardware_sizing.html#how-much-storage-do-i-need)
+* [How should I configure my hardware?](../guides/hardware_sizing.html#how-should-i-configure-my-hardware)
+
+Clustering:
+
+* [General hardware guidelines for clusters](../guides/hardware_sizing.html#general-hardware-guidelines-for-clusters)
+* [How should I configure my hardware?](../guides/hardware_sizing.html#how-should-i-configure-my-hardware-1)
+
+The following recommendations are for the tsm1 storage engine. Where possible, we note the relevant numbers for the b1 and bz1 storage engines.
+
+## General hardware guidelines for a single node
+
+We define the load that you'll be placing on InfluxDB by the number of writes per second, the number of queries per second, and the number of unique [series](../concepts/glossary.html#series). Based on your load, we make general CPU, RAM, and IOPS recommendations.
+
+| Load         | Writes per second  | Queries per second | Unique series |
 |--------------|----------------|----------------|---------------|
-|  Low         |  < 10K         |  < 5           |  100k         |
-|  Moderate    |  < 200k        |  < 25          |  < 1MM        |
-|  High        |  > 200k        |  > 25          |  > 1MM        |
-|  Infeasible  |  > 750k        |  > 100         |  > 20MM       |
+|  **Low**         |  < 5K         |  < 5           |  < 100K         |
+|  **Moderate**    |  < 100K        |  < 25          |  < 1MM        |
+|  **High**        |  > 100K        |  > 25          |  > 1MM        |
+| **Probably infeasible**  |  > 500K        |  > 100         |  > 10MM       |
 
-## Do I need more RAM?
 
-RAM will help queries return faster. More is generally better, and there is no known downside to adding more RAM.
+#### Low load recommendations
+* CPU: 1-2   
+* RAM: 1-2 GB   
+* IOPS: 500   
 
-The major consideration affecting RAM needs is [series cardinality](/docs/v0.9/concepts/glossary.html#series-cardinality). Using generated integers, floats, or random strings as [tags](/docs/v0.9/concepts/glossary.html#tag) can easily lead to large numbers of series and should be avoided. For example if a [measurement](/docs/v0.9/concepts/glossary.html#measurement) has two tags with 10,000 possible values each the series cardinality would be 100M. This is enough to make even large machines experience OOM failures. Though proper schema design this problem can usually be mitigated. 
+#### Moderate load recommendations
+* CPU: 4-6  
+* RAM: 8-16GB  
+* IOPS: 500-1000  
 
-For series cardinality above 100k machines should have at least 4GB of RAM. If series cardinality is ~1 million the instance should have at least 16GB RAM. For cardinality approaching 10 million series the instance should have 64GB RAM or more. The increase in RAM needs is exponential, although the exponent is between 1 and 2. 
+#### High load recommendations
+* CPU: 8+  
+* RAM: 16+ GB  
+* IOPS: 500-1000  
+
+#### Probably infeasible load
+Performance at this scale is a significant challenge and may not be achievable. Please contact InfluxDB for assistance with tuning your systems. (link?) 
+
+> **Note:** For the b1 and bz1 storage engines, we recommend having > 15,000 IOPS. The CPU and RAM guidelines are the same.
+
+## When do I need more RAM?
+In general, having more RAM helps queries return faster. There is no known downside to adding more RAM.
+
+The major component that affects your RAM needs is series cardinality. Series cardinality is the total number of [series](../concepts/glossary.html#series) in a database. If you have one measurement with two tags, and each tag has 1,000 possible values then the series cardinality is 1M. A series cardinality around or above 10MM can cause OOM failures. If this is the case, you can usually address the problem by redesigning your [schema](../concepts/glossary.html#schema).
+
+The increase in RAM needs relative to series cardinality is exponential where the exponent is between one and two:
 
 ![Series Cardinality](/img/series-cardinality.png)
 
-## Do I need more CPU?
-
-When running a cluster no member should have less than 2 cores. For a single node instance, a single CPU core can function for low loads. 
-
-## Do I need more IOPS?
-
-InfluxDB is designed to be run on SSDs.  Performance is drastically lower on spinning disk drives due to the additional latency introduced. Use a disk with at least 500+ IOPS. For high load 4k+ IOPS is suggested.
+## What kind of storage do I need?
+InfluxDB is designed to run on SSDs.  Performance is drastically lower on spinning disk drives.
 
 ## How much storage do I need?
+Database names, [measurements](../concepts/glossary.html#measurement), [tag keys](../concepts/glossary.html#tag-key), [field keys](../concepts/glossary.html#field-key), and [tag values](../concepts/glossary.html#tag-value) are stored once and as strings. Only [field values](../concepts/glossary.html#field-value) and [timestamps](../concepts/glossary.html#timestamp) are stored per-point.
 
-For the tsm1 engine, numeric values take up about 3 bytes. String values take variable space as determined by string compression.
+Non-string values require about three bytes. String values require variable space as determined by string compression.
 
-Database names, [measurements](/docs/v0.9/concepts/glossary.html#measurement), [tag keys](/docs/v0.9/concepts/glossary.html#tag-key), [field keys](/docs/v0.9/concepts/glossary.html#field-key), and all [tag values](/docs/v0.9/concepts/glossary.html#tag-value) are stored once and only once, as strings. There is no meaningful storage overhead to them. Only [field values](/docs/v0.9/concepts/glossary.html#field-value) and [timestamps](/docs/v0.9/concepts/glossary.html#timestamp) are stored per-point.
+> **Note:** With the b1 storage engine, non-string values require about 50 bytes. With the bz1 storage engine, non-string values require about 20 bytes.
 
 ## How should I configure my hardware?
+When running InfluxDB in a production environment the write-ahead-log directory the data directory should be housed on separate mounted volumes. This prevents disk contention when the system is under heavy write load. 
 
-When running InfluxDB in a production environment the `/wal` and `/data` directories should all be housed on separate mounted volumes. This prevents disk contention when the system is under heavy write load, which is the time when the write load to `/data` and `/wal` is the highest. `/wal` can be on spinning disk, IOPS are most important for `/data`. If you are running InfluxDB in a cluster mount the `/hh` directory on a separate SSD volume as well. 
+Note that the WAL directory can be on a spinning disk and that IOPS are most important for the data directory. 
 
-## How should I shape/submit my data?
+## General hardware guidelines for clusters
 
-When inserting data to InfluxDB it is important to batch writes. Each HTTP request introduces a considerable amount of computational overhead and can significantly slow writes. Optimal batch size can vary depending on hardware configuration and schema design but batches around 5000 points in size are generally best.
+Minimum hardware requirements: 
 
-Most of the InfluxDB [client libraries](/docs/v0.9/clients/api.html) support batching points. [Telegraf](https://github.com/influxdb/telegraf) can also help batch points.
+* CPU: 2
+* RAM: 4 GB
+* IOPS: 1000+ 
 
-## What about clustering?
+When running a cluster every member should have at least two cores. 
 
-For running a cluster of InfluxDB instances the minimum hardware requirements are as follows: 
+For better performance, we recommend having 8 GB RAM and 4 CPUs or more. 
 
-- Mount the `/hh` directory on a separate volume
-- All volumes 1000+ IOPS
-- Minimum 2 CPUs and 4GB RAM
-- Ideally 8GB RAM and 4 CPUs or more
+## How should I configure my hardware?
+Place the hinted-handoff directory on a separate SSD volume from the write-ahead-log directory and the data directory. For more information on setting up a cluster, see [Clustering setup](../guides/clustering.html).
 
 
 
