@@ -21,4 +21,4 @@ uglyurls = true
   StripeApiToken = "pk_live_YqkcDTFvohavPUkSV9ZtI7oO"
 
 [blackfriday]
-  plainIdAnchors = true
+  plainIDAnchors = true
