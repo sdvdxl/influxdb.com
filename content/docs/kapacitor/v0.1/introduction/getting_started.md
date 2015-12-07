@@ -271,6 +271,7 @@ Let's try it out.
 Use `reload` in order to get a running task to update based on a new definition:
 
 ```sh
+kapacitor define -name cpu_alert -tick cpu_alert.tick
 kapacitor reload cpu_alert
 ```
 
