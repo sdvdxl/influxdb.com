@@ -79,7 +79,7 @@ Deprecated versions are no longer actively developed.
 
 # <a id="telegraf"></a>Telegraf Downloads
 
-## Version 0.2.3
+## Version 0.2.4
 
 #### OS X
 
@@ -92,8 +92,8 @@ Deprecated versions are no longer actively developed.
 
 - 64-bit system install instructions
 
-		wget https://s3.amazonaws.com/get.influxdb.org/telegraf/telegraf_0.2.3_amd64.deb
-		sudo dpkg -i telegraf_0.2.3_amd64.deb
+		wget https://s3.amazonaws.com/get.influxdb.org/telegraf/telegraf_0.2.4_amd64.deb
+		sudo dpkg -i telegraf_0.2.4_amd64.deb
 
 MD5 checksum: `fb89f40b087cbe72d36e11a7c0415cdf`
 
@@ -101,8 +101,8 @@ MD5 checksum: `fb89f40b087cbe72d36e11a7c0415cdf`
 
 - 64-bit system install instructions
 
-		wget https://s3.amazonaws.com/get.influxdb.org/telegraf/telegraf-0.2.3-1.x86_64.rpm
-		sudo yum localinstall telegraf-0.2.3-1.x86_64.rpm
+		wget https://s3.amazonaws.com/get.influxdb.org/telegraf/telegraf-0.2.4-1.x86_64.rpm
+		sudo yum localinstall telegraf-0.2.4-1.x86_64.rpm
 
 MD5 checksum: `f2e34c07dcd58482a72f15e08e379bbe`
 
@@ -110,8 +110,8 @@ MD5 checksum: `f2e34c07dcd58482a72f15e08e379bbe`
 
 - 64-bit system download & decompress instructions
 
-		wget https://s3.amazonaws.com/get.influxdb.org/telegraf/telegraf_linux_amd64_0.2.3.tar.gz
-		tar xvfz telegraf_linux_amd64_0.2.3.tar.gz
+		wget https://s3.amazonaws.com/get.influxdb.org/telegraf/telegraf_linux_amd64_0.2.4.tar.gz
+		tar xvfz telegraf_linux_amd64_0.2.4.tar.gz
 
 MD5 checksum: `90fcb5ed91ee73c6adcf07b1ae51a8cd`
 
