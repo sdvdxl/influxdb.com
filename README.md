@@ -1,3 +1,5 @@
+> **This repo is no longer in use.** The new site (influxdata.com) has a different docs site, which lives at [influxdb/influxdata.com](/influxdb/influxdata.com). Please open pull requests and issues there!
+
 # InfluxDB.com 
 
 This repository is the entire site at [influxdb.com](http://influxdb.com).
