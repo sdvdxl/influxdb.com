@@ -1,4 +1,4 @@
-> **This repo is no longer in use.** The new site (influxdata.com) has a different docs site ([docs.influxdata.com](https://docs.influxdata.com)), which lives at [influxdb/docs.influxdata.com](https://github.com/influxdb/docs.influxdata.com). Please open pull requests and issues there!
+> **This repo is no longer in use.** The new site ([influxdata.com](https://influxdata.com)) has a different docs site ([docs.influxdata.com](https://docs.influxdata.com)), which lives at [influxdb/docs.influxdata.com](https://github.com/influxdb/docs.influxdata.com). Please open pull requests and issues there!
 
 # InfluxDB.com 
 
